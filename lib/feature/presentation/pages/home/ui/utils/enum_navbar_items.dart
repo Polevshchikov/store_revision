@@ -1,0 +1,4 @@
+enum NavbarItems {
+  achievements,
+  forum,
+}
