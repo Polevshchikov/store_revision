@@ -1,61 +1,77 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:store_revision/common/app_colors.dart';
-import 'package:store_revision/common/app_resources.dart';
-import 'package:store_revision/core/navigation/main_navigation.dart';
+import 'package:store_revision/feature/presentation/pages/revision/ui/widgets/button_add_revision.dart';
 
 class RevisionScreen extends StatelessWidget {
   const RevisionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: SizedBox(
-        width: 54,
-        height: 54,
-        child: GestureDetector(
-          onTap: () async => Navigator.of(context)
-              .pushNamed(MainNavigationRouteNames.addProduct),
-          child: Container(
-            height: 54,
-            width: 54,
-            decoration: const BoxDecoration(
-              color: AppColors.blackColorAddTrophy,
-              borderRadius: BorderRadius.all(
-                Radius.circular(100),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.mainColorApp,
-                  spreadRadius: 0,
-                  blurRadius: 8,
-                  offset: Offset(0, 0),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            colors: [Colors.purple[200]!, Colors.amber],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight),
+      ),
+      height: double.infinity,
+      width: double.infinity,
+      child: Stack(
+        children: [
+          GridPaper(
+            interval: 180,
+            divisions: 4,
+            subdivisions: 5,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.green[400],
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue[500]!,
+                          offset: const Offset(4, 4),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: const Offset(-4, -4),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('title'),
+                        SizedBox(height: 5),
+                        Text('date'),
+                        SizedBox(height: 5),
+                        Text('Count product'),
+                        SizedBox(height: 5),
+                        Text('Sum'),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 6,
-                ),
-                child: SvgPicture.asset(AppResources.addTrophyIcon),
-              ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: ButtonAddRevision(),
             ),
           ),
-        ),
-      ),
-      body: GridPaper(
-        interval: 180,
-        divisions: 4,
-        subdivisions: 5,
-        child: Container(
-          color: Colors.blueGrey,
-          height: double.infinity,
-          child: ListTile(
-            title: Text('Product1'),
-          ),
-        ),
+        ],
       ),
     );
   }

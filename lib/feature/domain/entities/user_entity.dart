@@ -8,7 +8,7 @@ import 'package:equatable/equatable.dart';
 class UserEntity extends Equatable {
   /// {@macro user}
   const UserEntity({
-    required this.id,
+    required this.uid,
     this.email,
     this.name,
     this.photo,
@@ -18,7 +18,7 @@ class UserEntity extends Equatable {
   final String? email;
 
   /// The current user's id.
-  final String id;
+  final String uid;
 
   /// The current user's name (display name).
   final String? name;
@@ -27,7 +27,7 @@ class UserEntity extends Equatable {
   final String? photo;
 
   /// Empty user which represents an unauthenticated user.
-  static const empty = UserEntity(id: '');
+  static const empty = UserEntity(uid: '');
 
   /// Convenience getter to determine whether the current user is empty.
   bool get isEmpty => this == UserEntity.empty;
@@ -36,5 +36,5 @@ class UserEntity extends Equatable {
   bool get isNotEmpty => this != UserEntity.empty;
 
   @override
-  List<Object?> get props => [email, id, name, photo];
+  List<Object?> get props => [email, uid, name, photo];
 }

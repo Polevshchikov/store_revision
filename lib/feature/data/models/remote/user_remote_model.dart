@@ -1,36 +1,33 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:store_revision/feature/domain/entities/user_entity.dart';
 
-// part 'user_remote_model.g.dart';
+part 'user_remote_model.g.dart';
 
-// @JsonSerializable(createToJson: false)
-// class UserRemoteModel extends UserEntity {
-//   final String id;
-//   final String email;
-//   final String name;
-//   final String avatar;
-//   @override
-//   @JsonKey(ignore: true)
-//   final LocationRemoteModel location;
+@JsonSerializable()
+class UserRemoteModel extends UserEntity {
+  @override
+  final String uid;
+  @override
+  final String email;
+  @override
+  final String name;
+  @override
+  final String photo;
 
-//   const UserRemoteModel({
-//     required this.id,
-//     required this.email,
-//     required this.name,
-//     required this.avatar,
-//     required this.location,
-//   }) : super(
-//           id: id,
-//           email: email,
-//           name: name,
-//           avatar: avatar,
-//           location: location,
-//         );
+  const UserRemoteModel({
+    required this.uid,
+    required this.email,
+    required this.name,
+    required this.photo,
+  }) : super(
+          uid: uid,
+          email: email,
+          name: name,
+          photo: photo,
+        );
 
-//   factory UserRemoteModel.fromJson(
-//     Map<String, dynamic> json, {
-//     required LocationRemoteModel location,
-//   }) {
-//     final model = _$UserRemoteModelFromJson(json);
-//     model.location = location;
-//     return model;
-//   }
-// }
+  factory UserRemoteModel.fromJson(Map<String, dynamic> json) =>
+      _$UserRemoteModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserRemoteModelToJson(this);
+}

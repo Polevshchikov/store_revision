@@ -1,7 +1,7 @@
 // // ignore_for_file: overridden_fields
 
 // import 'package:hive/hive.dart';
-// import 'package:irla_my/feature/domain/entities/user_entity.dart';
+// import 'package:store_revision/feature/domain/entities/user_entity.dart';
 
 // part 'user_local_model.g.dart';
 
@@ -20,42 +20,24 @@
 //   final String name;
 //   @override
 //   @HiveField(3)
-//   final String avatar;
-//   @override
-//   @HiveField(4)
-//   final String country;
-//   @override
-//   @HiveField(5)
-//   final String state;
-//   @override
-//   @HiveField(6)
-//   final String city;
+//   final String photo;
 
 //   const UserLocalModel({
 //     required this.id,
 //     required this.email,
 //     required this.name,
-//     required this.avatar,
-//     required this.country,
-//     required this.state,
-//     required this.city,
+//     required this.photo,
 //   }) : super(
 //           id: id,
 //           email: email,
 //           name: name,
-//           avatar: avatar,
-//           country: country,
-//           state: state,
-//           city: city,
+//           photo: photo,
 //         );
 
 //   factory UserLocalModel.from(UserEntity user) => UserLocalModel(
 //         id: user.id,
-//         email: user.email,
-//         name: user.name,
-//         avatar: user.avatar,
-//         country: user.country,
-//         state: user.state,
-//         city: user.city,
+//         email: user.email ?? '',
+//         name: user.name ?? '',
+//         photo: user.photo ?? '',
 //       );
 // }

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/exception.dart';
 import 'package:store_revision/core/error/failure.dart';
+import 'package:store_revision/feature/data/models/remote/user_remote_model.dart';
 import 'package:store_revision/feature/domain/entities/user_entity.dart';
 import 'package:store_revision/feature/domain/repositories/authentication_repository.dart';
 
@@ -23,10 +24,38 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     // this._networkInfo,
   );
 
+  // /// Stream of [User] which will emit the current user when
+  // /// the authentication state changes.
+  // ///
+  // /// Emits [User.empty] if the user is not authenticated.
+  // Stream<User> get user {
+  //   return _firebaseAuth.authStateChanges().map((firebaseUser) {
+  //     final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
+  //     // _cache.write(key: userCacheKey, value: user);
+  //     return user;
+  //   });
+  // }
+
+  // /// Returns the current cached user.
+  // /// Defaults to [User.empty] if there is no cached user.
+  // User get currentUser {
+  //   return _cache.read<User>(key: userCacheKey) ?? User.empty;
+  // }
+
+  /// Throws a [LogOutFailure] if an exception occurs.
   @override
   Future<Either<Failure, void>> logOut() async {
-    print('Exit');
-    return const Right(null);
+//  await Future.wait([
+//         _firebaseAuth.signOut(),
+//         _googleSignIn.signOut(),
+//       ]);
+    try {
+      await _firebaseAuth.signOut();
+
+      return const Right(null);
+    } catch (_) {
+      throw LogOutFailure();
+    }
   }
 
   @override
@@ -42,16 +71,23 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     return const Right(null);
   }
 
+  //  авторизация пользователя
   @override
   Future<Either<Failure, UserEntity>> logIn(
       {required String email, required String password}) async {
     try {
-      final UserEntity user = UserEntity(
+      UserCredential userCred = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
-        name: 'USER',
-        id: '1234567',
-        photo: 'https://picsum.photos/200/300',
+        password: password,
       );
+
+      // Get docs from collection reference
+      final documentSnapshot =
+          await _firestore.collection('users').doc(userCred.user!.uid).get();
+
+      final UserRemoteModel user =
+          UserRemoteModel.fromJson(documentSnapshot.data()!);
+
       return Right(user);
     } on FirebaseAuthException catch (e) {
       throw LogInWithEmailAndPasswordFailure.fromCode(e.code);
@@ -60,6 +96,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     }
   }
 
+  //  регистрация пользователя
   @override
   Future<Either<Failure, UserEntity>> signUp({
     required String email,
@@ -68,39 +105,26 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     // String? photo,
   }) async {
     try {
-      //  регистрация пользователя
+      //  регистрация пользователя в firebase
       UserCredential userCred =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
+      final UserRemoteModel user = UserRemoteModel(
+          uid: userCred.user!.uid, email: email, name: username, photo: '');
       //  добавить пользователя в базу данных
-      await _firestore.collection('users').doc(userCred.user!.uid).set({
-        'email': email,
-        'username': username,
-        'uid': userCred.user!.uid,
-      });
-      return Right(
-          UserEntity(id: userCred.user!.uid, name: username, email: email));
+      await _firestore
+          .collection('users')
+          .doc(userCred.user!.uid)
+          .set(user.toJson());
+      return Right(user);
     } on FirebaseAuthException catch (e) {
       throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
       throw const SignUpWithEmailAndPasswordFailure();
     }
   }
-  //   Future<void> signUp({required String email, required String password}) async {
-//     try {
-//       await _firebaseAuth.createUserWithEmailAndPassword(
-//         email: email,
-//         password: password,
-//       );
-//     } on FirebaseAuthException catch (e) {
-//       throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
-//     } catch (_) {
-//       throw const SignUpWithEmailAndPasswordFailure();
-//     }
-//   }
 
   @override
   Future<Either<Failure, void>> logInWithGoogle() async {
@@ -217,24 +241,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 //     }
 //   }
 
-//   /// Signs in with the provided [email] and [password].
-//   ///
-//   /// Throws a [LogInWithEmailAndPasswordFailure] if an exception occurs.
-//   Future<void> logInWithEmailAndPassword({
-//     required String email,
-//     required String password,
-//   }) async {
-//     try {
-//       await _firebaseAuth.signInWithEmailAndPassword(
-//         email: email,
-//         password: password,
-//       );
-//     } on FirebaseAuthException catch (e) {
-//       throw LogInWithEmailAndPasswordFailure.fromCode(e.code);
-//     } catch (_) {
-//       throw const LogInWithEmailAndPasswordFailure();
-//     }
-//   }
 
 //   /// Signs out the current user which will emit
 //   /// [User.empty] from the [user] Stream.
