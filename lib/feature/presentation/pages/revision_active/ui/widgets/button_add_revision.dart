@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_revision/core/navigation/main_navigation.dart';
 
 class ButtonAddRevision extends StatelessWidget {
   const ButtonAddRevision({Key? key}) : super(key: key);
@@ -6,7 +7,9 @@ class ButtonAddRevision extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(MainNavigationRouteNames.newRevision);
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

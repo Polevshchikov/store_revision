@@ -18,7 +18,9 @@ class BuildHomePage extends StatelessWidget {
         minTextAdapt: true,
         orientation: Orientation.portrait);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [],
+      ),
       bottomNavigationBar: HomeTabBar(
         actionIndex: currentIndex,
       ),

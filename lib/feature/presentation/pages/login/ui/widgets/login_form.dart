@@ -17,7 +17,7 @@ class LoginForm extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'Authentication Failure'),
+                content: Text(state.failure.getLocalizedMessage(context)),
               ),
             );
         }

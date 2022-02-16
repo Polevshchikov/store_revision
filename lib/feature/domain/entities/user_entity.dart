@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 
 /// {@template user}
 /// User model
@@ -9,8 +10,9 @@ class UserEntity extends Equatable {
   /// {@macro user}
   const UserEntity({
     required this.uid,
-    this.email,
-    this.name,
+    required this.email,
+    required this.name,
+    required this.revisions,
     this.photo,
   });
 
@@ -26,8 +28,16 @@ class UserEntity extends Equatable {
   /// Url for the current user's photo.
   final String? photo;
 
+  /// List of revisions of the current user
+  final List<RevisionEntity> revisions;
+
   /// Empty user which represents an unauthenticated user.
-  static const empty = UserEntity(uid: '');
+  static const empty = UserEntity(
+    uid: '',
+    email: '',
+    name: '',
+    revisions: [],
+  );
 
   /// Convenience getter to determine whether the current user is empty.
   bool get isEmpty => this == UserEntity.empty;

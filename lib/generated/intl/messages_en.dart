@@ -22,21 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "addDescriptionNewIRLA": MessageLookupByLibrary.simpleMessage(
-            "Add a journal entry to help you remember how you earned this IRLA (optional)"),
-        "addIRLA": MessageLookupByLibrary.simpleMessage("Add IRLA"),
-        "addedNewIRLA": MessageLookupByLibrary.simpleMessage(
-            "You have just added a new IRLA to your collection. Share this achievement with your friends."),
         "authFailure":
             MessageLookupByLibrary.simpleMessage("Authentication Failure"),
+        "cacheFailure": MessageLookupByLibrary.simpleMessage("Cache Failure"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
-        "cameraFoto": MessageLookupByLibrary.simpleMessage("Camera/Foto"),
-        "cameraVideo": MessageLookupByLibrary.simpleMessage("Camera/Video"),
         "changePassword":
             MessageLookupByLibrary.simpleMessage("Change Password"),
-        "characters12": MessageLookupByLibrary.simpleMessage("12 Characters"),
         "checkEmail": MessageLookupByLibrary.simpleMessage("Check your Email"),
-        "city": MessageLookupByLibrary.simpleMessage("City"),
         "clickHere": MessageLookupByLibrary.simpleMessage("CLICK HERE"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "commentTextEmailSignup": MessageLookupByLibrary.simpleMessage(
@@ -51,8 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "confirmationEmailSent": MessageLookupByLibrary.simpleMessage(
             "A confirmation email has been sent"),
-        "congratulations":
-            MessageLookupByLibrary.simpleMessage("Congratulations!"),
+        "connectionFailure":
+            MessageLookupByLibrary.simpleMessage("Connection Failure"),
         "createNewPassword":
             MessageLookupByLibrary.simpleMessage("Create New Password"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
@@ -60,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "download": MessageLookupByLibrary.simpleMessage("Download"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "emptyFieldFailure":
+            MessageLookupByLibrary.simpleMessage("Empty field Failure"),
         "errorEmailInputForgot": MessageLookupByLibrary.simpleMessage(
             "The e-mail address is incorrect. Please try again"),
         "errorEmailInputLogin": MessageLookupByLibrary.simpleMessage(
@@ -77,44 +71,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot your password?"),
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
-        "galleryFoto": MessageLookupByLibrary.simpleMessage("Gallery/Foto"),
-        "galleryVideo": MessageLookupByLibrary.simpleMessage("Gallery/Video"),
-        "informationNewIRLA": MessageLookupByLibrary.simpleMessage(
-            "If you choose to upload memories for this IRLA, you will be eligible for additional leaderboard points (once verified by a moderator)."),
-        "leaderboard": MessageLookupByLibrary.simpleMessage("Leaderboard"),
         "logIn": MessageLookupByLibrary.simpleMessage("Log in"),
-        "logInFacebook":
-            MessageLookupByLibrary.simpleMessage("Log In with Facebook"),
         "logOut": MessageLookupByLibrary.simpleMessage("Log out"),
         "myFriends": MessageLookupByLibrary.simpleMessage("My Friends"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
+        "noCachedDataFailure":
+            MessageLookupByLibrary.simpleMessage("No cached data Failure"),
+        "noChosenValueFailure":
+            MessageLookupByLibrary.simpleMessage("No chosen value Failure"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),
         "oldPassword": MessageLookupByLibrary.simpleMessage("Old Password"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
-        "personalAccount":
-            MessageLookupByLibrary.simpleMessage("Personal Account"),
-        "points": MessageLookupByLibrary.simpleMessage("points"),
         "restorePassword":
             MessageLookupByLibrary.simpleMessage("Restore Password"),
         "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
-        "selectCountry":
-            MessageLookupByLibrary.simpleMessage("Select your Country"),
         "sendAgain": MessageLookupByLibrary.simpleMessage("Send Again"),
         "sendConfirmationEmail": MessageLookupByLibrary.simpleMessage(
             "We will send you a confirmation email"),
         "sendEmail": MessageLookupByLibrary.simpleMessage("Send Email"),
-        "serialNumber": MessageLookupByLibrary.simpleMessage("Serial number"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
-        "shareIt": MessageLookupByLibrary.simpleMessage("Share It"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
-        "signUpFacebook":
-            MessageLookupByLibrary.simpleMessage("Sign Up with Facebook"),
-        "state": MessageLookupByLibrary.simpleMessage("State"),
-        "trackedIRLAs": MessageLookupByLibrary.simpleMessage("Tracked IRLAs"),
-        "trophy": MessageLookupByLibrary.simpleMessage("Trophy"),
-        "uploadFileNewIRLA": MessageLookupByLibrary.simpleMessage(
-            "Upload a picture/video of yourself completing the IRLA (optional)"),
+        "unknownFailure":
+            MessageLookupByLibrary.simpleMessage("Unknown Failure"),
         "user": MessageLookupByLibrary.simpleMessage("User"),
         "username": MessageLookupByLibrary.simpleMessage("Username")
       };

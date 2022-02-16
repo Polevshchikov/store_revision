@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_revision/common/app_colors.dart';
-import 'package:store_revision/common/app_styles.dart';
 import 'package:store_revision/feature/presentation/pages/add_trophy/cubit/add_trophy_cubit.dart';
 import 'package:store_revision/generated/l10n.dart';
 
@@ -34,7 +33,7 @@ class SectionDescriptionTrophy extends StatelessWidget {
               isDense: true,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              hintText: S.of(context).addDescriptionNewIRLA,
+              hintText: "S.of(context).addDescriptionNewIRLA",
               border: InputBorder.none,
             ),
           ),

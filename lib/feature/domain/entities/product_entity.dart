@@ -4,15 +4,17 @@ class ProductEntity extends Equatable {
   final String num;
   final double cost;
   final double count;
+  final double score;
   final String name;
-  final String creatorName;
+  final DateTime datePublished;
 
   const ProductEntity({
     required this.num,
     required this.cost,
     required this.count,
+    required this.score,
     required this.name,
-    required this.creatorName,
+    required this.datePublished,
   });
 
   @override
@@ -20,7 +22,8 @@ class ProductEntity extends Equatable {
         num,
         cost,
         count,
+        score,
         name,
-        creatorName,
+        datePublished,
       ];
 }

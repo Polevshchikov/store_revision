@@ -8,7 +8,7 @@ class AuthenticationState extends Equatable {
 
   const AuthenticationState._({
     this.status = AuthenticationStatus.initial,
-    this.isAuth = true,
+    this.isAuth = false,
     this.user = UserEntity.empty,
     Failure? error,
   }) : error = error ?? const EmptyFailure();

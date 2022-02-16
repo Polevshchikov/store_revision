@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:store_revision/core/error/exception.dart';
+import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/domain/usecases/logIn_with_google_usecase.dart';
 import 'package:store_revision/feature/domain/usecases/login_usecase.dart';
 import 'package:store_revision/feature/domain/usecases/params/login_params.dart';
@@ -40,54 +40,38 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> logInWithGoogle() async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    try {
-      final result = await _logInWithGoogleUseCase.call(NoParams());
-      await result.fold((failure) async {
-        emit(state.copyWith(
-          status: FormzStatus.submissionFailure,
-        ));
-        _authenticationBloc.add(AuthenticationLoggedError(failure));
-      }, (user) async {
-        emit(state.copyWith(status: FormzStatus.submissionSuccess));
-        // _authenticationBloc.add(AuthenticationLoggedIn(user));
-      });
-    } on LogInWithGoogleFailure catch (e) {
+    final result = await _logInWithGoogleUseCase.call(NoParams());
+    await result.fold((failure) async {
       emit(state.copyWith(
-        errorMessage: e.message,
+        failure: failure,
         status: FormzStatus.submissionFailure,
       ));
-    } catch (_) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
+      _authenticationBloc.add(AuthenticationLoggedError(failure));
+    }, (user) async {
+      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+      // _authenticationBloc.add(AuthenticationLoggedIn(user));
+    });
   }
 
   Future<void> logInWithCredentials() async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    try {
-      final result = await _loginUseCase.call(LoginParams(
-        email: state.email.value,
-        password: state.password.value,
-      ));
-      await result.fold((failure) async {
-        emit(state.copyWith(
-          status: FormzStatus.submissionFailure,
-        ));
-        _authenticationBloc.add(AuthenticationLoggedError(failure));
-      }, (user) async {
-        emit(state.copyWith(
-          status: FormzStatus.submissionSuccess,
-          email: Email.dirty(user.email ?? ''),
-        ));
-        _authenticationBloc.add(AuthenticationLoggedIn(user));
-      });
-    } on LogInWithEmailAndPasswordFailure catch (e) {
+    final result = await _loginUseCase.call(LoginParams(
+      email: state.email.value,
+      password: state.password.value,
+    ));
+    await result.fold((failure) async {
       emit(state.copyWith(
-        errorMessage: e.message,
+        failure: failure,
         status: FormzStatus.submissionFailure,
       ));
-    } catch (_) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
+      _authenticationBloc.add(AuthenticationLoggedError(failure));
+    }, (user) async {
+      emit(state.copyWith(
+        status: FormzStatus.submissionSuccess,
+        email: Email.dirty(user.email ?? ''),
+      ));
+      _authenticationBloc.add(AuthenticationLoggedIn(user));
+    });
   }
 }

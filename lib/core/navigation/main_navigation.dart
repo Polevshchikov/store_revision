@@ -8,7 +8,9 @@ import 'package:store_revision/feature/presentation/pages/home/cubit/bottom_navi
 import 'package:store_revision/feature/presentation/pages/home/ui/home_screen.dart';
 import 'package:store_revision/feature/presentation/pages/login/cubit/login_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/login/ui/login_page.dart';
-import 'package:store_revision/feature/presentation/pages/revision/ui/revision_screen.dart';
+import 'package:store_revision/feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/new_revision/ui/new_revision_screen.dart';
+import 'package:store_revision/feature/presentation/pages/revision_active/ui/revision_active_screen.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/cubit/sign_up_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/ui/sign_up_page.dart';
 import 'package:store_revision/injection.dart';
@@ -22,6 +24,7 @@ abstract class MainNavigationRouteNames {
   static const addProduct = '/addProduct';
   static const profileSettingsWidget = '/profileSettings';
   static const changePasswordWidget = '/changePassword';
+  static const newRevision = '/newRevision';
 }
 
 class MainNavigation {
@@ -50,6 +53,11 @@ class MainNavigation {
               param1: BlocProvider.of<AuthenticationBloc>(context)),
           child: const SignUpPage(),
         ),
+    MainNavigationRouteNames.newRevision: (context) => BlocProvider(
+          create: (BuildContext context) => getIt<NewRevisionCubit>(
+              param1: BlocProvider.of<AuthenticationBloc>(context)),
+          child: const NewRevisionScreen(),
+        ),
   };
 
   Route<Object> onGenerateRoute(RouteSettings routeSettings) {
@@ -62,6 +70,10 @@ class MainNavigation {
 }
 
 final List<Widget> tabGroups = [
-  const RevisionScreen(),
+  BlocProvider(
+    create: (BuildContext context) => getIt<NewRevisionCubit>(
+        param1: BlocProvider.of<AuthenticationBloc>(context)),
+    child: const RevisionActiveScreen(),
+  ),
   const ForumScreen(),
 ];

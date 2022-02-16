@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:store_revision/common/app_colors.dart';
 import 'package:store_revision/common/app_resources.dart';
-import 'package:store_revision/common/app_styles.dart';
 import 'package:store_revision/feature/presentation/pages/add_trophy/cubit/add_trophy_cubit.dart';
 import 'package:store_revision/generated/l10n.dart';
 
@@ -20,7 +19,7 @@ class SerialNumberTrophy extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              S.of(context).serialNumber + ' *',
+              'serialNumber' + ' *',
             ),
             TextField(
               key: const Key('addTrophy_serialNumberTrophyInput_textField'),
@@ -71,7 +70,7 @@ class SerialNumberTrophy extends StatelessWidget {
                   ),
                 ),
                 suffix: const SizedBox(width: 30),
-                hintText: S.of(context).characters12,
+                hintText: "S.of(context).characters12",
               ),
             )
           ],

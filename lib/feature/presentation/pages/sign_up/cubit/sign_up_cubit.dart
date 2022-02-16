@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:store_revision/core/error/exception.dart';
+import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/domain/usecases/params/singup_params.dart';
 import 'package:store_revision/feature/domain/usecases/singup_usecase.dart';
 import 'package:store_revision/feature/presentation/components/confirmed_password.dart';
@@ -83,28 +83,21 @@ class SignUpCubit extends Cubit<SignUpState> {
   Future<void> signUpFormSubmitted() async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    try {
-      final result = await _signupUseCase.call(SignUpParams(
-        username: state.username.value,
-        email: state.email.value,
-        password: state.password.value,
-      ));
-      await result.fold((failure) async {
-        emit(state.copyWith(
-          status: FormzStatus.submissionFailure,
-        ));
-      }, (user) async {
-        emit(state.copyWith(status: FormzStatus.submissionSuccess));
-        _authenticationBloc.add(AuthenticationLoggedIn(user));
-      });
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on SignUpWithEmailAndPasswordFailure catch (e) {
+
+    final result = await _signupUseCase.call(SignUpParams(
+      username: state.username.value,
+      email: state.email.value,
+      password: state.password.value,
+    ));
+    await result.fold((failure) async {
       emit(state.copyWith(
-        errorMessage: e.message,
+        error: failure,
         status: FormzStatus.submissionFailure,
       ));
-    } catch (_) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
+    }, (user) async {
+      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+      _authenticationBloc.add(AuthenticationLoggedIn(user));
+    });
+    emit(state.copyWith(status: FormzStatus.submissionSuccess));
   }
 }

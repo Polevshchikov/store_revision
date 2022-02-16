@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:store_revision/common/app_colors.dart';
 import 'package:store_revision/common/app_resources.dart';
-import 'package:store_revision/common/app_styles.dart';
 import 'package:store_revision/feature/presentation/pages/add_trophy/ui/widgets/dialog_wrapper_widget.dart';
 import 'package:store_revision/generated/l10n.dart';
 import 'package:store_revision/feature/presentation/pages/add_trophy/ui/widgets/dialog_wrapper_widget.dart';
@@ -21,13 +20,13 @@ addNewsIRLADialog(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  S.of(context).congratulations,
+                  'congratulations',
                 ),
                 const SizedBox(height: 40.0),
                 SvgPicture.asset(AppResources.congratulationsIcon),
                 const SizedBox(height: 24.0),
                 Text(
-                  S.of(context).addedNewIRLA,
+                  'addedNewIRLA',
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 25.0),

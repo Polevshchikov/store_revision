@@ -60,31 +60,11 @@ class S {
     );
   }
 
-  /// `Log In with Facebook`
-  String get logInFacebook {
-    return Intl.message(
-      'Log In with Facebook',
-      name: 'logInFacebook',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Sign Up`
   String get signUp {
     return Intl.message(
       'Sign Up',
       name: 'signUp',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Sign Up with Facebook`
-  String get signUpFacebook {
-    return Intl.message(
-      'Sign Up with Facebook',
-      name: 'signUpFacebook',
       desc: '',
       args: [],
     );
@@ -135,26 +115,6 @@ class S {
     return Intl.message(
       'Username',
       name: 'username',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `State`
-  String get state {
-    return Intl.message(
-      'State',
-      name: 'state',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `City`
-  String get city {
-    return Intl.message(
-      'City',
-      name: 'city',
       desc: '',
       args: [],
     );
@@ -300,16 +260,6 @@ class S {
     );
   }
 
-  /// `Select your Country`
-  String get selectCountry {
-    return Intl.message(
-      'Select your Country',
-      name: 'selectCountry',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Don't have an account?`
   String get dontHaveAccount {
     return Intl.message(
@@ -440,51 +390,11 @@ class S {
     );
   }
 
-  /// `Camera/Foto`
-  String get cameraFoto {
-    return Intl.message(
-      'Camera/Foto',
-      name: 'cameraFoto',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Camera/Video`
-  String get cameraVideo {
-    return Intl.message(
-      'Camera/Video',
-      name: 'cameraVideo',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Gallery`
   String get gallery {
     return Intl.message(
       'Gallery',
       name: 'gallery',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Gallery/Foto`
-  String get galleryFoto {
-    return Intl.message(
-      'Gallery/Foto',
-      name: 'galleryFoto',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Gallery/Video`
-  String get galleryVideo {
-    return Intl.message(
-      'Gallery/Video',
-      name: 'galleryVideo',
       desc: '',
       args: [],
     );
@@ -510,126 +420,6 @@ class S {
     );
   }
 
-  /// `Add IRLA`
-  String get addIRLA {
-    return Intl.message(
-      'Add IRLA',
-      name: 'addIRLA',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Share It`
-  String get shareIt {
-    return Intl.message(
-      'Share It',
-      name: 'shareIt',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Serial number`
-  String get serialNumber {
-    return Intl.message(
-      'Serial number',
-      name: 'serialNumber',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `12 Characters`
-  String get characters12 {
-    return Intl.message(
-      '12 Characters',
-      name: 'characters12',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Congratulations!`
-  String get congratulations {
-    return Intl.message(
-      'Congratulations!',
-      name: 'congratulations',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You have just added a new IRLA to your collection. Share this achievement with your friends.`
-  String get addedNewIRLA {
-    return Intl.message(
-      'You have just added a new IRLA to your collection. Share this achievement with your friends.',
-      name: 'addedNewIRLA',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `If you choose to upload memories for this IRLA, you will be eligible for additional leaderboard points (once verified by a moderator).`
-  String get informationNewIRLA {
-    return Intl.message(
-      'If you choose to upload memories for this IRLA, you will be eligible for additional leaderboard points (once verified by a moderator).',
-      name: 'informationNewIRLA',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Upload a picture/video of yourself completing the IRLA (optional)`
-  String get uploadFileNewIRLA {
-    return Intl.message(
-      'Upload a picture/video of yourself completing the IRLA (optional)',
-      name: 'uploadFileNewIRLA',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Add a journal entry to help you remember how you earned this IRLA (optional)`
-  String get addDescriptionNewIRLA {
-    return Intl.message(
-      'Add a journal entry to help you remember how you earned this IRLA (optional)',
-      name: 'addDescriptionNewIRLA',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Tracked IRLAs`
-  String get trackedIRLAs {
-    return Intl.message(
-      'Tracked IRLAs',
-      name: 'trackedIRLAs',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `points`
-  String get points {
-    return Intl.message(
-      'points',
-      name: 'points',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Trophy`
-  String get trophy {
-    return Intl.message(
-      'Trophy',
-      name: 'trophy',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Settings`
   String get settings {
     return Intl.message(
@@ -645,16 +435,6 @@ class S {
     return Intl.message(
       'Change Password',
       name: 'changePassword',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Personal Account`
-  String get personalAccount {
-    return Intl.message(
-      'Personal Account',
-      name: 'personalAccount',
       desc: '',
       args: [],
     );
@@ -680,21 +460,71 @@ class S {
     );
   }
 
-  /// `Leaderboard`
-  String get leaderboard {
-    return Intl.message(
-      'Leaderboard',
-      name: 'leaderboard',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Search`
   String get search {
     return Intl.message(
       'Search',
       name: 'search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No chosen value Failure`
+  String get noChosenValueFailure {
+    return Intl.message(
+      'No chosen value Failure',
+      name: 'noChosenValueFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty field Failure`
+  String get emptyFieldFailure {
+    return Intl.message(
+      'Empty field Failure',
+      name: 'emptyFieldFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown Failure`
+  String get unknownFailure {
+    return Intl.message(
+      'Unknown Failure',
+      name: 'unknownFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cache Failure`
+  String get cacheFailure {
+    return Intl.message(
+      'Cache Failure',
+      name: 'cacheFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No cached data Failure`
+  String get noCachedDataFailure {
+    return Intl.message(
+      'No cached data Failure',
+      name: 'noCachedDataFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection Failure`
+  String get connectionFailure {
+    return Intl.message(
+      'Connection Failure',
+      name: 'connectionFailure',
       desc: '',
       args: [],
     );

@@ -41,7 +41,7 @@ class SectionAddImageVideoTrophy extends StatelessWidget {
               Flexible(
                 flex: 6,
                 child: Text(
-                  S.of(context).uploadFileNewIRLA,
+                  "S.of(context).uploadFileNewIRLA",
                 ),
               ),
             ],

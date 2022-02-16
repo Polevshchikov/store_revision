@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:store_revision/common/app_colors.dart';
 import 'package:store_revision/common/app_resources.dart';
-import 'package:store_revision/common/app_styles.dart';
 import 'package:store_revision/generated/l10n.dart';
 
 PreferredSize appBarAddTrophy(BuildContext context) => PreferredSize(
@@ -44,7 +43,7 @@ PreferredSize appBarAddTrophy(BuildContext context) => PreferredSize(
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    S.of(context).addIRLA,
+                    'addIRLA',
                     // style: AppStyles.addTrophyTitleStyle,
                   ),
                 ),

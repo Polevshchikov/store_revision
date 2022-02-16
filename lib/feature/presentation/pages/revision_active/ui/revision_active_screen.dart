@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:store_revision/feature/presentation/pages/revision/ui/widgets/button_add_revision.dart';
+import 'package:store_revision/feature/presentation/pages/revision_active/ui/widgets/button_add_revision.dart';
 
-class RevisionScreen extends StatelessWidget {
-  const RevisionScreen({Key? key}) : super(key: key);
+class RevisionActiveScreen extends StatelessWidget {
+  const RevisionActiveScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class RevisionScreen extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
+              padding: EdgeInsets.only(bottom: 20.0),
               child: ButtonAddRevision(),
             ),
           ),

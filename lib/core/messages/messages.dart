@@ -10,11 +10,3 @@ class EmptyMessage implements LocalizedMessage {
   @override
   String getLocalizedMessage(BuildContext context) => '';
 }
-
-class RecoveryRequestSentSuccessfully implements LocalizedMessage {
-  const RecoveryRequestSentSuccessfully();
-
-  @override
-  String getLocalizedMessage(BuildContext context) =>
-      'recovery Request Sent Successfully';
-}

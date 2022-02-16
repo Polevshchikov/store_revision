@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_revision/common/app_colors.dart';
-import 'package:store_revision/common/app_styles.dart';
 import 'package:store_revision/feature/presentation/pages/add_trophy/ui/utils/enum_file_num.dart';
 
 import 'package:formz/formz.dart';

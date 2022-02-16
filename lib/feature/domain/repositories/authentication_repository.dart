@@ -12,6 +12,8 @@ abstract class AuthenticationRepository {
 
   Future<Either<Failure, void>> logInWithGoogle();
 
+  Future<Either<Failure, UserEntity>> getAuthenticatedUser();
+
   Future<Either<Failure, void>> fetchPasswordRecovery(String email);
 
   Future<Either<Failure, void>> changePassword(
