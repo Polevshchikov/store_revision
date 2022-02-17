@@ -49,36 +49,32 @@ class RevisionRemoteModel extends RevisionEntity {
   @override
   final String description;
   @override
-  final List<ProductRemoteModel> listProducts;
+  final List<String> listTrusted;
   @override
   final DateTime date;
   @override
-  final String creatorName;
-  @override
   final bool isClosed;
   @override
-  final double score;
+  final double total;
 
   const RevisionRemoteModel({
     required this.id,
     required this.uid,
     required this.name,
     required this.description,
-    required this.listProducts,
+    required this.listTrusted,
     required this.date,
-    required this.creatorName,
     required this.isClosed,
-    required this.score,
+    required this.total,
   }) : super(
           id: id,
           uid: uid,
           name: name,
           description: description,
-          listProducts: listProducts,
+          listTrusted: listTrusted,
           date: date,
-          creatorName: creatorName,
           isClosed: isClosed,
-          score: score,
+          total: total,
         );
 
   factory RevisionRemoteModel.fromJson(Map<String, dynamic> json) =>
@@ -90,40 +86,50 @@ class RevisionRemoteModel extends RevisionEntity {
 @JsonSerializable()
 class ProductRemoteModel extends ProductEntity {
   @override
-  final String num;
+  final String id;
+  @override
+  final String uid;
   @override
   final double cost;
   @override
   final double count;
   @override
-  final double score;
+  final double total;
   @override
   final String name;
+  @override
+  final String userName;
   @override
   final DateTime datePublished;
 
   const ProductRemoteModel({
-    required this.num,
+    required this.id,
+    required this.uid,
     required this.cost,
     required this.count,
-    required this.score,
+    required this.total,
     required this.name,
+    required this.userName,
     required this.datePublished,
   }) : super(
-          num: num,
+          id: id,
+          uid: uid,
           cost: cost,
           count: count,
-          score: score,
+          total: total,
           name: name,
+          userName: userName,
           datePublished: datePublished,
         );
 
   factory ProductRemoteModel.from(ProductEntity product) => ProductRemoteModel(
-        num: product.num,
+        id: product.id,
+        uid: product.uid,
         cost: product.cost,
         count: product.count,
-        score: product.score,
+        total: product.total,
         name: product.name,
+        userName: product.userName,
         datePublished: product.datePublished,
       );
 

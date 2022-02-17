@@ -9,10 +9,11 @@ abstract class RevisionRepository {
     required String uid,
     required String name,
     required String description,
-    required String username,
   });
 
-  Future<Either<Failure, void>> changeRevision();
+  Future<Either<Failure, void>> editRevision();
 
   Future<Either<Failure, void>> daleteRevision(String revisionId);
+
+  Future<Either<Failure, List<RevisionEntity>>> getRevisions();
 }

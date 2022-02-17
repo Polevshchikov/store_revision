@@ -33,13 +33,11 @@ class NewRevisionCubit extends Cubit<NewRevisionState> {
     ));
   }
 
-  Future<void> createRevision(
-      {required String uid, required String username}) async {
+  Future<void> createRevision({required String uid}) async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final result = await _createRevisionUseCase.call(CreateRevisionParams(
       uid: uid,
-      username: username,
       name: state.name.value,
       description: state.description.value,
     ));

@@ -88,8 +88,9 @@ class _CreateRevisionButton extends StatelessWidget {
                 ),
                 onPressed: state.status.isValidated
                     ? () async {
-                        await context.read<NewRevisionCubit>().createRevision(
-                            uid: user.uid, username: user.name ?? '');
+                        await context
+                            .read<NewRevisionCubit>()
+                            .createRevision(uid: user.uid);
                         Navigator.of(context).pop();
                       }
                     : null,

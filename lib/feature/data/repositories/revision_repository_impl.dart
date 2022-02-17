@@ -10,21 +10,14 @@ import 'package:uuid/uuid.dart';
 
 @Injectable(as: RevisionRepository)
 class RevisionRepositoryImpl implements RevisionRepository {
-  // final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firestore;
-  // final SharedPreferences _prefs;
-  // final HiveInterface _hive;
-  // final NetworkInfo _networkInfo;
   RevisionRepositoryImpl(
-    // this._firebaseAuth,
     this._firestore,
-    // this._prefs,
-    // this._hive,
-    // this._networkInfo,
   );
 
+  //  To change the data revision
   @override
-  Future<Either<Failure, void>> changeRevision() {
+  Future<Either<Failure, void>> editRevision() {
     throw UnimplementedError();
   }
 
@@ -34,32 +27,28 @@ class RevisionRepositoryImpl implements RevisionRepository {
     required String uid,
     required String name,
     required String description,
-    required String username,
   }) async {
     try {
-      // String photoUrl =
-      //     await StorageMethods().uploadImageToStorage('posts', file, true);
       String revisionId = const Uuid().v1(); // creates unique id based on time,
       final RevisionRemoteModel revision = RevisionRemoteModel(
         id: revisionId,
         name: name,
         description: description,
-        listProducts: const [],
+        listTrusted: const [],
         date: DateTime.now(),
-        creatorName: username,
         isClosed: false,
-        score: 0,
+        total: 0,
         uid: uid,
       );
 
-      _firestore
+      await _firestore
           .collection(FirestoreCollectionPath.revisions)
           .doc(revisionId)
           .set(revision.toJson());
 
       return Right(revision);
     } catch (_) {
-      throw const UnknownFailure();
+      return const Left(UnknownFailure());
     }
   }
 
@@ -71,9 +60,27 @@ class RevisionRepositoryImpl implements RevisionRepository {
           .collection(FirestoreCollectionPath.revisions)
           .doc(revisionId)
           .delete();
-      return Right(null);
+      return const Right(null);
     } catch (_) {
-      throw const UnknownFailure();
+      return const Left(UnknownFailure());
+    }
+  }
+
+  //  Get list revision
+  @override
+  Future<Either<Failure, List<RevisionEntity>>> getRevisions() async {
+    try {
+      //  получить всех пользователей
+      final document =
+          await _firestore.collection(FirestoreCollectionPath.revisions).get();
+      final allData = document.docs.map((doc) => doc.data()).toList();
+
+      final listRevisions = allData
+          .map((revision) => RevisionRemoteModel.fromJson(revision))
+          .toList();
+      return Right(listRevisions);
+    } catch (_) {
+      return const Left(UnknownFailure());
     }
   }
 }

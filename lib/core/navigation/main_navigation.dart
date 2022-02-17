@@ -10,6 +10,7 @@ import 'package:store_revision/feature/presentation/pages/login/cubit/login_cubi
 import 'package:store_revision/feature/presentation/pages/login/ui/login_page.dart';
 import 'package:store_revision/feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/new_revision/ui/new_revision_screen.dart';
+import 'package:store_revision/feature/presentation/pages/revision_active/cubit/revision_active_list_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision_active/ui/revision_active_screen.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/cubit/sign_up_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/ui/sign_up_page.dart';
@@ -71,7 +72,7 @@ class MainNavigation {
 
 final List<Widget> tabGroups = [
   BlocProvider(
-    create: (BuildContext context) => getIt<NewRevisionCubit>(
+    create: (BuildContext context) => getIt<RevisionActiveListCubit>(
         param1: BlocProvider.of<AuthenticationBloc>(context)),
     child: const RevisionActiveScreen(),
   ),

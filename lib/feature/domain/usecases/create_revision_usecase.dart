@@ -19,11 +19,10 @@ class CreateRevisionUseCase extends UseCase<void, CreateRevisionParams> {
       uid: params.uid,
       name: params.name,
       description: params.description,
-      username: params.username,
     );
 
     return result.fold((failure) => Left(failure), (revisionRemote) async {
-      final result = await _userRepository.changeRevisionUser(
+      final result = await _userRepository.addRevisionUser(
           uid: params.uid, revisionId: revisionRemote.id);
 
       return result.fold(

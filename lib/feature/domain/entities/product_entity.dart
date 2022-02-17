@@ -1,29 +1,35 @@
 import 'package:equatable/equatable.dart';
 
 class ProductEntity extends Equatable {
-  final String num;
+  final String id;
+  final String uid;
   final double cost;
   final double count;
-  final double score;
+  final double total;
   final String name;
   final DateTime datePublished;
+  final String userName;
 
   const ProductEntity({
-    required this.num,
-    required this.cost,
-    required this.count,
-    required this.score,
+    required this.id,
+    required this.uid,
+    required this.cost, //  цена
+    required this.count, //  количество
+    required this.total, // итог
     required this.name,
+    required this.userName,
     required this.datePublished,
   });
 
   @override
   List<Object> get props => [
-        num,
+        id,
+        uid,
         cost,
         count,
-        score,
+        total,
         name,
+        userName,
         datePublished,
       ];
 }

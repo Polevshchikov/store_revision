@@ -57,10 +57,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<Either<Failure, UserEntity>> getAuthenticatedUser() async {
     try {
       User? userCred = _firebaseAuth.currentUser;
-      //  получить всех пользователей
-      // final document =
-      //     await _firestore.collection(FirestoreCollectionPath.users).get();
-      // final allData = document.docs.map((doc) => doc.data()).toList();
       // Get docs from collection reference
       final documentSnapshot = await _firestore
           .collection(FirestoreCollectionPath.users)
