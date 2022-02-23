@@ -51,6 +51,8 @@ class RevisionRemoteModel extends RevisionEntity {
   @override
   final List<String> listTrusted;
   @override
+  final List<String> listProducts;
+  @override
   final DateTime date;
   @override
   final bool isClosed;
@@ -63,6 +65,7 @@ class RevisionRemoteModel extends RevisionEntity {
     required this.name,
     required this.description,
     required this.listTrusted,
+    required this.listProducts,
     required this.date,
     required this.isClosed,
     required this.total,
@@ -72,6 +75,7 @@ class RevisionRemoteModel extends RevisionEntity {
           name: name,
           description: description,
           listTrusted: listTrusted,
+          listProducts: listProducts,
           date: date,
           isClosed: isClosed,
           total: total,

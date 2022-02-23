@@ -8,7 +8,7 @@ class ButtonAddRevision extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(MainNavigationRouteNames.newRevision);
+        Navigator.of(context).pushNamed(MainNavigationRouteNames.addRevision);
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

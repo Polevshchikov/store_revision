@@ -4,8 +4,8 @@ import 'package:formz/formz.dart';
 import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
 import 'package:store_revision/feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart';
 
-class NewRevisionScreen extends StatelessWidget {
-  const NewRevisionScreen({Key? key}) : super(key: key);
+class AddRevisionScreen extends StatelessWidget {
+  const AddRevisionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

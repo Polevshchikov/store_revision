@@ -35,6 +35,7 @@ class RevisionRepositoryImpl implements RevisionRepository {
         name: name,
         description: description,
         listTrusted: const [],
+        listProducts: const [],
         date: DateTime.now(),
         isClosed: false,
         total: 0,
@@ -80,6 +81,56 @@ class RevisionRepositoryImpl implements RevisionRepository {
           .toList();
       return Right(listRevisions);
     } catch (_) {
+      return const Left(UnknownFailure());
+    }
+  }
+
+  //  Add item id to revision list
+  @override
+  Future<Either<Failure, void>> addProductRevision(
+      {required String revisionId, required String productId}) async {
+    try {
+      DocumentSnapshot snap = await _firestore
+          .collection(FirestoreCollectionPath.revisions)
+          .doc(revisionId)
+          .get();
+      List products = (snap.data()! as dynamic)['listProducts'];
+
+      if (!products.contains(productId)) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .update({
+          'listProducts': FieldValue.arrayUnion([productId])
+        });
+      }
+      return const Right(null);
+    } catch (e) {
+      return const Left(UnknownFailure());
+    }
+  }
+
+  //  Remove item from revision list
+  @override
+  Future<Either<Failure, void>> deleteProductRevision(
+      {required String revisionId, required String productId}) async {
+    try {
+      DocumentSnapshot snap = await _firestore
+          .collection(FirestoreCollectionPath.revisions)
+          .doc(revisionId)
+          .get();
+      List products = (snap.data()! as dynamic)['listProducts'];
+
+      if (products.contains(productId)) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .update({
+          'listProducts': FieldValue.arrayRemove([productId])
+        });
+      }
+      return const Right(null);
+    } catch (e) {
       return const Left(UnknownFailure());
     }
   }

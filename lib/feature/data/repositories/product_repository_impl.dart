@@ -15,10 +15,32 @@ class ProductRepositoryImpl implements ProductRepository {
     this._firestore,
   );
 
-  //  To change the data product
+  //  Edit the data product
   @override
   Future<Either<Failure, void>> editProduct() {
     throw UnimplementedError();
+  }
+
+  //  Get list products
+  @override
+  Future<Either<Failure, List<ProductEntity>>> getProducts(
+      {required String revisionId}) async {
+    try {
+      //  получить все товары
+      final document = await _firestore
+          .collection(FirestoreCollectionPath.revisions)
+          .doc(revisionId)
+          .collection(FirestoreCollectionPath.products)
+          .get();
+      final allData = document.docs.map((doc) => doc.data()).toList();
+
+      final lisrProducts = allData
+          .map((product) => ProductRemoteModel.fromJson(product))
+          .toList();
+      return Right(lisrProducts);
+    } catch (_) {
+      return const Left(UnknownFailure());
+    }
   }
 
   //  Create product firebase database

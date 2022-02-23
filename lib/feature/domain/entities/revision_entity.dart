@@ -6,6 +6,7 @@ class RevisionEntity extends Equatable {
   final String name;
   final String description;
   final List<String> listTrusted;
+  final List<String> listProducts;
   final DateTime? date;
   final bool isClosed;
   final double total;
@@ -16,6 +17,7 @@ class RevisionEntity extends Equatable {
     required this.name,
     required this.description,
     required this.listTrusted,
+    required this.listProducts,
     required this.date,
     required this.isClosed,
     required this.total,
@@ -28,6 +30,7 @@ class RevisionEntity extends Equatable {
     name: '',
     description: '',
     listTrusted: [],
+    listProducts: [],
     date: null,
     isClosed: false,
     total: 0,
@@ -40,6 +43,7 @@ class RevisionEntity extends Equatable {
         name,
         description,
         listTrusted,
+        listProducts,
         isClosed,
         total,
       ];

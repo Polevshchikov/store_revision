@@ -35,6 +35,9 @@ RevisionRemoteModel _$RevisionRemoteModelFromJson(Map<String, dynamic> json) =>
       listTrusted: (json['listTrusted'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      listProducts: (json['listProducts'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       date: DateTime.parse(json['date'] as String),
       isClosed: json['isClosed'] as bool,
       total: (json['total'] as num).toDouble(),
@@ -48,6 +51,7 @@ Map<String, dynamic> _$RevisionRemoteModelToJson(
       'name': instance.name,
       'description': instance.description,
       'listTrusted': instance.listTrusted,
+      'listProducts': instance.listProducts,
       'date': instance.date.toIso8601String(),
       'isClosed': instance.isClosed,
       'total': instance.total,

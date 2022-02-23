@@ -16,4 +16,10 @@ abstract class RevisionRepository {
   Future<Either<Failure, void>> daleteRevision(String revisionId);
 
   Future<Either<Failure, List<RevisionEntity>>> getRevisions();
+
+  Future<Either<Failure, void>> addProductRevision(
+      {required String revisionId, required String productId});
+
+  Future<Either<Failure, void>> deleteProductRevision(
+      {required String revisionId, required String productId});
 }

@@ -16,6 +16,10 @@ abstract class ProductRepository {
 
   Future<Either<Failure, void>> editProduct();
 
+  Future<Either<Failure, List<ProductEntity>>> getProducts({
+    required String revisionId,
+  });
+
   Future<Either<Failure, void>> daleteProduct({
     required String revisionId,
     required String productId,

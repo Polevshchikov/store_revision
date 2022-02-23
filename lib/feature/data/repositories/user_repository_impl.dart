@@ -63,15 +63,14 @@ class UserRepositoryImpl implements UserRepository {
           .collection(FirestoreCollectionPath.users)
           .doc(uid)
           .get();
-      List revisions =
-          (snap.data()! as dynamic)[FirestoreCollectionPath.revisions];
+      List revisions = (snap.data()! as dynamic)['revisions'];
 
       if (!revisions.contains(revisionId)) {
         await _firestore
             .collection(FirestoreCollectionPath.users)
             .doc(uid)
             .update({
-          FirestoreCollectionPath.revisions: FieldValue.arrayUnion([revisionId])
+          'revisions': FieldValue.arrayRemove([revisionId])
         });
       }
       return const Right(null);
@@ -89,16 +88,14 @@ class UserRepositoryImpl implements UserRepository {
           .collection(FirestoreCollectionPath.users)
           .doc(uid)
           .get();
-      List revisions =
-          (snap.data()! as dynamic)[FirestoreCollectionPath.revisions];
+      List revisions = (snap.data()! as dynamic)['revisions'];
 
       if (revisions.contains(revisionId)) {
         await _firestore
             .collection(FirestoreCollectionPath.users)
             .doc(uid)
             .update({
-          FirestoreCollectionPath.revisions:
-              FieldValue.arrayRemove([revisionId])
+          'revisions': FieldValue.arrayRemove([revisionId])
         });
       }
       return const Right(null);

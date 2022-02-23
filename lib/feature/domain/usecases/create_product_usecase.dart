@@ -3,26 +3,33 @@ import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/core/usecases/usecase.dart';
 import 'package:store_revision/feature/domain/repositories/product_repository.dart';
+import 'package:store_revision/feature/domain/repositories/revision_repository.dart';
 import 'package:store_revision/feature/domain/usecases/params/create_product_params.dart';
 
 @injectable
 class CreateProductUseCase extends UseCase<void, CreateProductParams> {
   final ProductRepository _productRepository;
+  final RevisionRepository _revisionRepository;
 
-  CreateProductUseCase(this._productRepository);
+  CreateProductUseCase(this._productRepository, this._revisionRepository);
 
   @override
   Future<Either<Failure, void>> call(CreateProductParams params) async {
     final result = await _productRepository.createProduct(
-      cost: params.cost,
       uid: params.uid,
-      count: params.count,
-      name: params.name,
       revisionId: params.revisionId,
+      name: params.name,
       userName: params.userName,
+      cost: double.parse(params.cost),
+      count: double.parse(params.count),
     );
 
-    return result.fold(
-        (failure) => Left(failure), (product) => const Right(null));
+    return result.fold((failure) => Left(failure), (productRemote) async {
+      final result = await _revisionRepository.addProductRevision(
+          revisionId: params.revisionId, productId: productRemote.id);
+
+      return result.fold(
+          (failure) => Left(failure), (product) => const Right(null));
+    });
   }
 }

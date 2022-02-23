@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
 import 'package:store_revision/feature/presentation/pages/home/ui/utils/build_tab.dart';
 import 'package:store_revision/feature/presentation/pages/home/ui/widgets/home_tab_bar.dart';
 
@@ -19,7 +21,16 @@ class BuildHomePage extends StatelessWidget {
         orientation: Orientation.portrait);
     return Scaffold(
       appBar: AppBar(
-        actions: [],
+        title: const Text('Home'),
+        actions: <Widget>[
+          IconButton(
+            key: const Key('homePage_logout_iconButton'),
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () => context
+                .read<AuthenticationBloc>()
+                .add(AuthenticationLoggedOut()),
+          )
+        ],
       ),
       bottomNavigationBar: HomeTabBar(
         actionIndex: currentIndex,
