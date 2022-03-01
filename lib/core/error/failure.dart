@@ -75,7 +75,7 @@ class SignUpWithEmailAndPasswordFailure extends Failure {
 
   @override
   String getLocalizedMessage(BuildContext context) =>
-      SignUpfromCode(statusCode);
+      signUpfromCode(statusCode);
 }
 
 class LogInWithEmailAndPasswordFailure extends Failure {
@@ -87,7 +87,7 @@ class LogInWithEmailAndPasswordFailure extends Failure {
   List<Object> get props => [statusCode];
 
   @override
-  String getLocalizedMessage(BuildContext context) => LogInfromCode(statusCode);
+  String getLocalizedMessage(BuildContext context) => logInfromCode(statusCode);
 }
 
 class LogInWithGoogleFailure extends Failure {
@@ -100,7 +100,7 @@ class LogInWithGoogleFailure extends Failure {
 
   @override
   String getLocalizedMessage(BuildContext context) =>
-      LogInGooglefromCode(statusCode);
+      logInGooglefromCode(statusCode);
 }
 
 class LogOutFailure extends Failure {
@@ -110,7 +110,7 @@ class LogOutFailure extends Failure {
   String getLocalizedMessage(BuildContext context) => S.of(context).logOut;
 }
 
-String SignUpfromCode(String code) {
+String signUpfromCode(String code) {
   switch (code) {
     case 'invalid-email':
       return 'Email is not valid or badly formatted.';
@@ -127,7 +127,7 @@ String SignUpfromCode(String code) {
   }
 }
 
-String LogInfromCode(String code) {
+String logInfromCode(String code) {
   switch (code) {
     case 'invalid-email':
       return 'Email is not valid or badly formatted.';
@@ -142,7 +142,7 @@ String LogInfromCode(String code) {
   }
 }
 
-String LogInGooglefromCode(String code) {
+String logInGooglefromCode(String code) {
   switch (code) {
     case 'account-exists-with-different-credential':
       return 'Account exists with different credentials.';

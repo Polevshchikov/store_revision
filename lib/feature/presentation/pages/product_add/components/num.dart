@@ -7,12 +7,10 @@ class Num extends FormzInput<String, NumValidationError> {
 
   const Num.dirty([String value = '']) : super.dirty(value);
 
-  static final RegExp _serialNumRegExp = RegExp(r'[\d]{1,}$');
+  static final RegExp _numRegExp = RegExp('[0-9.,]');
 
   @override
   NumValidationError? validator(String? value) {
-    return _serialNumRegExp.hasMatch(value ?? '')
-        ? null
-        : NumValidationError.invalid;
+    return _numRegExp.hasMatch(value ?? '') ? null : NumValidationError.invalid;
   }
 }

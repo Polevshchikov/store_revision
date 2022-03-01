@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_revision/common/app_colors.dart';
-import 'package:store_revision/common/app_resources.dart';
 import 'package:store_revision/feature/presentation/pages/home/cubit/bottom_navigation_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/home/ui/utils/enum_navbar_items.dart';
 import 'package:store_revision/feature/presentation/pages/home/ui/utils/item_tab_widget.dart';
@@ -16,8 +14,8 @@ List<Widget> listBottomTabs(BuildContext context, int actionIndex) {
           .changeScreen(NavbarItems.achievements),
       actionIndex: actionIndex,
       childTab: actionIndex == 0
-          ? SvgPicture.asset(AppResources.meSelectedIcon)
-          : SvgPicture.asset(AppResources.meIcon),
+          ? const Icon(Icons.reviews)
+          : const Icon(Icons.reviews_outlined),
       tabWidth: tabWidth,
       colorBorder: actionIndex == 0 ? AppColors.mainColorApp : null,
     ),
@@ -26,8 +24,8 @@ List<Widget> listBottomTabs(BuildContext context, int actionIndex) {
           context.read<BottomNavigationCubit>().changeScreen(NavbarItems.forum),
       actionIndex: actionIndex,
       childTab: actionIndex == 1
-          ? SvgPicture.asset(AppResources.friendsSelectedIcon)
-          : SvgPicture.asset(AppResources.friendsIcon),
+          ? const Icon(Icons.archive)
+          : const Icon(Icons.archive_outlined),
       tabWidth: tabWidth,
       colorBorder: actionIndex == 1 ? AppColors.mainColorApp : null,
     ),

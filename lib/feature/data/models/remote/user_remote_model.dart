@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:store_revision/feature/domain/entities/product_entity.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';

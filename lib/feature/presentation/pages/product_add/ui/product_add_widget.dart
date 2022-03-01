@@ -1,12 +1,16 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/domain/entities/user_entity.dart';
 import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/cubit/product_add_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/product_add/ui/widgets/product_field_widget.dart';
+import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 
 class ProductAddWidget extends StatelessWidget {
   final RevisionEntity revision;
@@ -42,24 +46,64 @@ class ProductAddWidget extends StatelessWidget {
           child: Stack(
             children: [
               _ProductFormWidget(revisionId: revision.id),
-              Align(
+              const Align(
                 alignment: Alignment.topRight,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    primary: Color.fromARGB(205, 218, 87, 0),
-                  ),
-                  onPressed: () {},
-                  icon: Icon(Icons.qr_code_2_outlined),
-                  label: Text('Сканировать'),
-                ),
+                child: _QrScannerWidget(),
               )
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _QrScannerWidget extends StatefulWidget {
+  const _QrScannerWidget({Key? key}) : super(key: key);
+
+  @override
+  _QrScannerWidgetState createState() => _QrScannerWidgetState();
+}
+
+class _QrScannerWidgetState extends State<_QrScannerWidget> {
+  String qrCode = '';
+
+  Future<void> scanQRCode() async {
+    try {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Отменить',
+        true,
+        ScanMode.QR,
+      );
+
+      if (!mounted) return;
+
+      setState(() {
+        this.qrCode = qrCode;
+      });
+    } on PlatformException {
+      qrCode = 'Failed to get platform version.';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        primary: const Color.fromARGB(205, 218, 87, 0),
+      ),
+      onPressed: () async {
+        await scanQRCode();
+        if (qrCode != '-1' && qrCode.isNotEmpty) {
+          context.read<ProductAddCubit>().scannChanged(qrCode);
+        }
+      },
+      icon: const Icon(Icons.qr_code_2_outlined),
+      label: const Text('Сканировать'),
     );
   }
 }
@@ -106,72 +150,74 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductAddCubit, ProductAddState>(
-      builder: (context, state) {
-        return Column(
-          children: [
-            const SizedBox(height: 36),
-            TextFormField(
-              focusNode: focusName,
-              autofocus: true,
-              controller: _nameController,
-              textInputAction: TextInputAction.next,
-              key: const Key('productForm_nameInput_textField'),
-              onChanged: (name) =>
-                  context.read<ProductAddCubit>().nameChanged(name),
-              keyboardType: TextInputType.name,
-              onFieldSubmitted: (term) {
-                focusName.unfocus();
-                FocusScope.of(context).requestFocus(focusCost);
-              },
-              decoration: InputDecoration(
-                labelText: 'Название товара',
-                helperText: '',
-                errorText: state.name.invalid ? 'invalid name' : null,
-              ),
-            ),
-            TextFormField(
-              focusNode: focusCost,
-              controller: _costController,
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.datetime,
-              key: const Key('productForm_costInput_textField'),
-              onChanged: (cost) =>
-                  context.read<ProductAddCubit>().costChanged(cost),
-              onFieldSubmitted: (term) {
-                focusCost.unfocus();
-                FocusScope.of(context).requestFocus(focusCount);
-              },
-              decoration: InputDecoration(
-                labelText: 'Цена товара',
-                helperText: '',
-                errorText: state.cost.invalid ? 'invalid cost' : null,
-              ),
-            ),
-            TextFormField(
-              focusNode: focusCount,
-              controller: _countController,
-              keyboardType: TextInputType.number,
-              key: const Key('productForm_countInput_textField'),
-              onChanged: (count) =>
-                  context.read<ProductAddCubit>().countChanged(count),
-              onFieldSubmitted: (term) {
-                focusCount.unfocus();
-                FocusScope.of(context).requestFocus(focusName);
-              },
-              decoration: InputDecoration(
-                labelText: 'Количество товара',
-                helperText: '',
-                errorText: state.count.invalid ? 'invalid count' : null,
-              ),
-            ),
-            _CreateRevisionButton(
+    return Column(
+      children: [
+        const SizedBox(height: 30),
+        BlocBuilder<ProductAddCubit, ProductAddState>(
+          buildWhen: (previous, current) =>
+              ((previous.scannQr != current.scannQr) ||
+                  (previous.name != current.name)),
+          builder: (context, state) {
+            if (state.scannQr.isNotEmpty) {
+              context.read<ProductAddCubit>().nameChanged(state.scannQr);
+              _nameController.value = TextEditingValue(
+                text: state.scannQr,
+                selection: TextSelection.fromPosition(
+                    TextPosition(offset: state.scannQr.length)),
+              );
+            }
+            return ProductFieldWidget(
+              errorText: state.name.invalid ? 'Пустое поле' : null,
+              controllerWidget: _nameController,
+              focusWidget: focusName,
+              focusWidgetNext: focusCost,
+              keyWidget: const Key('productForm_nameInput_textField'),
+              labelText: 'Название товара',
+              typeField: TypeField.name,
+            );
+          },
+        ),
+        BlocBuilder<ProductAddCubit, ProductAddState>(
+          buildWhen: (previous, current) => previous.cost != current.cost,
+          builder: (context, state) {
+            return ProductFieldWidget(
+              errorText: state.cost.invalid ? 'Пустое поле' : null,
+              controllerWidget: _costController,
+              focusWidget: focusCost,
+              focusWidgetNext: focusCount,
+              keyWidget: const Key('productForm_costInput_textField'),
+              labelText: 'Цена товара',
+              typeField: TypeField.cost,
+            );
+          },
+        ),
+        BlocBuilder<ProductAddCubit, ProductAddState>(
+          buildWhen: (previous, current) => previous.count != current.count,
+          builder: (context, state) {
+            return ProductFieldWidget(
+              errorText: state.count.invalid ? 'Пустое поле' : null,
+              controllerWidget: _countController,
+              focusWidget: focusCount,
+              focusWidgetNext: focusName,
+              keyWidget: const Key('productForm_countInput_textField'),
+              labelText: 'Количество товара',
+              typeField: TypeField.count,
+            );
+          },
+        ),
+        BlocBuilder<ProductAddCubit, ProductAddState>(
+          buildWhen: (previous, current) => previous.status != current.status,
+          builder: (context, state) {
+            return _CreateProductButton(
               onTapButton: state.status.isValidated
                   ? () async {
                       await context.read<ProductAddCubit>().createProduct(
                             uid: user.uid,
                             revisionId: widget.revisionId,
                             userName: user.name,
+                            productName: _nameController.text,
+                            productCost: double.parse(_costController.text),
+                            productCount: double.parse(_countController.text),
                           );
                       focusCount.unfocus();
                       FocusScope.of(context).requestFocus(focusName);
@@ -180,18 +226,18 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
                       _countController.clear();
                     }
                   : null,
-            ),
-          ],
-        );
-      },
+            );
+          },
+        ),
+      ],
     );
   }
 }
 
-class _CreateRevisionButton extends StatelessWidget {
+class _CreateProductButton extends StatelessWidget {
   final VoidCallback? onTapButton;
 
-  const _CreateRevisionButton({
+  const _CreateProductButton({
     Key? key,
     required this.onTapButton,
   }) : super(key: key);
@@ -210,21 +256,24 @@ class _CreateRevisionButton extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      primary: Color.fromARGB(148, 196, 2, 2),
+                      primary: const Color.fromARGB(148, 196, 2, 2),
                     ),
-                    onPressed: () {},
-                    icon: Icon(Icons.close),
-                    label: Text('Закрыть'),
+                    onPressed: () {
+                      context.read<ChangeBodyToCubit>().changeToRevision();
+                      context.read<ProductAddCubit>().resetState();
+                    },
+                    icon: const Icon(Icons.close),
+                    label: const Text('Закрыть'),
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      primary: Color.fromARGB(147, 5, 146, 0),
+                      primary: const Color.fromARGB(147, 5, 146, 0),
                     ),
                     onPressed: onTapButton,
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                     label: const Text('PRODUCT'),
                   ),
                 ],

@@ -55,7 +55,7 @@ dependencies:
   cloud_firestore: ^3.1.8
   font_awesome_flutter: ^9.2.0
   uuid: ^3.0.5
-  # google_sign_in: ^5.2.3
+  flutter_barcode_scanner: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -83,8 +83,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  assets:
-    - assets/img/
+  # assets:
+  #   - assets/img/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

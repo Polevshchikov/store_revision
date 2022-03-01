@@ -33,7 +33,7 @@ import 'feature/domain/usecases/get_authenticated_user_usecase.dart' as _i26;
 import 'feature/domain/usecases/get_products_usecase.dart' as _i27;
 import 'feature/domain/usecases/get_revisions_usecase.dart' as _i28;
 import 'feature/domain/usecases/login_usecase.dart' as _i30;
-import 'feature/domain/usecases/logIn_with_google_usecase.dart' as _i29;
+import 'feature/domain/usecases/login_with_google_usecase.dart' as _i29;
 import 'feature/domain/usecases/logout_usecase.dart' as _i31;
 import 'feature/domain/usecases/singup_usecase.dart' as _i38;
 import 'feature/domain/usecases/upload_camera_image_usecase.dart' as _i16;

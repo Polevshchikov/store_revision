@@ -14,13 +14,22 @@ part 'product_add_state.dart';
 @injectable
 class ProductAddCubit extends Cubit<ProductAddState> {
   final CreateProductUseCase _createProductUseCase;
-  ProductAddCubit(this._createProductUseCase) : super(const ProductAddState());
+  ProductAddCubit(this._createProductUseCase)
+      : super(ProductAddState.initial());
+
+  void scannChanged(String value) {
+    emit(state.copyWith(scannQr: value));
+  }
 
   void costChanged(String value) {
     final cost = Num.dirty(value);
     emit(state.copyWith(
       cost: cost,
-      status: Formz.validate([cost]),
+      status: Formz.validate([
+        cost,
+        state.name,
+        state.count,
+      ]),
     ));
   }
 
@@ -28,7 +37,11 @@ class ProductAddCubit extends Cubit<ProductAddState> {
     final count = Num.dirty(value);
     emit(state.copyWith(
       count: count,
-      status: Formz.validate([count]),
+      status: Formz.validate([
+        count,
+        state.cost,
+        state.name,
+      ]),
     ));
   }
 
@@ -36,36 +49,41 @@ class ProductAddCubit extends Cubit<ProductAddState> {
     final name = Name.dirty(value);
     emit(state.copyWith(
       name: name,
-      status: Formz.validate([name]),
+      status: Formz.validate([
+        name,
+        state.cost,
+        state.count,
+      ]),
     ));
+  }
+
+  void resetState() {
+    emit(ProductAddState.initial());
   }
 
   Future<void> createProduct({
     required String uid,
     required String revisionId,
     required String? userName,
+    required String productName,
+    required double productCost,
+    required double productCount,
   }) async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final result = await _createProductUseCase.call(CreateProductParams(
       uid: uid,
       revisionId: revisionId,
-      name: state.name.value,
+      name: productName,
       userName: userName ?? '',
-      cost: state.cost.value,
-      count: state.count.value,
+      cost: productCost,
+      count: productCount,
     ));
     await result.fold((failure) async {
-      emit(state.copyWith(
-        failure: failure,
-        status: FormzStatus.submissionFailure,
-      ));
+      emit(ProductAddState.error(failure));
     }, (product) async {
-      emit(state.copyWith(
-          name: const Name.pure(),
-          cost: const Num.pure(),
-          count: const Num.pure(),
-          status: FormzStatus.submissionSuccess));
+      emit(ProductAddState.success());
+      resetState();
     });
   }
 }

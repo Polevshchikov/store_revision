@@ -5,8 +5,8 @@ class CreateProductParams extends Equatable {
   final String revisionId;
   final String name;
   final String userName;
-  final String cost;
-  final String count;
+  final double cost;
+  final double count;
 
   const CreateProductParams({
     required this.uid,

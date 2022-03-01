@@ -20,8 +20,8 @@ class CreateProductUseCase extends UseCase<void, CreateProductParams> {
       revisionId: params.revisionId,
       name: params.name,
       userName: params.userName,
-      cost: double.parse(params.cost),
-      count: double.parse(params.count),
+      cost: params.cost,
+      count: params.count,
     );
 
     return result.fold((failure) => Left(failure), (productRemote) async {

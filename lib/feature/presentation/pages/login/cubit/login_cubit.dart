@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/failure.dart';
-import 'package:store_revision/feature/domain/usecases/logIn_with_google_usecase.dart';
+import 'package:store_revision/feature/domain/usecases/login_with_google_usecase.dart';
 import 'package:store_revision/feature/domain/usecases/login_usecase.dart';
 import 'package:store_revision/feature/domain/usecases/params/login_params.dart';
 import 'package:store_revision/feature/domain/usecases/params/no_params.dart';
