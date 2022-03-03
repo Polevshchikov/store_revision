@@ -70,7 +70,7 @@ class UserRepositoryImpl implements UserRepository {
             .collection(FirestoreCollectionPath.users)
             .doc(uid)
             .update({
-          'revisions': FieldValue.arrayRemove([revisionId])
+          'revisions': FieldValue.arrayUnion([revisionId])
         });
       }
       return const Right(null);

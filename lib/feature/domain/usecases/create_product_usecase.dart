@@ -26,7 +26,7 @@ class CreateProductUseCase extends UseCase<void, CreateProductParams> {
 
     return result.fold((failure) => Left(failure), (productRemote) async {
       final result = await _revisionRepository.addProductRevision(
-          revisionId: params.revisionId, productId: productRemote.id);
+          revisionId: params.revisionId, product: productRemote);
 
       return result.fold(
           (failure) => Left(failure), (product) => const Right(null));

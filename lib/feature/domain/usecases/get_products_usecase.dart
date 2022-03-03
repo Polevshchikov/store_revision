@@ -16,6 +16,10 @@ class GetProductsUseCase
   @override
   Future<Either<Failure, List<ProductEntity>>> call(
       GetProductsParams params) async {
-    return _productRepository.getProducts(revisionId: params.revisionId);
+    final result =
+        await _productRepository.getProducts(revisionId: params.revisionId);
+
+    return result.fold(
+        (failure) => Left(failure), (products) => Right(products));
   }
 }

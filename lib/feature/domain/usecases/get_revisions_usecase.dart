@@ -14,6 +14,9 @@ class GetRevisionsUseCase extends UseCase<List<RevisionEntity>, NoParams> {
 
   @override
   Future<Either<Failure, List<RevisionEntity>>> call(NoParams params) async {
-    return _revisionRepository.getRevisions();
+    final result = await _revisionRepository.getRevisions();
+
+    return result.fold(
+        (failure) => Left(failure), (revisions) => Right(revisions));
   }
 }

@@ -11,6 +11,7 @@ import 'package:store_revision/feature/presentation/pages/authentication/bloc/au
 import 'package:store_revision/feature/presentation/pages/product_add/cubit/product_add_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/ui/widgets/product_field_widget.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/revision/cubit/revision_cubit.dart';
 
 class ProductAddWidget extends StatelessWidget {
   final RevisionEntity revision;
@@ -209,7 +210,7 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
           buildWhen: (previous, current) => previous.status != current.status,
           builder: (context, state) {
             return _CreateProductButton(
-              onTapButton: state.status.isValidated
+              onTapButtonCreate: state.status.isValidated
                   ? () async {
                       await context.read<ProductAddCubit>().createProduct(
                             uid: user.uid,
@@ -219,6 +220,9 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
                             productCost: double.parse(_costController.text),
                             productCount: double.parse(_countController.text),
                           );
+                      await context
+                          .read<RevisionCubit>()
+                          .getProducts(revisionId: widget.revisionId);
                       focusCount.unfocus();
                       FocusScope.of(context).requestFocus(focusName);
                       _nameController.clear();
@@ -226,6 +230,13 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
                       _countController.clear();
                     }
                   : null,
+              onTapButtonClose: () async {
+                await context
+                    .read<RevisionCubit>()
+                    .getProducts(revisionId: widget.revisionId);
+                context.read<ChangeBodyToCubit>().changeToRevision();
+                context.read<ProductAddCubit>().resetState();
+              },
             );
           },
         ),
@@ -235,11 +246,13 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
 }
 
 class _CreateProductButton extends StatelessWidget {
-  final VoidCallback? onTapButton;
+  final VoidCallback? onTapButtonCreate;
+  final VoidCallback? onTapButtonClose;
 
   const _CreateProductButton({
     Key? key,
-    required this.onTapButton,
+    required this.onTapButtonCreate,
+    required this.onTapButtonClose,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -258,10 +271,7 @@ class _CreateProductButton extends StatelessWidget {
                       ),
                       primary: const Color.fromARGB(148, 196, 2, 2),
                     ),
-                    onPressed: () {
-                      context.read<ChangeBodyToCubit>().changeToRevision();
-                      context.read<ProductAddCubit>().resetState();
-                    },
+                    onPressed: onTapButtonClose,
                     icon: const Icon(Icons.close),
                     label: const Text('Закрыть'),
                   ),
@@ -272,7 +282,7 @@ class _CreateProductButton extends StatelessWidget {
                       ),
                       primary: const Color.fromARGB(147, 5, 146, 0),
                     ),
-                    onPressed: onTapButton,
+                    onPressed: onTapButtonCreate,
                     icon: const Icon(Icons.add),
                     label: const Text('PRODUCT'),
                   ),

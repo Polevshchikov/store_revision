@@ -13,8 +13,8 @@ import 'package:store_revision/feature/presentation/pages/product_add/cubit/prod
 import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/revision_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/ui/revision_screen.dart';
-import 'package:store_revision/feature/presentation/pages/revision_active/cubit/revision_active_list_cubit.dart';
-import 'package:store_revision/feature/presentation/pages/revision_active/ui/revision_active_screen.dart';
+import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/revisions_active/ui/revisions_active_screen.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/cubit/sign_up_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/ui/sign_up_page.dart';
 import 'package:store_revision/injection.dart';

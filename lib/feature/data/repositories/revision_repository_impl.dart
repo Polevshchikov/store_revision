@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/data/components/firestore_collection_path.dart';
 import 'package:store_revision/feature/data/models/remote/user_remote_model.dart';
+import 'package:store_revision/feature/domain/entities/product_entity.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/domain/repositories/revision_repository.dart';
 import 'package:uuid/uuid.dart';
@@ -61,6 +62,7 @@ class RevisionRepositoryImpl implements RevisionRepository {
           .collection(FirestoreCollectionPath.revisions)
           .doc(revisionId)
           .delete();
+
       return const Right(null);
     } catch (_) {
       return const Left(UnknownFailure());
@@ -71,7 +73,7 @@ class RevisionRepositoryImpl implements RevisionRepository {
   @override
   Future<Either<Failure, List<RevisionEntity>>> getRevisions() async {
     try {
-      //  получить всех пользователей
+      //  получить все ревизии
       final document =
           await _firestore.collection(FirestoreCollectionPath.revisions).get();
       final allData = document.docs.map((doc) => doc.data()).toList();
@@ -88,7 +90,8 @@ class RevisionRepositoryImpl implements RevisionRepository {
   //  Add item id to revision list
   @override
   Future<Either<Failure, void>> addProductRevision(
-      {required String revisionId, required String productId}) async {
+      {required String revisionId, required ProductEntity product}) async {
+    final productId = product.id;
     try {
       DocumentSnapshot snap = await _firestore
           .collection(FirestoreCollectionPath.revisions)
@@ -103,6 +106,10 @@ class RevisionRepositoryImpl implements RevisionRepository {
             .update({
           'listProducts': FieldValue.arrayUnion([productId])
         });
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .update({'total': FieldValue.increment(product.total)});
       }
       return const Right(null);
     } catch (e) {
@@ -128,6 +135,34 @@ class RevisionRepositoryImpl implements RevisionRepository {
             .update({
           'listProducts': FieldValue.arrayRemove([productId])
         });
+      }
+      return const Right(null);
+    } catch (e) {
+      return const Left(UnknownFailure());
+    }
+  }
+
+  //  Open - Сlose revision
+  @override
+  Future<Either<Failure, void>> openCloseRevision(String revisionId) async {
+    try {
+      DocumentSnapshot snap = await _firestore
+          .collection(FirestoreCollectionPath.revisions)
+          .doc(revisionId)
+          .get();
+
+      final bool isClosed = (snap.data()! as dynamic)['isClosed'];
+
+      if (isClosed == false) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .update({'isClosed': true});
+      } else {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .update({'isClosed': false});
       }
       return const Right(null);
     } catch (e) {

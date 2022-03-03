@@ -15,17 +15,18 @@ class CreateRevisionUseCase extends UseCase<void, CreateRevisionParams> {
 
   @override
   Future<Either<Failure, void>> call(CreateRevisionParams params) async {
-    final result = await _revisionRepository.createRevision(
+    final resultCreate = await _revisionRepository.createRevision(
       uid: params.uid,
       name: params.name,
       description: params.description,
     );
 
-    return result.fold((failure) => Left(failure), (revisionRemote) async {
-      final result = await _userRepository.addRevisionUser(
+    return resultCreate.fold((failure) => Left(failure),
+        (revisionRemote) async {
+      final resultAddRevision = await _userRepository.addRevisionUser(
           uid: params.uid, revisionId: revisionRemote.id);
 
-      return result.fold(
+      return resultAddRevision.fold(
           (failure) => Left(failure), (revision) => Right(revision));
     });
   }

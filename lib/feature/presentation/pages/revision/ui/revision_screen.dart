@@ -68,19 +68,6 @@ class RevisionScreen extends StatelessWidget {
             ),
             centerTitle: false,
             actions: [
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  primary: Color.fromARGB(146, 187, 17, 144),
-                ),
-                onPressed: () {
-                  print('Закрыть ревизию');
-                },
-                icon: Icon(Icons.sim_card_download_outlined),
-                label: Text('Закрыть ревизию'),
-              ),
               SizedBox(width: 5),
             ],
           ),
@@ -124,47 +111,92 @@ class RevisionScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             itemCount: _products.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                width: double.infinity,
-                                margin: EdgeInsets.all(20),
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.green[400],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15.0)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.blue[500]!,
-                                      offset: const Offset(4, 4),
-                                      blurRadius: 15,
-                                      spreadRadius: 1,
+                              return Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    margin: EdgeInsets.all(20),
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green[400],
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.blue[500]!,
+                                          offset: const Offset(4, 4),
+                                          blurRadius: 15,
+                                          spreadRadius: 1,
+                                        ),
+                                        BoxShadow(
+                                          color: Colors.white,
+                                          offset: const Offset(-4, -4),
+                                          blurRadius: 15,
+                                          spreadRadius: 1,
+                                        ),
+                                      ],
                                     ),
-                                    BoxShadow(
-                                      color: Colors.white,
-                                      offset: const Offset(-4, -4),
-                                      blurRadius: 15,
-                                      spreadRadius: 1,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Название товара: ' +
+                                            _products[index].name),
+                                        SizedBox(height: 5),
+                                        Text('Дата записи : ' +
+                                            _products[index]
+                                                .datePublished
+                                                .toString()),
+                                        SizedBox(height: 5),
+                                        Text('Цена товара: ' +
+                                            _products[index].cost.toString()),
+                                        SizedBox(height: 5),
+                                        Text('Количество товара: ' +
+                                            _products[index].count.toString()),
+                                        SizedBox(height: 5),
+                                        Text('Итог: ' +
+                                            _products[index].total.toString()),
+                                        SizedBox(height: 5),
+                                        Text('Имя создателя : ' +
+                                            _products[index]
+                                                .userName
+                                                .toString()),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(_products[index].name),
-                                    SizedBox(height: 5),
-                                    Text(_products[index]
-                                        .datePublished
-                                        .toString()),
-                                    SizedBox(height: 5),
-                                    Text(_products[index].cost.toString()),
-                                    SizedBox(height: 5),
-                                    Text(_products[index].count.toString()),
-                                    SizedBox(height: 5),
-                                    Text(_products[index].total.toString()),
-                                    SizedBox(height: 5),
-                                    Text(_products[index].userName.toString()),
-                                  ],
-                                ),
+                                  ),
+                                  Positioned(
+                                    right: 30.0,
+                                    bottom: -10,
+                                    child: Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            primary:
+                                                Color.fromARGB(146, 189, 5, 14),
+                                          ),
+                                          onPressed: () async {
+                                            await context
+                                                .read<RevisionCubit>()
+                                                .deleteProducts(
+                                                    revisionId: revision.id,
+                                                    productId:
+                                                        _products[index].id);
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: const [
+                                              Text('Удалить товар'),
+                                              Icon(Icons.cancel_outlined)
+                                            ],
+                                          ),
+                                        )),
+                                  ),
+                                ],
                               );
                             });
                       }

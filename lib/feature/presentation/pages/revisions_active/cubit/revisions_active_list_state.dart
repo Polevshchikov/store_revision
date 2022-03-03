@@ -1,4 +1,4 @@
-part of 'revision_active_list_cubit.dart';
+part of 'revisions_active_list_cubit.dart';
 
 class RevisionActiveListState extends Equatable {
   final List<RevisionEntity> revisions;
