@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
+import 'package:store_revision/feature/presentation/pages/archive/cubit/archive_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/archive/ui/archive_screen.dart';
 import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
-import 'package:store_revision/feature/presentation/pages/forum/ui/forum_screen.dart';
 import 'package:store_revision/feature/presentation/pages/home/cubit/bottom_navigation_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/home/ui/home_screen.dart';
 import 'package:store_revision/feature/presentation/pages/login/cubit/login_cubit.dart';
@@ -88,5 +89,9 @@ final List<Widget> tabGroups = [
         param1: BlocProvider.of<AuthenticationBloc>(context)),
     child: const RevisionActiveScreen(),
   ),
-  const ForumScreen(),
+  BlocProvider(
+    create: (BuildContext context) => getIt<ArchiveCubit>(
+        param1: BlocProvider.of<AuthenticationBloc>(context)),
+    child: const ArchiveScreen(),
+  ),
 ];

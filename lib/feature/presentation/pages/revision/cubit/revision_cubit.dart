@@ -30,10 +30,10 @@ class RevisionCubit extends Cubit<RevisionState> {
   }
 
   Future<void> deleteProducts(
-      {required String revisionId, required String productId}) async {
+      {required String revisionId, required ProductEntity product}) async {
     emit(RevisionState.loading());
-    final result = await _deleteProductsUseCase.call(
-        DeleteProductParams(revisionId: revisionId, productId: productId));
+    final result = await _deleteProductsUseCase
+        .call(DeleteProductParams(revisionId: revisionId, product: product));
     emit(result.fold(
       (failure) => RevisionState.error(failure),
       (listProducts) => RevisionState.success(listProducts),

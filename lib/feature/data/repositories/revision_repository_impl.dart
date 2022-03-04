@@ -120,7 +120,8 @@ class RevisionRepositoryImpl implements RevisionRepository {
   //  Remove item from revision list
   @override
   Future<Either<Failure, void>> deleteProductRevision(
-      {required String revisionId, required String productId}) async {
+      {required String revisionId, required ProductEntity product}) async {
+    final productId = product.id;
     try {
       DocumentSnapshot snap = await _firestore
           .collection(FirestoreCollectionPath.revisions)
@@ -135,6 +136,10 @@ class RevisionRepositoryImpl implements RevisionRepository {
             .update({
           'listProducts': FieldValue.arrayRemove([productId])
         });
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .update({'total': FieldValue.increment(-product.total)});
       }
       return const Right(null);
     } catch (e) {

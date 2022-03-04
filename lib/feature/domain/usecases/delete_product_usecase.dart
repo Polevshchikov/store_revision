@@ -19,12 +19,12 @@ class DeleteProductsUseCase
   Future<Either<Failure, List<ProductEntity>>> call(
       DeleteProductParams params) async {
     final resultProduct = await _productRepository.daleteProduct(
-        revisionId: params.revisionId, productId: params.productId);
+        revisionId: params.revisionId, productId: params.product.id);
 
     return resultProduct.fold((failure) => Left(failure), (products) async {
       final resultRevisoionDelProd =
           await _revisionRepository.deleteProductRevision(
-              revisionId: params.revisionId, productId: params.productId);
+              revisionId: params.revisionId, product: params.product);
 
       return resultRevisoionDelProd.fold((failure) => Left(failure),
           (product) async {

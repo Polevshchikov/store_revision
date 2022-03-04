@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart';
 
 /// Всплывающая подсказка подтверждения удалить запись из списка
-void promptRemoveRevision({
+void promptRemove({
   required BuildContext context,
-  required String revisionId,
-  required String userId,
   required String title,
+  required Function onPressed,
 }) {
   showDialog(
       context: context,
@@ -25,10 +22,7 @@ void promptRemoveRevision({
                 children: [
                   TextButton(
                     onPressed: () {
-                      context.read<RevisionActiveListCubit>().deleteRevision(
-                            revisionId: revisionId,
-                            userId: userId,
-                          );
+                      onPressed();
                       Navigator.of(context).pop();
                     },
                     child: Text(

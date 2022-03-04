@@ -2,19 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:store_revision/core/navigation/main_navigation.dart';
+import 'package:store_revision/feature/domain/entities/user_entity.dart';
 import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/ui/widgets/button_add_revision.dart';
-import 'package:store_revision/feature/presentation/utils/prompt_remove_revision.dart';
+import 'package:store_revision/feature/presentation/utils/prompt_remove.dart';
 import 'package:store_revision/feature/presentation/utils/status.dart';
 
-class RevisionActiveScreen extends StatelessWidget {
+class RevisionActiveScreen extends StatefulWidget {
   const RevisionActiveScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<RevisionActiveScreen> createState() => _RevisionActiveScreenState();
+}
+
+class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
+  late RevisionActiveListCubit _revisionActiveListCubit;
+  late UserEntity user;
+  @override
+  void initState() {
     context.read<RevisionActiveListCubit>().getRevisions();
-    final user = BlocProvider.of<AuthenticationBloc>(context).state.user;
+    _revisionActiveListCubit =
+        BlocProvider.of<RevisionActiveListCubit>(context);
+    user = BlocProvider.of<AuthenticationBloc>(context).state.user;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
@@ -29,7 +44,7 @@ class RevisionActiveScreen extends StatelessWidget {
         children: [
           RefreshIndicator(
             onRefresh: () async {
-              await context.read<RevisionActiveListCubit>().getRevisions();
+              await _revisionActiveListCubit.getRevisions();
             },
             child:
                 BlocBuilder<RevisionActiveListCubit, RevisionActiveListState>(
@@ -50,7 +65,7 @@ class RevisionActiveScreen extends StatelessWidget {
                 final revisions = state.revisions;
 
                 return ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 35),
+                    padding: const EdgeInsets.only(top: 35),
                     itemCount: revisions.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
@@ -63,7 +78,8 @@ class RevisionActiveScreen extends StatelessWidget {
                               context,
                               MainNavigationRouteNames.revision,
                               arguments: revisions[index],
-                            );
+                            ).then(
+                                (_) => _revisionActiveListCubit.getRevisions());
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 40.0),
@@ -97,11 +113,17 @@ class RevisionActiveScreen extends StatelessWidget {
                                         SlidableAction(
                                           flex: 2,
                                           onPressed: (context) {
-                                            promptRemoveRevision(
+                                            promptRemove(
                                                 context: context,
-                                                revisionId: revisions[index].id,
-                                                userId: user.uid,
-                                                title: revisions[index].name);
+                                                title: revisions[index].name,
+                                                onPressed: () {
+                                                  _revisionActiveListCubit
+                                                      .deleteRevision(
+                                                    revisionId:
+                                                        revisions[index].id,
+                                                    userId: user.uid,
+                                                  );
+                                                });
                                           },
                                           backgroundColor:
                                               const Color(0xFFFE4A49),
@@ -112,11 +134,11 @@ class RevisionActiveScreen extends StatelessWidget {
                                         SlidableAction(
                                           flex: 3,
                                           onPressed: (context) {
-                                            promptRemoveRevision(
-                                                context: context,
-                                                revisionId: revisions[index].id,
-                                                userId: user.uid,
-                                                title: revisions[index].name);
+                                            // promptRemoveRevision(
+                                            //     context: context,
+                                            //     revisionId: revisions[index].id,
+                                            //     userId: user.uid,
+                                            //     title: revisions[index].name);
                                           },
                                           backgroundColor:
                                               const Color(0xFF21B7CA),

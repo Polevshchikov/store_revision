@@ -5,15 +5,29 @@ import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/ui/product_add_widget.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/revision_cubit.dart';
+import 'package:store_revision/feature/presentation/utils/prompt_remove.dart';
 import 'package:store_revision/feature/presentation/utils/status.dart';
 
-class RevisionScreen extends StatelessWidget {
+class RevisionScreen extends StatefulWidget {
   final RevisionEntity revision;
   const RevisionScreen({Key? key, required this.revision}) : super(key: key);
 
   @override
+  State<RevisionScreen> createState() => _RevisionScreenState();
+}
+
+class _RevisionScreenState extends State<RevisionScreen> {
+  late RevisionCubit _revisionCubit;
+
+  @override
+  void initState() {
+    context.read<RevisionCubit>().getProducts(revisionId: widget.revision.id);
+    _revisionCubit = BlocProvider.of<RevisionCubit>(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    context.read<RevisionCubit>().getProducts(revisionId: revision.id);
     return BlocBuilder<ChangeBodyToCubit, ChangeBodyToState>(
       builder: (context, changeBodytate) {
         return Scaffold(
@@ -64,7 +78,7 @@ class RevisionScreen extends StatelessWidget {
               : null,
           appBar: AppBar(
             title: Text(
-              revision.name,
+              widget.revision.name,
             ),
             centerTitle: false,
             actions: [
@@ -86,9 +100,8 @@ class RevisionScreen extends StatelessWidget {
                 children: [
                   RefreshIndicator(
                     onRefresh: () async {
-                      await context
-                          .read<RevisionCubit>()
-                          .getProducts(revisionId: revision.id);
+                      await _revisionCubit.getProducts(
+                          revisionId: widget.revision.id);
                     },
                     child: BlocBuilder<RevisionCubit, RevisionState>(
                         builder: (BuildContext context, RevisionState state) {
@@ -179,13 +192,17 @@ class RevisionScreen extends StatelessWidget {
                                             primary:
                                                 Color.fromARGB(146, 189, 5, 14),
                                           ),
-                                          onPressed: () async {
-                                            await context
-                                                .read<RevisionCubit>()
-                                                .deleteProducts(
-                                                    revisionId: revision.id,
-                                                    productId:
-                                                        _products[index].id);
+                                          onPressed: () {
+                                            promptRemove(
+                                                context: context,
+                                                title: _products[index].name,
+                                                onPressed: () {
+                                                  _revisionCubit.deleteProducts(
+                                                      revisionId:
+                                                          widget.revision.id,
+                                                      product:
+                                                          _products[index]);
+                                                });
                                           },
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
@@ -206,7 +223,7 @@ class RevisionScreen extends StatelessWidget {
                   ),
                   (changeBodytate is ShowRevisionState)
                       ? const SizedBox.shrink()
-                      : ProductAddWidget(revision: revision),
+                      : ProductAddWidget(revision: widget.revision),
                 ],
               );
             }),

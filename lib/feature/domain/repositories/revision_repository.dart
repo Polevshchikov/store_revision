@@ -24,5 +24,5 @@ abstract class RevisionRepository {
       {required String revisionId, required ProductEntity product});
 
   Future<Either<Failure, void>> deleteProductRevision(
-      {required String revisionId, required String productId});
+      {required String revisionId, required ProductEntity product});
 }

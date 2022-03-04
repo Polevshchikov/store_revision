@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class ForumScreen extends StatelessWidget {
-  const ForumScreen({Key? key}) : super(key: key);
+class ArchiveScreen extends StatelessWidget {
+  const ArchiveScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
