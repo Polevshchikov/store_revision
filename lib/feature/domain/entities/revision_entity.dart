@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 class RevisionEntity extends Equatable {
   final String id;
@@ -7,7 +8,7 @@ class RevisionEntity extends Equatable {
   final String description;
   final List<String> listTrusted;
   final List<String> listProducts;
-  final DateTime? date;
+  final DateTime date;
   final bool isClosed;
   final double total;
 
@@ -24,14 +25,14 @@ class RevisionEntity extends Equatable {
   });
 
   /// Empty user which represents an unauthenticated user.
-  static const empty = RevisionEntity(
+  static final empty = RevisionEntity(
     id: '',
     uid: '',
     name: '',
     description: '',
-    listTrusted: [],
-    listProducts: [],
-    date: null,
+    listTrusted: const [],
+    listProducts: const [],
+    date: DateTime.utc(2022),
     isClosed: false,
     total: 0,
   );
@@ -40,6 +41,7 @@ class RevisionEntity extends Equatable {
   List<Object> get props => [
         id,
         uid,
+        date,
         name,
         description,
         listTrusted,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:store_revision/common/app_colors.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/ui/product_add_widget.dart';
@@ -158,9 +159,9 @@ class _RevisionScreenState extends State<RevisionScreen> {
                                             _products[index].name),
                                         SizedBox(height: 5),
                                         Text('Дата записи : ' +
-                                            _products[index]
-                                                .datePublished
-                                                .toString()),
+                                            DateFormat('dd.MM.yyyy').format(
+                                                _products[index]
+                                                    .datePublished)),
                                         SizedBox(height: 5),
                                         Text('Цена товара: ' +
                                             _products[index].cost.toString()),
@@ -169,7 +170,9 @@ class _RevisionScreenState extends State<RevisionScreen> {
                                             _products[index].count.toString()),
                                         SizedBox(height: 5),
                                         Text('Итог: ' +
-                                            _products[index].total.toString()),
+                                            _products[index]
+                                                .total
+                                                .toStringAsFixed(2)),
                                         SizedBox(height: 5),
                                         Text('Имя создателя : ' +
                                             _products[index]
@@ -193,9 +196,10 @@ class _RevisionScreenState extends State<RevisionScreen> {
                                                 Color.fromARGB(146, 189, 5, 14),
                                           ),
                                           onPressed: () {
-                                            promptRemove(
+                                            promptDialog(
                                                 context: context,
-                                                title: _products[index].name,
+                                                dialog:
+                                                    'Вы действительно хотите удалить товар ${_products[index].name} ?',
                                                 onPressed: () {
                                                   _revisionCubit.deleteProducts(
                                                       revisionId:

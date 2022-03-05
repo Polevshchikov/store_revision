@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 /// Всплывающая подсказка подтверждения удалить запись из списка
-void promptRemove({
+void promptDialog({
   required BuildContext context,
-  required String title,
+  required String dialog,
   required Function onPressed,
 }) {
   showDialog(
@@ -12,7 +12,7 @@ void promptRemove({
         return AlertDialog(
             backgroundColor: Colors.white,
             title: Text(
-              'Вы уверены что хотите удалить $title ?',
+              dialog,
               style: TextStyle(
                 color: Colors.black,
               ),

@@ -182,7 +182,7 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
           buildWhen: (previous, current) => previous.cost != current.cost,
           builder: (context, state) {
             return ProductFieldWidget(
-              errorText: state.cost.invalid ? 'Пустое поле' : null,
+              errorText: state.cost.invalid ? 'Некорректно указана цена' : null,
               controllerWidget: _costController,
               focusWidget: focusCost,
               focusWidgetNext: focusCount,
@@ -196,7 +196,8 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
           buildWhen: (previous, current) => previous.count != current.count,
           builder: (context, state) {
             return ProductFieldWidget(
-              errorText: state.count.invalid ? 'Пустое поле' : null,
+              errorText:
+                  state.count.invalid ? 'Некорректно указано количество' : null,
               controllerWidget: _countController,
               focusWidget: focusCount,
               focusWidgetNext: focusName,
@@ -217,8 +218,10 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
                             revisionId: widget.revisionId,
                             userName: user.name,
                             productName: _nameController.text,
-                            productCost: double.parse(_costController.text),
-                            productCount: double.parse(_countController.text),
+                            productCost: double.parse(_costController.text
+                                .replaceAll(RegExp(','), '.')),
+                            productCount: double.parse(_countController.text
+                                .replaceAll(RegExp(','), '.')),
                           );
                       await context
                           .read<RevisionCubit>()

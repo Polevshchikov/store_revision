@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:store_revision/core/navigation/main_navigation.dart';
 import 'package:store_revision/feature/domain/entities/user_entity.dart';
 import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
@@ -113,9 +114,10 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                         SlidableAction(
                                           flex: 2,
                                           onPressed: (context) {
-                                            promptRemove(
+                                            promptDialog(
                                                 context: context,
-                                                title: revisions[index].name,
+                                                dialog:
+                                                    'Вы действительно хотите удалить товар ${revisions[index].name} ?',
                                                 onPressed: () {
                                                   _revisionActiveListCubit
                                                       .deleteRevision(
@@ -163,12 +165,13 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                               revisions[index].name),
                                           SizedBox(height: 5),
                                           Text('Дата: ' +
-                                              revisions[index].date.toString()),
+                                              DateFormat('dd.MM.yyyy').format(
+                                                  revisions[index].date)),
                                           SizedBox(height: 5),
                                           Text('Описание: ' +
                                               revisions[index].description),
                                           SizedBox(height: 5),
-                                          Text('Количество товара: ' +
+                                          Text('Количество наименований: ' +
                                               revisions[index]
                                                   .listProducts
                                                   .length
@@ -182,7 +185,7 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                           Text('Общая сумма: ' +
                                               revisions[index]
                                                   .total
-                                                  .toString()),
+                                                  .toStringAsFixed(2)),
                                         ],
                                       ),
                                     ),
@@ -199,8 +202,8 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                       primary:
                                           Color.fromARGB(146, 187, 17, 144),
                                     ),
-                                    onPressed: () async {
-                                      await context
+                                    onPressed: () {
+                                      context
                                           .read<RevisionActiveListCubit>()
                                           .closeRevision(
                                               revisionId: revisions[index].id);

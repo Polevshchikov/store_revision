@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart' as _i10;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i15;
 
-import 'core/modules/local_module.dart' as _i45;
+import 'core/modules/local_module.dart' as _i46;
 import 'feature/data/repositories/authentication_repository_impl.dart' as _i21;
 import 'feature/data/repositories/file_repository_impl.dart' as _i6;
 import 'feature/data/repositories/product_repository_impl.dart' as _i12;
@@ -40,11 +40,12 @@ import 'feature/domain/usecases/open_close_revision_usecase.dart' as _i34;
 import 'feature/domain/usecases/singup_usecase.dart' as _i40;
 import 'feature/domain/usecases/upload_camera_image_usecase.dart' as _i16;
 import 'feature/domain/usecases/upload_file_usecase.dart' as _i17;
+import 'feature/presentation/pages/archive/cubit/archive_cubit.dart' as _i41;
 import 'feature/presentation/pages/authentication/bloc/authentication_bloc.dart'
-    as _i41;
+    as _i42;
 import 'feature/presentation/pages/home/cubit/bottom_navigation_cubit.dart'
     as _i3;
-import 'feature/presentation/pages/login/cubit/login_cubit.dart' as _i43;
+import 'feature/presentation/pages/login/cubit/login_cubit.dart' as _i44;
 import 'feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart'
     as _i33;
 import 'feature/presentation/pages/product_add/cubit/product_add_cubit.dart'
@@ -55,9 +56,9 @@ import 'feature/presentation/pages/revision/cubit/revision_cubit.dart' as _i37;
 import 'feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart'
     as _i36;
 import 'feature/presentation/pages/settings/language/bloc/language_bloc.dart'
-    as _i42;
+    as _i43;
 import 'feature/presentation/pages/sign_up/cubit/sign_up_cubit.dart'
-    as _i44; // ignore_for_file: unnecessary_lambdas
+    as _i45; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -125,17 +126,19 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       () => _i39.SettingRepositoryImpl(get<_i15.SharedPreferences>()));
   gh.factory<_i40.SignupUseCase>(
       () => _i40.SignupUseCase(get<_i20.AuthenticationRepository>()));
-  gh.singleton<_i41.AuthenticationBloc>(_i41.AuthenticationBloc(
+  gh.factory<_i41.ArchiveCubit>(() => _i41.ArchiveCubit(
+      get<_i29.GetRevisionsUseCase>(), get<_i34.OpenCloseRevisionUseCase>()));
+  gh.singleton<_i42.AuthenticationBloc>(_i42.AuthenticationBloc(
       get<_i32.LogoutUseCase>(),
       get<_i7.FirebaseAuth>(),
       get<_i27.GetAuthenticatedUserUseCase>()));
-  gh.factory<_i42.LanguageBloc>(
-      () => _i42.LanguageBloc(get<_i38.SettingsRepository>()));
-  gh.factory<_i43.LoginCubit>(() => _i43.LoginCubit(get<_i31.LoginUseCase>(),
-      get<_i41.AuthenticationBloc>(), get<_i30.LogInWithGoogleUseCase>()));
-  gh.factory<_i44.SignUpCubit>(() => _i44.SignUpCubit(
-      get<_i40.SignupUseCase>(), get<_i41.AuthenticationBloc>()));
+  gh.factory<_i43.LanguageBloc>(
+      () => _i43.LanguageBloc(get<_i38.SettingsRepository>()));
+  gh.factory<_i44.LoginCubit>(() => _i44.LoginCubit(get<_i31.LoginUseCase>(),
+      get<_i42.AuthenticationBloc>(), get<_i30.LogInWithGoogleUseCase>()));
+  gh.factory<_i45.SignUpCubit>(() => _i45.SignUpCubit(
+      get<_i40.SignupUseCase>(), get<_i42.AuthenticationBloc>()));
   return get;
 }
 
-class _$LocalModule extends _i45.LocalModule {}
+class _$LocalModule extends _i46.LocalModule {}
