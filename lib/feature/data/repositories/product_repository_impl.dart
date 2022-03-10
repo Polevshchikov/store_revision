@@ -51,7 +51,7 @@ class ProductRepositoryImpl implements ProductRepository {
     required String name,
     required String userName,
     required double cost,
-    required double count,
+    required double quantity,
   }) async {
     try {
       String productId = const Uuid().v1(); // creates unique id based on time,
@@ -62,8 +62,8 @@ class ProductRepositoryImpl implements ProductRepository {
         userName: userName,
         datePublished: DateTime.now(),
         cost: cost,
-        count: count,
-        total: cost * count,
+        quantity: quantity,
+        total: cost * quantity,
       );
 
       _firestore

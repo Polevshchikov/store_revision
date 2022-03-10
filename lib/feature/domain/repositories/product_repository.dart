@@ -11,7 +11,7 @@ abstract class ProductRepository {
     required String name,
     required String userName,
     required double cost,
-    required double count,
+    required double quantity,
   });
 
   Future<Either<Failure, void>> editProduct();

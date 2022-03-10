@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/cubit/product_add_cubit.dart';
 
-enum TypeField { name, cost, count }
+enum TypeField { name, cost, quantity }
 
 class ProductFieldWidget extends StatelessWidget {
   final FocusNode focusWidget;
@@ -32,20 +32,21 @@ class ProductFieldWidget extends StatelessWidget {
       textInputAction: TextInputAction.next,
       key: keyWidget,
       inputFormatters:
-          (typeField == TypeField.cost || typeField == TypeField.count)
+          (typeField == TypeField.cost || typeField == TypeField.quantity)
               ? [
                   FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
                 ]
               : null,
       keyboardType:
-          (typeField == TypeField.cost || typeField == TypeField.count)
+          (typeField == TypeField.cost || typeField == TypeField.quantity)
               ? TextInputType.datetime
               : TextInputType.name,
       onChanged: typeField == TypeField.name
           ? (name) => context.read<ProductAddCubit>().nameChanged(name)
           : typeField == TypeField.cost
               ? (cost) => context.read<ProductAddCubit>().costChanged(cost)
-              : (count) => context.read<ProductAddCubit>().countChanged(count),
+              : (quantity) =>
+                  context.read<ProductAddCubit>().quantityChanged(quantity),
       onFieldSubmitted: (term) {
         focusWidget.unfocus();
         FocusScope.of(context).requestFocus(focusWidgetNext);

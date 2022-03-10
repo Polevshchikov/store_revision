@@ -28,17 +28,17 @@ class ProductAddCubit extends Cubit<ProductAddState> {
       status: Formz.validate([
         cost,
         state.name,
-        state.count,
+        state.quantity,
       ]),
     ));
   }
 
-  void countChanged(String value) {
-    final count = Num.dirty(value);
+  void quantityChanged(String value) {
+    final quantity = Num.dirty(value);
     emit(state.copyWith(
-      count: count,
+      quantity: quantity,
       status: Formz.validate([
-        count,
+        quantity,
         state.cost,
         state.name,
       ]),
@@ -52,7 +52,7 @@ class ProductAddCubit extends Cubit<ProductAddState> {
       status: Formz.validate([
         name,
         state.cost,
-        state.count,
+        state.quantity,
       ]),
     ));
   }
@@ -67,7 +67,7 @@ class ProductAddCubit extends Cubit<ProductAddState> {
     required String? userName,
     required String productName,
     required double productCost,
-    required double productCount,
+    required double productQuantity,
   }) async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
@@ -77,7 +77,7 @@ class ProductAddCubit extends Cubit<ProductAddState> {
       name: productName,
       userName: userName ?? '',
       cost: productCost,
-      count: productCount,
+      quantity: productQuantity,
     ));
     await result.fold((failure) async {
       emit(ProductAddState.error(failure));

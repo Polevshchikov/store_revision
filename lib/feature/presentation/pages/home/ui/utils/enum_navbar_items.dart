@@ -1,4 +1,5 @@
 enum NavbarItems {
-  achievements,
-  forum,
+  archive,
+  active,
+  pdf,
 }

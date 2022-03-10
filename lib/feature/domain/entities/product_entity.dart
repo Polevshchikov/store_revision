@@ -4,7 +4,7 @@ class ProductEntity extends Equatable {
   final String id;
   final String uid;
   final double cost;
-  final double count;
+  final double quantity;
   final double total;
   final String name;
   final DateTime datePublished;
@@ -14,7 +14,7 @@ class ProductEntity extends Equatable {
     required this.id,
     required this.uid,
     required this.cost, //  цена
-    required this.count, //  количество
+    required this.quantity, //  количество
     required this.total, // итог
     required this.name,
     required this.userName,
@@ -26,7 +26,7 @@ class ProductEntity extends Equatable {
         id,
         uid,
         cost,
-        count,
+        quantity,
         total,
         name,
         userName,

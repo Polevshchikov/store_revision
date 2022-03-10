@@ -10,10 +10,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
         builder: (context, state) {
-      if (state is BottomNavigationAchievements) {
+      if (state is BottomNavigationArchive) {
         return BuildHomePage(currentIndex: state.itemIndex);
       }
-      if (state is BottomNavigationProfile) {
+      if (state is BottomNavigationActive) {
+        return BuildHomePage(currentIndex: state.itemIndex);
+      }
+      if (state is BottomNavigationPdf) {
         return BuildHomePage(currentIndex: state.itemIndex);
       }
       return const BuildHomePage(currentIndex: 0);

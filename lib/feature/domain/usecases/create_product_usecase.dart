@@ -21,7 +21,7 @@ class CreateProductUseCase extends UseCase<void, CreateProductParams> {
       name: params.name,
       userName: params.userName,
       cost: params.cost,
-      count: params.count,
+      quantity: params.quantity,
     );
 
     return result.fold((failure) => Left(failure), (productRemote) async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Всплывающая подсказка подтверждения удалить запись из списка
+/// Всплывающая подсказка подтверждения об изменении записи из списка
 void promptDialog({
   required BuildContext context,
   required String dialog,
@@ -13,7 +13,7 @@ void promptDialog({
             backgroundColor: Colors.white,
             title: Text(
               dialog,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
               ),
             ),
@@ -25,7 +25,7 @@ void promptDialog({
                       onPressed();
                       Navigator.of(context).pop();
                     },
-                    child: Text(
+                    child: const Text(
                       'Да',
                       style: TextStyle(
                         color: Colors.black,
@@ -34,7 +34,7 @@ void promptDialog({
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(
+                    child: const Text(
                       'Нет',
                       style: TextStyle(
                         color: Colors.black,

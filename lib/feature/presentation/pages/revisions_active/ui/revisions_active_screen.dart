@@ -52,13 +52,13 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                     builder:
                         (BuildContext context, RevisionActiveListState state) {
               if (state.status == Status.waiting) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
               if (state.status == Status.success && state.revisions.isEmpty) {
-                return Text('ПУСТО!!');
+                return const Text('ПУСТО!!');
               }
 
               if (state.status == Status.success &&
@@ -88,17 +88,17 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                               clipBehavior: Clip.none,
                               children: [
                                 DecoratedBox(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black,
-                                        offset: const Offset(4, 4),
+                                        offset: Offset(4, 4),
                                         blurRadius: 15,
                                         spreadRadius: 1,
                                       ),
                                       BoxShadow(
                                         color: Colors.white,
-                                        offset: const Offset(-4, -4),
+                                        offset: Offset(-4, -4),
                                         blurRadius: 15,
                                         spreadRadius: 1,
                                       ),
@@ -109,7 +109,7 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                     startActionPane: ActionPane(
                                       extentRatio: 0.6,
                                       dragDismissible: false,
-                                      motion: ScrollMotion(),
+                                      motion: const ScrollMotion(),
                                       children: [
                                         SlidableAction(
                                           flex: 2,
@@ -153,7 +153,7 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                     child: Container(
                                       width: double.infinity,
                                       padding: const EdgeInsets.all(12.0),
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color:
                                             Color.fromRGBO(236, 236, 236, 0.8),
                                       ),
@@ -163,25 +163,25 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                         children: [
                                           Text('Название: ' +
                                               revisions[index].name),
-                                          SizedBox(height: 5),
+                                          const SizedBox(height: 5),
                                           Text('Дата: ' +
                                               DateFormat('dd.MM.yyyy').format(
                                                   revisions[index].date)),
-                                          SizedBox(height: 5),
+                                          const SizedBox(height: 5),
                                           Text('Описание: ' +
                                               revisions[index].description),
-                                          SizedBox(height: 5),
+                                          const SizedBox(height: 5),
                                           Text('Количество наименований: ' +
                                               revisions[index]
                                                   .listProducts
                                                   .length
                                                   .toString()),
-                                          SizedBox(height: 5),
+                                          const SizedBox(height: 5),
                                           Text('Статус: ' +
                                               revisions[index]
                                                   .isClosed
                                                   .toString()),
-                                          SizedBox(height: 5),
+                                          const SizedBox(height: 5),
                                           Text('Общая сумма: ' +
                                               revisions[index]
                                                   .total
@@ -199,8 +199,8 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(15),
                                       ),
-                                      primary:
-                                          Color.fromARGB(146, 187, 17, 144),
+                                      primary: const Color.fromARGB(
+                                          146, 187, 17, 144),
                                     ),
                                     onPressed: () {
                                       context
@@ -208,9 +208,9 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                                           .closeRevision(
                                               revisionId: revisions[index].id);
                                     },
-                                    icon:
-                                        Icon(Icons.sim_card_download_outlined),
-                                    label: Text('Закрыть ревизию'),
+                                    icon: const Icon(
+                                        Icons.sim_card_download_outlined),
+                                    label: const Text('Закрыть ревизию'),
                                   ),
                                 ),
                               ],
@@ -220,7 +220,8 @@ class _RevisionActiveScreenState extends State<RevisionActiveScreen> {
                       );
                     });
               }
-              return Text('AppLocalizations.of(context).screenInitialization');
+              return const Text(
+                  'AppLocalizations.of(context).screenInitialization');
             }),
           ),
           const Align(

@@ -6,7 +6,7 @@ class CreateProductParams extends Equatable {
   final String name;
   final String userName;
   final double cost;
-  final double count;
+  final double quantity;
 
   const CreateProductParams({
     required this.uid,
@@ -14,7 +14,7 @@ class CreateProductParams extends Equatable {
     required this.name,
     required this.userName,
     required this.cost,
-    required this.count,
+    required this.quantity,
   });
 
   @override
@@ -24,6 +24,6 @@ class CreateProductParams extends Equatable {
         name,
         userName,
         cost,
-        count,
+        quantity,
       ];
 }

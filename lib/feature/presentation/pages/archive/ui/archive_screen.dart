@@ -28,7 +28,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       // decoration: const BoxDecoration(
       //   gradient: LinearGradient(colors: [
       //     Color.fromARGB(255, 36, 153, 199),
@@ -45,13 +45,13 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
         child: BlocBuilder<ArchiveCubit, ArchiveState>(
             builder: (BuildContext context, ArchiveState state) {
           if (state.status == Status.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
           if (state.status == Status.success && state.revisions.isEmpty) {
-            return Text('ПУСТО!!');
+            return const Text('ПУСТО!!');
           }
 
           if (state.status == Status.success && state.revisions.isNotEmpty) {
@@ -76,17 +76,17 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 40.0),
                         child: DecoratedBox(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black,
-                                offset: const Offset(4, 4),
+                                offset: Offset(4, 4),
                                 blurRadius: 15,
                                 spreadRadius: 1,
                               ),
                               BoxShadow(
                                 color: Colors.white,
-                                offset: const Offset(-4, -4),
+                                offset: Offset(-4, -4),
                                 blurRadius: 15,
                                 spreadRadius: 1,
                               ),
@@ -97,7 +97,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                             startActionPane: ActionPane(
                               extentRatio: 0.6,
                               dragDismissible: false,
-                              motion: ScrollMotion(),
+                              motion: const ScrollMotion(),
                               children: [
                                 SlidableAction(
                                   onPressed: (context) {
@@ -111,7 +111,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                         });
                                   },
                                   backgroundColor:
-                                      Color.fromARGB(255, 30, 172, 94),
+                                      const Color.fromARGB(255, 30, 172, 94),
                                   foregroundColor: Colors.white,
                                   icon: Icons.delete,
                                   label: 'Удалить',
@@ -134,30 +134,30 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                             child: Container(
                               width: double.infinity,
                               padding: const EdgeInsets.all(12.0),
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color.fromRGBO(236, 236, 236, 0.8),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('Название: ' + revisions[index].name),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text('Дата: ' +
                                       DateFormat('dd.MM.yyyy')
                                           .format(revisions[index].date)),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text('Описание: ' +
                                       revisions[index].description),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text('Количество наименований: ' +
                                       revisions[index]
                                           .listProducts
                                           .length
                                           .toString()),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text('Статус: ' +
                                       revisions[index].isClosed.toString()),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text('Общая сумма: ' +
                                       revisions[index]
                                           .total
@@ -172,7 +172,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                   );
                 });
           }
-          return Text('AppLocalizations.of(context).screenInitialization');
+          return const Text(
+              'AppLocalizations.of(context).screenInitialization');
         }),
       ),
     );

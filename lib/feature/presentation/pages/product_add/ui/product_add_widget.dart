@@ -121,19 +121,19 @@ class _ProductFormWidget extends StatefulWidget {
 class _ProductFormWidgetState extends State<_ProductFormWidget> {
   late TextEditingController _nameController;
   late TextEditingController _costController;
-  late TextEditingController _countController;
+  late TextEditingController _quantityController;
   late UserEntity user;
   late FocusNode focusName;
   late FocusNode focusCost;
-  late FocusNode focusCount;
+  late FocusNode focusQuantity;
   @override
   void initState() {
     focusName = FocusNode();
     focusCost = FocusNode();
-    focusCount = FocusNode();
+    focusQuantity = FocusNode();
     _nameController = TextEditingController();
     _costController = TextEditingController();
-    _countController = TextEditingController();
+    _quantityController = TextEditingController();
     user = BlocProvider.of<AuthenticationBloc>(context).state.user;
     super.initState();
   }
@@ -142,10 +142,10 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
   void dispose() {
     _nameController.dispose();
     _costController.dispose();
-    _countController.dispose();
+    _quantityController.dispose();
     focusName.dispose();
     focusCost.dispose();
-    focusCount.dispose();
+    focusQuantity.dispose();
     super.dispose();
   }
 
@@ -185,7 +185,7 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
               errorText: state.cost.invalid ? 'Некорректно указана цена' : null,
               controllerWidget: _costController,
               focusWidget: focusCost,
-              focusWidgetNext: focusCount,
+              focusWidgetNext: focusQuantity,
               keyWidget: const Key('productForm_costInput_textField'),
               labelText: 'Цена товара',
               typeField: TypeField.cost,
@@ -193,17 +193,19 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
           },
         ),
         BlocBuilder<ProductAddCubit, ProductAddState>(
-          buildWhen: (previous, current) => previous.count != current.count,
+          buildWhen: (previous, current) =>
+              previous.quantity != current.quantity,
           builder: (context, state) {
             return ProductFieldWidget(
-              errorText:
-                  state.count.invalid ? 'Некорректно указано количество' : null,
-              controllerWidget: _countController,
-              focusWidget: focusCount,
+              errorText: state.quantity.invalid
+                  ? 'Некорректно указано количество'
+                  : null,
+              controllerWidget: _quantityController,
+              focusWidget: focusQuantity,
               focusWidgetNext: focusName,
-              keyWidget: const Key('productForm_countInput_textField'),
+              keyWidget: const Key('productForm_quantityInput_textField'),
               labelText: 'Количество товара',
-              typeField: TypeField.count,
+              typeField: TypeField.quantity,
             );
           },
         ),
@@ -220,17 +222,18 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
                             productName: _nameController.text,
                             productCost: double.parse(_costController.text
                                 .replaceAll(RegExp(','), '.')),
-                            productCount: double.parse(_countController.text
+                            productQuantity: double.parse(_quantityController
+                                .text
                                 .replaceAll(RegExp(','), '.')),
                           );
                       await context
                           .read<RevisionCubit>()
                           .getProducts(revisionId: widget.revisionId);
-                      focusCount.unfocus();
+                      focusQuantity.unfocus();
                       FocusScope.of(context).requestFocus(focusName);
                       _nameController.clear();
                       _costController.clear();
-                      _countController.clear();
+                      _quantityController.clear();
                     }
                   : null,
               onTapButtonClose: () async {

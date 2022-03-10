@@ -7,18 +7,21 @@ part 'bottom_navigation_state.dart';
 
 @injectable
 class BottomNavigationCubit extends Cubit<BottomNavigationState> {
-  BottomNavigationCubit() : super(BottomNavigationProfile());
+  BottomNavigationCubit() : super(BottomNavigationActive());
 
   void changeScreen(NavbarItems itemName) {
     switch (itemName) {
-      case NavbarItems.achievements:
-        emit(BottomNavigationAchievements());
+      case NavbarItems.archive:
+        emit(BottomNavigationArchive());
         break;
-      case NavbarItems.forum:
-        emit(BottomNavigationProfile());
+      case NavbarItems.active:
+        emit(BottomNavigationActive());
+        break;
+      case NavbarItems.pdf:
+        emit(BottomNavigationPdf());
         break;
       default:
-        emit(BottomNavigationProfile());
+        emit(BottomNavigationActive());
     }
   }
 }

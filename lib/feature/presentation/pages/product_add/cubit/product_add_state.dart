@@ -5,7 +5,7 @@ class ProductAddState extends Equatable {
     this.scannQr = '',
     this.name = const Name.pure(),
     this.cost = const Num.pure(),
-    this.count = const Num.pure(),
+    this.quantity = const Num.pure(),
     this.status = FormzStatus.pure,
     this.failure = const UnknownFailure(),
   });
@@ -13,7 +13,7 @@ class ProductAddState extends Equatable {
   final String scannQr;
   final Name name;
   final Num cost;
-  final Num count;
+  final Num quantity;
   final FormzStatus status;
   final Failure failure;
 
@@ -21,7 +21,7 @@ class ProductAddState extends Equatable {
     String? scannQr,
     Name? name,
     Num? cost,
-    Num? count,
+    Num? quantity,
     FormzStatus? status,
     Failure? failure,
   }) {
@@ -29,7 +29,7 @@ class ProductAddState extends Equatable {
       scannQr: scannQr ?? '',
       name: name ?? this.name,
       cost: cost ?? this.cost,
-      count: count ?? this.count,
+      quantity: quantity ?? this.quantity,
       status: status ?? this.status,
       failure: failure ?? const UnknownFailure(),
     );
@@ -54,7 +54,7 @@ class ProductAddState extends Equatable {
         scannQr,
         name,
         cost,
-        count,
+        quantity,
         status,
         failure,
       ];

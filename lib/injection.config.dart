@@ -7,21 +7,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as _i8;
 import 'package:firebase_auth/firebase_auth.dart' as _i7;
 import 'package:get_it/get_it.dart' as _i1;
-import 'package:hive/hive.dart' as _i9;
-import 'package:image_picker/image_picker.dart' as _i10;
+import 'package:image_picker/image_picker.dart' as _i9;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i15;
 
 import 'core/modules/local_module.dart' as _i46;
 import 'feature/data/repositories/authentication_repository_impl.dart' as _i21;
 import 'feature/data/repositories/file_repository_impl.dart' as _i6;
-import 'feature/data/repositories/product_repository_impl.dart' as _i12;
+import 'feature/data/repositories/product_repository_impl.dart' as _i11;
 import 'feature/data/repositories/revision_repository_impl.dart' as _i14;
 import 'feature/data/repositories/settings_repository_impl.dart' as _i39;
 import 'feature/data/repositories/user_repository_impl.dart' as _i19;
 import 'feature/domain/repositories/authentication_repository.dart' as _i20;
 import 'feature/domain/repositories/file_repository.dart' as _i5;
-import 'feature/domain/repositories/product_repository.dart' as _i11;
+import 'feature/domain/repositories/product_repository.dart' as _i10;
 import 'feature/domain/repositories/revision_repository.dart' as _i13;
 import 'feature/domain/repositories/settings_repository.dart' as _i38;
 import 'feature/domain/repositories/user_repository.dart' as _i18;
@@ -50,6 +49,7 @@ import 'feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart'
     as _i33;
 import 'feature/presentation/pages/product_add/cubit/product_add_cubit.dart'
     as _i35;
+import 'feature/presentation/pages/profile/cubit/profile_cubit.dart' as _i12;
 import 'feature/presentation/pages/revision/cubit/change_body_to_cubit.dart'
     as _i4;
 import 'feature/presentation/pages/revision/cubit/revision_cubit.dart' as _i37;
@@ -71,29 +71,29 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   gh.factory<_i5.FileRepository>(() => _i6.FileRepositoryImpl());
   gh.factory<_i7.FirebaseAuth>(() => localModule.firebaseAuth);
   gh.factory<_i8.FirebaseFirestore>(() => localModule.firebaseFirestore);
-  gh.factory<_i9.HiveInterface>(() => localModule.hive);
-  gh.factory<_i10.ImagePicker>(() => localModule.imagePicker);
-  gh.factory<_i11.ProductRepository>(
-      () => _i12.ProductRepositoryImpl(get<_i8.FirebaseFirestore>()));
+  gh.factory<_i9.ImagePicker>(() => localModule.imagePicker);
+  gh.factory<_i10.ProductRepository>(
+      () => _i11.ProductRepositoryImpl(get<_i8.FirebaseFirestore>()));
+  gh.factory<_i12.ProfileCubit>(() => _i12.ProfileCubit());
   gh.factory<_i13.RevisionRepository>(
       () => _i14.RevisionRepositoryImpl(get<_i8.FirebaseFirestore>()));
   await gh.factoryAsync<_i15.SharedPreferences>(() => localModule.prefs,
       preResolve: true);
   gh.factory<_i16.UploadCameraImageUseCase>(() => _i16.UploadCameraImageUseCase(
-      get<_i5.FileRepository>(), get<_i10.ImagePicker>()));
+      get<_i5.FileRepository>(), get<_i9.ImagePicker>()));
   gh.factory<_i17.UploadFileUseCase>(() => _i17.UploadFileUseCase(
-      get<_i5.FileRepository>(), get<_i10.ImagePicker>()));
+      get<_i5.FileRepository>(), get<_i9.ImagePicker>()));
   gh.factory<_i18.UserRepository>(() => _i19.UserRepositoryImpl(
       get<_i8.FirebaseFirestore>(), get<_i7.FirebaseAuth>()));
   gh.factory<_i20.AuthenticationRepository>(() =>
       _i21.AuthenticationRepositoryImpl(
           get<_i7.FirebaseAuth>(), get<_i8.FirebaseFirestore>()));
   gh.factory<_i22.CreateProductUseCase>(() => _i22.CreateProductUseCase(
-      get<_i11.ProductRepository>(), get<_i13.RevisionRepository>()));
+      get<_i10.ProductRepository>(), get<_i13.RevisionRepository>()));
   gh.factory<_i23.CreateRevisionUseCase>(() => _i23.CreateRevisionUseCase(
       get<_i13.RevisionRepository>(), get<_i18.UserRepository>()));
   gh.factory<_i24.DeleteProductsUseCase>(() => _i24.DeleteProductsUseCase(
-      get<_i13.RevisionRepository>(), get<_i11.ProductRepository>()));
+      get<_i13.RevisionRepository>(), get<_i10.ProductRepository>()));
   gh.factory<_i25.DeleteRevisionUseCase>(() => _i25.DeleteRevisionUseCase(
       get<_i13.RevisionRepository>(), get<_i18.UserRepository>()));
   gh.factory<_i26.GetAllUserUseCase>(
@@ -101,7 +101,7 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   gh.factory<_i27.GetAuthenticatedUserUseCase>(() =>
       _i27.GetAuthenticatedUserUseCase(get<_i20.AuthenticationRepository>()));
   gh.factory<_i28.GetProductsUseCase>(
-      () => _i28.GetProductsUseCase(get<_i11.ProductRepository>()));
+      () => _i28.GetProductsUseCase(get<_i10.ProductRepository>()));
   gh.factory<_i29.GetRevisionsUseCase>(
       () => _i29.GetRevisionsUseCase(get<_i13.RevisionRepository>()));
   gh.factory<_i30.LogInWithGoogleUseCase>(

@@ -10,7 +10,10 @@ import 'package:store_revision/feature/presentation/pages/login/cubit/login_cubi
 import 'package:store_revision/feature/presentation/pages/login/ui/login_page.dart';
 import 'package:store_revision/feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/new_revision/ui/new_revision_screen.dart';
+import 'package:store_revision/feature/presentation/pages/pdf/pdf_page.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/cubit/product_add_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/profile/cubit/profile_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/profile/ui/profile_page.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/revision_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/ui/revision_screen.dart';
@@ -27,6 +30,7 @@ abstract class MainNavigationRouteNames {
   static const signUpPage = '/signUp';
   static const addRevision = '/addRevision';
   static const revision = '/revision';
+  static const profile = '/profile';
 }
 
 class MainNavigation {
@@ -54,6 +58,11 @@ class MainNavigation {
           create: (BuildContext context) => getIt<NewRevisionCubit>(
               param1: BlocProvider.of<AuthenticationBloc>(context)),
           child: const AddRevisionScreen(),
+        ),
+    MainNavigationRouteNames.profile: (context) => BlocProvider(
+          create: (BuildContext context) => getIt<ProfileCubit>(
+              param1: BlocProvider.of<AuthenticationBloc>(context)),
+          child: const ProfilePage(),
         ),
   };
 
@@ -94,4 +103,5 @@ final List<Widget> tabGroups = [
         param1: BlocProvider.of<AuthenticationBloc>(context)),
     child: const ArchiveScreen(),
   ),
+  PdfPage(),
 ];

@@ -20,14 +20,14 @@ class ButtonAddRevision extends StatelessWidget {
         children: [
           Container(
             height: 40,
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.black,
                 width: 1.5,
               ),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     blurRadius: 7,
                     spreadRadius: 0,
@@ -40,7 +40,7 @@ class ButtonAddRevision extends StatelessWidget {
               ),
               color: Colors.blueAccent,
             ),
-            child: Text(
+            child: const Text(
               'Добавить ревизию',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -49,7 +49,7 @@ class ButtonAddRevision extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 3),
+          const SizedBox(width: 3),
           Container(
             height: 40,
             width: 40,
@@ -59,7 +59,7 @@ class ButtonAddRevision extends StatelessWidget {
                 color: Colors.black,
                 width: 1.5,
               ),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     blurRadius: 7,
                     spreadRadius: 0,
@@ -72,7 +72,7 @@ class ButtonAddRevision extends StatelessWidget {
               ),
               color: Colors.blueAccent,
             ),
-            child: Icon(Icons.post_add_rounded),
+            child: const Icon(Icons.post_add_rounded),
           ),
         ],
       ),

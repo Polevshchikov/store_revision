@@ -64,9 +64,9 @@ class _RevisionScreenState extends State<RevisionScreen> {
                               .read<ChangeBodyToCubit>()
                               .changeToAddProduct();
                         },
-                        child: Center(
+                        child: const Center(
                           child: Padding(
-                            padding: const EdgeInsets.only(
+                            padding: EdgeInsets.only(
                               bottom: 6,
                             ),
                             child: Icon(Icons.add_circle_outline_outlined),
@@ -82,7 +82,7 @@ class _RevisionScreenState extends State<RevisionScreen> {
               widget.revision.name,
             ),
             centerTitle: false,
-            actions: [
+            actions: const [
               SizedBox(width: 5),
             ],
           ),
@@ -107,14 +107,14 @@ class _RevisionScreenState extends State<RevisionScreen> {
                     child: BlocBuilder<RevisionCubit, RevisionState>(
                         builder: (BuildContext context, RevisionState state) {
                       if (state.status == Status.waiting) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
 
                       if (state.status == Status.success &&
                           state.products.isEmpty) {
-                        return Text('ПУСТО!!');
+                        return const Text('ПУСТО!!');
                       }
 
                       if (state.status == Status.success &&
@@ -130,11 +130,11 @@ class _RevisionScreenState extends State<RevisionScreen> {
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    margin: EdgeInsets.all(20),
-                                    padding: EdgeInsets.all(10),
+                                    margin: const EdgeInsets.all(20),
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                                       color: Colors.green[400],
-                                      borderRadius: BorderRadius.all(
+                                      borderRadius: const BorderRadius.all(
                                           Radius.circular(15.0)),
                                       boxShadow: [
                                         BoxShadow(
@@ -143,9 +143,9 @@ class _RevisionScreenState extends State<RevisionScreen> {
                                           blurRadius: 15,
                                           spreadRadius: 1,
                                         ),
-                                        BoxShadow(
+                                        const BoxShadow(
                                           color: Colors.white,
-                                          offset: const Offset(-4, -4),
+                                          offset: Offset(-4, -4),
                                           blurRadius: 15,
                                           spreadRadius: 1,
                                         ),
@@ -157,23 +157,25 @@ class _RevisionScreenState extends State<RevisionScreen> {
                                       children: [
                                         Text('Название товара: ' +
                                             _products[index].name),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
                                         Text('Дата записи : ' +
                                             DateFormat('dd.MM.yyyy').format(
                                                 _products[index]
                                                     .datePublished)),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
                                         Text('Цена товара: ' +
                                             _products[index].cost.toString()),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
                                         Text('Количество товара: ' +
-                                            _products[index].count.toString()),
-                                        SizedBox(height: 5),
+                                            _products[index]
+                                                .quantity
+                                                .toString()),
+                                        const SizedBox(height: 5),
                                         Text('Итог: ' +
                                             _products[index]
                                                 .total
                                                 .toStringAsFixed(2)),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
                                         Text('Имя создателя : ' +
                                             _products[index]
                                                 .userName
@@ -192,8 +194,8 @@ class _RevisionScreenState extends State<RevisionScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(15),
                                             ),
-                                            primary:
-                                                Color.fromARGB(146, 189, 5, 14),
+                                            primary: const Color.fromARGB(
+                                                146, 189, 5, 14),
                                           ),
                                           onPressed: () {
                                             promptDialog(
@@ -221,7 +223,7 @@ class _RevisionScreenState extends State<RevisionScreen> {
                               );
                             });
                       }
-                      return Text(
+                      return const Text(
                           'AppLocalizations.of(context).screenInitialization');
                     }),
                   ),

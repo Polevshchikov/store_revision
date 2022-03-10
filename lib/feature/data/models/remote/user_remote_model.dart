@@ -98,7 +98,7 @@ class ProductRemoteModel extends ProductEntity {
   @override
   final double cost;
   @override
-  final double count;
+  final double quantity;
   @override
   final double total;
   @override
@@ -112,7 +112,7 @@ class ProductRemoteModel extends ProductEntity {
     required this.id,
     required this.uid,
     required this.cost,
-    required this.count,
+    required this.quantity,
     required this.total,
     required this.name,
     required this.userName,
@@ -121,7 +121,7 @@ class ProductRemoteModel extends ProductEntity {
           id: id,
           uid: uid,
           cost: cost,
-          count: count,
+          quantity: quantity,
           total: total,
           name: name,
           userName: userName,
@@ -132,7 +132,7 @@ class ProductRemoteModel extends ProductEntity {
         id: product.id,
         uid: product.uid,
         cost: product.cost,
-        count: product.count,
+        quantity: product.quantity,
         total: product.total,
         name: product.name,
         userName: product.userName,
