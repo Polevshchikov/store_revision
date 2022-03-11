@@ -10,10 +10,11 @@ class HomeTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return BottomAppBar(
       elevation: 10,
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: SalomonBottomBar(
@@ -30,11 +31,7 @@ class HomeTabBar extends StatelessWidget {
                     .read<BottomNavigationCubit>()
                     .changeScreen(NavbarItems.archive);
                 break;
-              case 2:
-                context
-                    .read<BottomNavigationCubit>()
-                    .changeScreen(NavbarItems.pdf);
-                break;
+
               default:
                 context
                     .read<BottomNavigationCubit>()
@@ -42,38 +39,31 @@ class HomeTabBar extends StatelessWidget {
             }
           },
           margin: EdgeInsets.only(
-            left: 8,
-            right: 8,
+            left: screenWidth / 8,
+            right: screenWidth / 8,
             top: 16,
-            bottom: 25,
+            bottom: 10,
           ),
+          itemPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           items: [
-            /// Home
+            /// Active
             SalomonBottomBarItem(
-              icon: Icon(Icons.home),
-              title: Text("Home"),
-              selectedColor: Colors.indigo,
+              icon: const Icon(
+                Icons.add_to_photos_rounded,
+                size: 30,
+              ),
+              title: const Text("Активные"),
+              selectedColor: const Color.fromARGB(255, 35, 147, 212),
             ),
 
-            /// Search
+            /// Archiv
             SalomonBottomBarItem(
-              icon: Icon(Icons.search),
-              title: Text("Search"),
-              selectedColor: Colors.orange,
-            ),
-
-            /// Likes
-            SalomonBottomBarItem(
-              icon: Icon(Icons.favorite_border),
-              title: Text("Likes"),
-              selectedColor: Colors.pink,
-            ),
-
-            /// Profile
-            SalomonBottomBarItem(
-              icon: Icon(Icons.person),
-              title: Text("Profile"),
-              selectedColor: Colors.teal,
+              icon: const Icon(
+                Icons.cloud_circle_rounded,
+                size: 30,
+              ),
+              title: const Text("Архивные"),
+              selectedColor: const Color.fromARGB(255, 212, 35, 153),
             ),
           ],
         ),

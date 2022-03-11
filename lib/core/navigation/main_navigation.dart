@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/presentation/pages/archive/cubit/archive_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/archive/cubit/revision_pdf_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/archive/ui/archive_screen.dart';
 import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
 import 'package:store_revision/feature/presentation/pages/home/cubit/bottom_navigation_cubit.dart';
@@ -10,7 +11,6 @@ import 'package:store_revision/feature/presentation/pages/login/cubit/login_cubi
 import 'package:store_revision/feature/presentation/pages/login/ui/login_page.dart';
 import 'package:store_revision/feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/new_revision/ui/new_revision_screen.dart';
-import 'package:store_revision/feature/presentation/pages/pdf/pdf_page.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/cubit/product_add_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/profile/cubit/profile_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/profile/ui/profile_page.dart';
@@ -98,10 +98,15 @@ final List<Widget> tabGroups = [
         param1: BlocProvider.of<AuthenticationBloc>(context)),
     child: const RevisionActiveScreen(),
   ),
-  BlocProvider(
-    create: (BuildContext context) => getIt<ArchiveCubit>(
-        param1: BlocProvider.of<AuthenticationBloc>(context)),
+  MultiBlocProvider(
+    providers: [
+      BlocProvider(
+          create: (BuildContext context) => getIt<ArchiveCubit>(
+              param1: BlocProvider.of<AuthenticationBloc>(context))),
+      BlocProvider(
+          create: (BuildContext context) => getIt<RevisionPdfCubit>(
+              param1: BlocProvider.of<AuthenticationBloc>(context))),
+    ],
     child: const ArchiveScreen(),
   ),
-  PdfPage(),
 ];

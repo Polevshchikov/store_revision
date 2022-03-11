@@ -16,9 +16,7 @@ class HomeScreen extends StatelessWidget {
       if (state is BottomNavigationActive) {
         return BuildHomePage(currentIndex: state.itemIndex);
       }
-      if (state is BottomNavigationPdf) {
-        return BuildHomePage(currentIndex: state.itemIndex);
-      }
+
       return const BuildHomePage(currentIndex: 0);
     });
   }

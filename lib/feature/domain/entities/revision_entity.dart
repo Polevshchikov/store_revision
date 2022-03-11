@@ -23,19 +23,6 @@ class RevisionEntity extends Equatable {
     required this.total,
   });
 
-  /// Empty user which represents an unauthenticated user.
-  static final empty = RevisionEntity(
-    id: '',
-    uid: '',
-    name: '',
-    description: '',
-    listTrusted: const [],
-    listProducts: const [],
-    date: DateTime.utc(2022),
-    isClosed: false,
-    total: 0,
-  );
-
   @override
   List<Object> get props => [
         id,

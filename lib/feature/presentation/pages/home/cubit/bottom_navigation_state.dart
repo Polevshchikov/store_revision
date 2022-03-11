@@ -7,10 +7,6 @@ abstract class BottomNavigationState extends Equatable {
   List<Object> get props => [];
 }
 
-class BottomNavigationPdf extends BottomNavigationState {
-  final int itemIndex = 2;
-}
-
 class BottomNavigationArchive extends BottomNavigationState {
   final int itemIndex = 1;
 }

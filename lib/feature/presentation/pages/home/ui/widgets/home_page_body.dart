@@ -45,9 +45,6 @@ class _HomePageBodyState extends State<HomePageBody> {
         if (state is BottomNavigationActive) {
           await _animateTo(state.itemIndex);
         }
-        if (state is BottomNavigationPdf) {
-          await _animateTo(state.itemIndex);
-        }
       },
       builder: (context, state) {
         return PageView(
@@ -64,11 +61,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                     .read<BottomNavigationCubit>()
                     .changeScreen(NavbarItems.archive);
                 break;
-              case 2:
-                context
-                    .read<BottomNavigationCubit>()
-                    .changeScreen(NavbarItems.pdf);
-                break;
+
               default:
                 context
                     .read<BottomNavigationCubit>()

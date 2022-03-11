@@ -17,9 +17,7 @@ class BottomNavigationCubit extends Cubit<BottomNavigationState> {
       case NavbarItems.active:
         emit(BottomNavigationActive());
         break;
-      case NavbarItems.pdf:
-        emit(BottomNavigationPdf());
-        break;
+
       default:
         emit(BottomNavigationActive());
     }
