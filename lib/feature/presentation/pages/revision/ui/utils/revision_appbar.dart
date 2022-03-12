@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:store_revision/core/navigation/main_navigation.dart';
+import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 
-PreferredSizeWidget homeAppbar(
-    {required BuildContext context,
-    required String title,
-    required Gradient gradient}) {
+PreferredSizeWidget revisionAppbar(
+    {required BuildContext context, required RevisionEntity revision}) {
   return AppBar(
       centerTitle: true,
       backgroundColor: Colors.transparent,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: gradient,
-        ),
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [
+          Color.fromARGB(255, 78, 15, 4),
+          Color.fromARGB(255, 117, 34, 96),
+          Color.fromARGB(255, 34, 95, 119),
+        ], begin: Alignment.centerLeft, end: Alignment.bottomRight)),
       ),
       elevation: 10,
-      title: Text(title),
+      title: Text(
+        'Ревизия: ' + revision.name,
+      ),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 10, bottom: 10, top: 12),
@@ -22,13 +26,17 @@ PreferredSizeWidget homeAppbar(
             child: Container(
               width: 55,
               decoration: BoxDecoration(
-                gradient: gradient,
+                gradient: const LinearGradient(colors: [
+                  Color.fromARGB(255, 11, 56, 73),
+                  Color.fromARGB(255, 174, 222, 241),
+                  Color.fromARGB(255, 151, 14, 14),
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 boxShadow: const [
                   BoxShadow(
                     color: Color.fromARGB(255, 255, 255, 255),
                     spreadRadius: 0,
-                    blurRadius: 8,
+                    blurRadius: 4,
                     offset: Offset(0, 0),
                   ),
                 ],
@@ -40,14 +48,15 @@ PreferredSizeWidget homeAppbar(
               ),
               child: const Center(
                   child: Icon(
-                Icons.person_pin,
-                color: Colors.white,
+                Icons.info_outlined,
+                color: Color.fromARGB(255, 54, 53, 53),
               )),
             ),
             onTap: () {
               Navigator.pushNamed(
                 context,
-                MainNavigationRouteNames.profile,
+                MainNavigationRouteNames.revisionDetails,
+                arguments: revision,
               );
             },
           ),

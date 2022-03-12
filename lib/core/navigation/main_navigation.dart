@@ -17,6 +17,8 @@ import 'package:store_revision/feature/presentation/pages/profile/ui/profile_pag
 import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/revision_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/ui/revision_screen.dart';
+import 'package:store_revision/feature/presentation/pages/revision_details/ui/revision_details.dart';
+import 'package:store_revision/feature/presentation/pages/revision_info/ui/revision_info_screen.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/ui/revisions_active_screen.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/cubit/sign_up_cubit.dart';
@@ -31,6 +33,8 @@ abstract class MainNavigationRouteNames {
   static const addRevision = '/addRevision';
   static const revision = '/revision';
   static const profile = '/profile';
+  static const revisionDetails = '/revisionDetails';
+  static const revisionInfo = '/revisionInfo';
 }
 
 class MainNavigation {
@@ -85,6 +89,16 @@ class MainNavigation {
             child: RevisionScreen(revision: value),
           ),
         );
+      case MainNavigationRouteNames.revisionDetails:
+        final value = routeSettings.arguments as RevisionEntity;
+        return MaterialPageRoute(
+            builder: (_) => (RevisionDetailsPage(revision: value)));
+
+      case MainNavigationRouteNames.revisionInfo:
+        final value = routeSettings.arguments as RevisionEntity;
+        return MaterialPageRoute(
+            builder: (_) => (RevisionInfoScreen(revision: value)));
+
       default:
         const widget = Center(child: Text('Navigation Error!!!'));
         return MaterialPageRoute(builder: (context) => widget);

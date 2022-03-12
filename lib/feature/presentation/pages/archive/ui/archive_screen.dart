@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:store_revision/api/pdf_api.dart';
+import 'package:store_revision/core/navigation/main_navigation.dart';
 import 'package:store_revision/feature/domain/entities/user_entity.dart';
 import 'package:store_revision/feature/presentation/pages/archive/cubit/archive_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/archive/cubit/revision_pdf_cubit.dart';
@@ -78,11 +79,11 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                         : EdgeInsets.zero,
                     child: GestureDetector(
                       onTap: () {
-                        // Navigator.pushNamed(
-                        //   context,
-                        //   MainNavigationRouteNames.revision,
-                        //   arguments: revisions[index],
-                        // ).then((_) => _revisionActiveListCubit.getRevisions());
+                        Navigator.pushNamed(
+                          context,
+                          MainNavigationRouteNames.revisionInfo,
+                          arguments: revisions[index],
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 40.0),
@@ -126,8 +127,10 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                       onPressed: (context) {
                                         promptDialog(
                                             context: context,
-                                            dialog:
-                                                'Вы действительно хотите ревизию ${revisions[index].name} сделать активной для изменений ?',
+                                            dialog: Text(
+                                                'Вы действительно хотите ревизию ${revisions[index].name} сделать активной для изменений?',
+                                                style: const TextStyle(
+                                                    color: Colors.black)),
                                             onPressed: () {
                                               _archiveCubit.openRevision(
                                                   revisionId:
@@ -177,9 +180,6 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                               .listProducts
                                               .length
                                               .toString()),
-                                      const SizedBox(height: 5),
-                                      Text('Статус: ' +
-                                          revisions[index].isClosed.toString()),
                                       const SizedBox(height: 5),
                                       Text('Общая сумма: ' +
                                           revisions[index]

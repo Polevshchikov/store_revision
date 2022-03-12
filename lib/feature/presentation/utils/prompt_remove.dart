@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Всплывающая подсказка подтверждения об изменении записи из списка
 void promptDialog({
   required BuildContext context,
-  required String dialog,
+  required Widget dialog,
   required Function onPressed,
 }) {
   showDialog(
@@ -11,12 +11,7 @@ void promptDialog({
       builder: (BuildContext context) {
         return AlertDialog(
             backgroundColor: Colors.white,
-            title: Text(
-              dialog,
-              style: const TextStyle(
-                color: Colors.black,
-              ),
-            ),
+            title: dialog,
             actions: <Widget>[
               Row(
                 children: [
