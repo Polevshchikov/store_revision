@@ -6,13 +6,13 @@ import 'package:store_revision/feature/domain/repositories/authentication_reposi
 import 'package:store_revision/feature/domain/usecases/params/no_params.dart';
 
 @injectable
-class LogInWithGoogleUseCase extends UseCase<void, NoParams> {
+class GetVerificationUseCase extends UseCase<bool, NoParams> {
   final AuthenticationRepository _authenticationRepository;
 
-  LogInWithGoogleUseCase(this._authenticationRepository);
+  GetVerificationUseCase(this._authenticationRepository);
 
   @override
-  Future<Either<Failure, void>> call(NoParams params) async {
-    return _authenticationRepository.logInWithGoogle();
+  Future<Either<Failure, bool>> call(NoParams params) async {
+    return await _authenticationRepository.isVerificationEmail();
   }
 }

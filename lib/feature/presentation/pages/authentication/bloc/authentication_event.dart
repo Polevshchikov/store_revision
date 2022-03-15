@@ -20,6 +20,17 @@ class AuthenticationLoggedIn extends AuthenticationEvent {
 
 class AuthenticationLoggedOut extends AuthenticationEvent {}
 
+class AuthenticationLoad extends AuthenticationEvent {}
+
+class AuthenticationVerifivation extends AuthenticationEvent {
+  const AuthenticationVerifivation(this.user);
+
+  final UserEntity user;
+
+  @override
+  List<Object> get props => [user];
+}
+
 class AuthenticationLoggedError extends AuthenticationEvent {
   const AuthenticationLoggedError(this.failure);
   final Failure failure;

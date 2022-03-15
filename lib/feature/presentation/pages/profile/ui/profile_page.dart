@@ -8,11 +8,16 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _user = BlocProvider.of<AuthenticationBloc>(context).state.user;
+    final widthScreen = MediaQuery.of(context).size.width;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: Colors.teal,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 146, 91, 91),
-        elevation: 10,
+        leading: const BackButton(color: Colors.black),
+        backgroundColor: const Color.fromARGB(83, 66, 66, 66),
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))),
       ),
       body: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
@@ -35,19 +40,20 @@ class ProfilePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      child: ClipOval(
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0), //or 15.0
+                      child: Container(
+                        width: widthScreen * 0.6,
+                        color: const Color(0xffFF0E58),
                         child: Image.network('https://picsum.photos/200',
                             fit: BoxFit.fill),
                       ),
-                      backgroundColor: Colors.transparent,
-                      radius: 80,
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                Text(_user.email ?? ''),
-                Text(_user.name ?? ''),
+                Text(_user.email),
+                Text(_user.name),
                 Text('Проведено ревизий: ${_user.revisions.length}'),
                 const SizedBox(height: 20),
                 GestureDetector(
@@ -81,30 +87,11 @@ class ProfilePage extends StatelessWidget {
                         .add(AuthenticationLoggedOut());
                   },
                 ),
-                Container(
-                  color: Colors.amber,
-                  child: null,
-                ),
               ],
             ),
           );
         },
       ),
     );
-
-    // Scaffold(
-    //   appBar: AppBar(
-    //     actions: <Widget>[
-    //       IconButton(
-    //         key: const Key('homePage_logout_iconButton'),
-    //         icon: const Icon(Icons.exit_to_app),
-    //         onPressed: () => context
-    //             .read<AuthenticationBloc>()
-    //             .add(AuthenticationLoggedOut()),
-    //       )
-    //     ],
-    //   ),
-    //   body: Container(color: Colors.cyan),
-    // );
   }
 }

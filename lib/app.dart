@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
 import 'package:store_revision/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -47,7 +48,7 @@ class App extends StatelessWidget {
             ],
             supportedLocales: S.delegate.supportedLocales,
             routes: mainNavigation.routes,
-            initialRoute: mainNavigation.initialRoute(authState.isAuth),
+            initialRoute: mainNavigation.initialRoute(),
             onGenerateRoute: mainNavigation.onGenerateRoute,
             builder: (context, child) {
               return BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -61,6 +62,11 @@ class App extends StatelessWidget {
                     case AuthenticationStatus.unauthenticated:
                       _navigatorKey.currentState?.pushNamedAndRemoveUntil(
                           MainNavigationRouteNames.loginPage, (route) => false);
+                      break;
+                    case AuthenticationStatus.noVerification:
+                      _navigatorKey.currentState?.pushNamedAndRemoveUntil(
+                          MainNavigationRouteNames.verification,
+                          (route) => false);
                       break;
                     case AuthenticationStatus.error:
                       ScaffoldMessenger.of(context)

@@ -33,7 +33,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 //       ]);
     try {
       await _firebaseAuth.signOut();
-
       return const Right(null);
     } catch (_) {
       return const Left(LogOutFailure());
@@ -57,6 +56,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<Either<Failure, UserEntity>> getAuthenticatedUser() async {
     try {
       User? userCred = _firebaseAuth.currentUser;
+      await userCred?.reload();
       // Get docs from collection reference
       final documentSnapshot = await _firestore
           .collection(FirestoreCollectionPath.users)
@@ -68,6 +68,30 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       return Right(user);
     } on FirebaseAuthException catch (e) {
       return Left(LogInWithEmailAndPasswordFailure(e.code));
+    } catch (e) {
+      return const Left(UnknownFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> sendVerificationEmail() async {
+    try {
+      User? userCred = _firebaseAuth.currentUser;
+      await userCred?.sendEmailVerification();
+
+      return const Right(null);
+    } catch (e) {
+      return const Left(UnknownFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> isVerificationEmail() async {
+    try {
+      User? userCred = _firebaseAuth.currentUser;
+      await userCred?.reload();
+      final isVerification = userCred?.emailVerified ?? false;
+      return Right(isVerification);
     } catch (e) {
       return const Left(UnknownFailure());
     }
@@ -115,6 +139,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         email: email,
         password: password,
       );
+      await userCred.user?.updateDisplayName(username);
+      //await user?.updatePhotoURL(photo);
       final UserRemoteModel user = UserRemoteModel(
         uid: userCred.user!.uid,
         email: email,
@@ -133,28 +159,5 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     } catch (_) {
       return const Left(UnknownFailure());
     }
-  }
-
-  @override
-  Future<Either<Failure, void>> logInWithGoogle() async {
-    print('logInWithGoogle');
-    return const Right(null);
-    // try {
-    //   late final firebase_auth.AuthCredential credential;
-    //   if (isWeb) {
-    //     final googleProvider = firebase_auth.GoogleAuthProvider();
-    //     final userCredential = await _firebaseAuth.signInWithPopup(
-    //       googleProvider,
-    //     );
-    //     credential = userCredential.credential!;
-    //   } else {
-    //     final googleUser = await _googleSignIn.signIn();
-    //     final googleAuth = await googleUser!.authentication;
-    //     credential = firebase_auth.GoogleAuthProvider.credential(
-    //       accessToken: googleAuth.accessToken,
-    //       idToken: googleAuth.idToken,
-    //     );
-    //   }
-    // }
   }
 }

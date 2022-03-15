@@ -3,10 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/failure.dart';
-import 'package:store_revision/feature/domain/usecases/login_with_google_usecase.dart';
 import 'package:store_revision/feature/domain/usecases/login_usecase.dart';
 import 'package:store_revision/feature/domain/usecases/params/login_params.dart';
-import 'package:store_revision/feature/domain/usecases/params/no_params.dart';
 import 'package:store_revision/feature/presentation/components/email.dart';
 import 'package:store_revision/feature/presentation/components/password.dart';
 import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
@@ -15,12 +13,10 @@ part 'login_state.dart';
 
 @injectable
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this._loginUseCase, this._authenticationBloc,
-      this._logInWithGoogleUseCase)
+  LoginCubit(this._loginUseCase, this._authenticationBloc)
       : super(const LoginState());
   final LoginUseCase _loginUseCase;
   final AuthenticationBloc _authenticationBloc;
-  final LogInWithGoogleUseCase _logInWithGoogleUseCase;
 
   void emailChanged(String value) {
     final email = Email.dirty(value);
@@ -36,21 +32,6 @@ class LoginCubit extends Cubit<LoginState> {
       password: password,
       status: Formz.validate([state.email, password]),
     ));
-  }
-
-  Future<void> logInWithGoogle() async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    final result = await _logInWithGoogleUseCase.call(NoParams());
-    await result.fold((failure) async {
-      emit(state.copyWith(
-        failure: failure,
-        status: FormzStatus.submissionFailure,
-      ));
-      _authenticationBloc.add(AuthenticationLoggedError(failure));
-    }, (user) async {
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-      // _authenticationBloc.add(AuthenticationLoggedIn(user));
-    });
   }
 
   Future<void> logInWithCredentials() async {
@@ -69,8 +50,9 @@ class LoginCubit extends Cubit<LoginState> {
     }, (user) async {
       emit(state.copyWith(
         status: FormzStatus.submissionSuccess,
-        email: Email.dirty(user.email ?? ''),
+        email: Email.dirty(user.email),
       ));
+      _authenticationBloc.add(AuthenticationLoad());
       _authenticationBloc.add(AuthenticationLoggedIn(user));
     });
   }

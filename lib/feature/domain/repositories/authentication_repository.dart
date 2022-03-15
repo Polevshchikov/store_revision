@@ -10,9 +10,11 @@ abstract class AuthenticationRepository {
 
   Future<Either<Failure, void>> logOut();
 
-  Future<Either<Failure, void>> logInWithGoogle();
-
   Future<Either<Failure, UserEntity>> getAuthenticatedUser();
+
+  Future<Either<Failure, bool>> isVerificationEmail();
+
+  Future<Either<Failure, void>> sendVerificationEmail();
 
   Future<Either<Failure, void>> fetchPasswordRecovery(String email);
 

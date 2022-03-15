@@ -20,6 +20,12 @@ abstract class RevisionRepository {
 
   Future<Either<Failure, List<RevisionEntity>>> getRevisions();
 
+  Future<Either<Failure, List<String>>> addTrustedRevision(
+      {required String revisionId, required List<String> trustedsId});
+
+  Future<Either<Failure, List<String>>> deleteTrustedRevision(
+      {required String revisionId, required List<String> trustedsId});
+
   Future<Either<Failure, void>> addProductRevision(
       {required String revisionId, required ProductEntity product});
 

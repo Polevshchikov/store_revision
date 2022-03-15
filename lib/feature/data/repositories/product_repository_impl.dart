@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/data/components/firestore_collection_path.dart';
-import 'package:store_revision/feature/data/models/remote/user_remote_model.dart';
+import 'package:store_revision/feature/data/models/remote/product_remote_model.dart';
 import 'package:store_revision/feature/domain/entities/product_entity.dart';
 import 'package:store_revision/feature/domain/repositories/product_repository.dart';
 import 'package:uuid/uuid.dart';

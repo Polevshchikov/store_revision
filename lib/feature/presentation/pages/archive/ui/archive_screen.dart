@@ -12,6 +12,8 @@ import 'package:store_revision/feature/presentation/utils/prompt_remove.dart';
 import 'package:store_revision/feature/presentation/utils/status.dart';
 import 'dart:math' as math;
 
+import 'package:store_revision/feature/presentation/widgets/plug_screen.dart';
+
 class ArchiveScreen extends StatefulWidget {
   const ArchiveScreen({Key? key}) : super(key: key);
 
@@ -39,10 +41,10 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
         gradient: SweepGradient(
           center: Alignment.bottomCenter,
           colors: [
-            Color.fromARGB(255, 97, 187, 240),
-            Color.fromARGB(255, 58, 6, 6),
-            Color.fromARGB(255, 212, 83, 195),
-            Color.fromARGB(255, 207, 197, 57),
+            Color.fromARGB(255, 42, 168, 241),
+            Color.fromARGB(255, 106, 19, 206),
+            Color.fromARGB(255, 167, 18, 55),
+            Color.fromARGB(255, 209, 167, 30),
           ],
           endAngle: math.pi * 2,
           startAngle: math.pi,
@@ -197,8 +199,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                   );
                 });
           }
-          return const Text(
-              'AppLocalizations.of(context).screenInitialization');
+          return const PlugScreen();
         }),
       ),
     );

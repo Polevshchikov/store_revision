@@ -290,7 +290,10 @@ class _CreateProductButton extends StatelessWidget {
                     ),
                     onPressed: onTapButtonCreate,
                     icon: const Icon(Icons.add),
-                    label: const Text('PRODUCT'),
+                    label: const Text(
+                      'Добавить',
+                      style: TextStyle(fontSize: 15),
+                    ),
                   ),
                 ],
               );

@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:store_revision/core/navigation/arguments/revision_details_arguments.dart';
 import 'package:store_revision/core/navigation/main_navigation.dart';
+import 'package:store_revision/feature/domain/entities/product_entity.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 
-PreferredSizeWidget revisionAppbar(
-    {required BuildContext context, required RevisionEntity revision}) {
+PreferredSizeWidget revisionAppbar({
+  required BuildContext context,
+  required RevisionEntity revision,
+  required List<ProductEntity> products,
+}) {
   return AppBar(
       centerTitle: true,
       backgroundColor: Colors.transparent,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Color.fromARGB(255, 78, 15, 4),
-          Color.fromARGB(255, 117, 34, 96),
-          Color.fromARGB(255, 34, 95, 119),
-        ], begin: Alignment.centerLeft, end: Alignment.bottomRight)),
+          gradient: LinearGradient(colors: [
+            Color.fromARGB(200, 78, 15, 4),
+            Color.fromARGB(200, 117, 34, 96),
+            Color.fromARGB(200, 34, 95, 119),
+          ], begin: Alignment.centerLeft, end: Alignment.bottomRight),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
       ),
       elevation: 10,
       title: Text(
@@ -56,7 +63,8 @@ PreferredSizeWidget revisionAppbar(
               Navigator.pushNamed(
                 context,
                 MainNavigationRouteNames.revisionDetails,
-                arguments: revision,
+                arguments: RevisionDetailsArguments(
+                    revision: revision, products: products),
               );
             },
           ),

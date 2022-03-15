@@ -96,6 +96,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       ));
     }, (user) async {
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
+      _authenticationBloc.add(AuthenticationLoad());
       _authenticationBloc.add(AuthenticationLoggedIn(user));
     });
     emit(state.copyWith(status: FormzStatus.submissionSuccess));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_revision/core/navigation/arguments/revision_details_arguments.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/presentation/pages/archive/cubit/archive_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/archive/cubit/revision_pdf_cubit.dart';
@@ -19,10 +20,14 @@ import 'package:store_revision/feature/presentation/pages/revision/cubit/revisio
 import 'package:store_revision/feature/presentation/pages/revision/ui/revision_screen.dart';
 import 'package:store_revision/feature/presentation/pages/revision_details/ui/revision_details.dart';
 import 'package:store_revision/feature/presentation/pages/revision_info/ui/revision_info_screen.dart';
+import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/change_body_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/ui/revisions_active_screen.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/cubit/sign_up_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/sign_up/ui/sign_up_page.dart';
+import 'package:store_revision/feature/presentation/pages/splash/ui/splash_screen.dart';
+import 'package:store_revision/feature/presentation/pages/trusted_add/cubit/trusted_add_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/verification/ui/verification_screen.dart';
 import 'package:store_revision/injection.dart';
 
 abstract class MainNavigationRouteNames {
@@ -35,12 +40,12 @@ abstract class MainNavigationRouteNames {
   static const profile = '/profile';
   static const revisionDetails = '/revisionDetails';
   static const revisionInfo = '/revisionInfo';
+  static const splash = '/splash';
+  static const verification = '/verification';
 }
 
 class MainNavigation {
-  String initialRoute(bool isAuth) => isAuth
-      ? MainNavigationRouteNames.loginPage
-      : MainNavigationRouteNames.homeScreen;
+  String initialRoute() => MainNavigationRouteNames.splash;
 
   final routes = <String, Widget Function(BuildContext)>{
     MainNavigationRouteNames.homeScreen: (context) => BlocProvider(
@@ -68,6 +73,9 @@ class MainNavigation {
               param1: BlocProvider.of<AuthenticationBloc>(context)),
           child: const ProfilePage(),
         ),
+    MainNavigationRouteNames.splash: (context) => const SplashScreen(),
+    MainNavigationRouteNames.verification: (context) =>
+        const VerificationScreen(),
   };
 
   Route<Object> onGenerateRoute(RouteSettings routeSettings) {
@@ -90,9 +98,10 @@ class MainNavigation {
           ),
         );
       case MainNavigationRouteNames.revisionDetails:
-        final value = routeSettings.arguments as RevisionEntity;
+        final value = routeSettings.arguments as RevisionDetailsArguments;
         return MaterialPageRoute(
-            builder: (_) => (RevisionDetailsPage(revision: value)));
+          builder: (_) => RevisionDetailsPage(revisionDetailsArguments: value),
+        );
 
       case MainNavigationRouteNames.revisionInfo:
         final value = routeSettings.arguments as RevisionEntity;
@@ -107,9 +116,16 @@ class MainNavigation {
 }
 
 final List<Widget> tabGroups = [
-  BlocProvider(
-    create: (BuildContext context) => getIt<RevisionActiveListCubit>(
-        param1: BlocProvider.of<AuthenticationBloc>(context)),
+  MultiBlocProvider(
+    providers: [
+      BlocProvider(
+          create: (BuildContext context) => getIt<RevisionActiveListCubit>(
+              param1: BlocProvider.of<AuthenticationBloc>(context))),
+      BlocProvider(
+          create: (BuildContext context) => getIt<TrustedAddCubit>(
+              param1: BlocProvider.of<AuthenticationBloc>(context))),
+      BlocProvider(create: (BuildContext context) => getIt<ChangeBodyCubit>()),
+    ],
     child: const RevisionActiveScreen(),
   ),
   MultiBlocProvider(

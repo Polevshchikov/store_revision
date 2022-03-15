@@ -65,33 +65,34 @@ class ItemBodyProduct extends StatelessWidget {
           right: 30.0,
           bottom: -10,
           child: Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  primary: const Color.fromARGB(146, 189, 5, 14),
+            alignment: Alignment.bottomRight,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                onPressed: () {
-                  promptDialog(
-                      context: context,
-                      dialog: Text(
-                          'Вы действительно хотите удалить товар ${product.name}?',
-                          style: const TextStyle(color: Colors.black)),
-                      onPressed: () {
-                        BlocProvider.of<RevisionCubit>(context).deleteProducts(
-                            revisionId: revisionId, product: product);
-                      });
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Text('Удалить товар'),
-                    Icon(Icons.cancel_outlined)
-                  ],
-                ),
-              )),
+                primary: const Color.fromARGB(146, 189, 5, 14),
+              ),
+              onPressed: () {
+                promptDialog(
+                    context: context,
+                    dialog: Text(
+                        'Вы действительно хотите удалить товар: ${product.name}?',
+                        style: const TextStyle(color: Colors.black)),
+                    onPressed: () {
+                      BlocProvider.of<RevisionCubit>(context).deleteProducts(
+                          revisionId: revisionId, product: product);
+                    });
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text('Удалить товар'),
+                  Icon(Icons.cancel_outlined)
+                ],
+              ),
+            ),
+          ),
         ),
       ],
     );

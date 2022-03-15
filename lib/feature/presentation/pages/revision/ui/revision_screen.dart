@@ -8,6 +8,7 @@ import 'package:store_revision/feature/presentation/pages/revision/ui/utils/revi
 import 'package:store_revision/feature/presentation/pages/revision/ui/widgets/add_product_button.dart';
 import 'package:store_revision/feature/presentation/pages/revision/ui/widgets/item_body_product.dart';
 import 'package:store_revision/feature/presentation/utils/status.dart';
+import 'package:store_revision/feature/presentation/widgets/plug_screen.dart';
 
 class RevisionScreen extends StatefulWidget {
   final RevisionEntity revision;
@@ -31,27 +32,32 @@ class _RevisionScreenState extends State<RevisionScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<ChangeBodyToCubit, ChangeBodyToState>(
       builder: (context, changeBodytate) {
-        return Scaffold(
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: (changeBodytate is ShowRevisionState)
-              ? const AddProductButton()
-              : null,
-          appBar: revisionAppbar(context: context, revision: widget.revision),
-          body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color.fromARGB(255, 206, 147, 216),
-                Color.fromARGB(255, 241, 184, 11),
-                Color.fromARGB(255, 4, 105, 97),
-              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-            ),
-            height: double.infinity,
-            width: double.infinity,
-            child: BlocBuilder<RevisionCubit, RevisionState>(
-                builder: (BuildContext context, RevisionState state) {
-              return Stack(
+        return BlocBuilder<RevisionCubit, RevisionState>(
+            builder: (BuildContext context, RevisionState state) {
+          return Scaffold(
+            extendBodyBehindAppBar: true,
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            floatingActionButton: (changeBodytate is ShowRevisionState)
+                ? const AddProductButton()
+                : null,
+            appBar: revisionAppbar(
+                context: context,
+                revision: widget.revision,
+                products: state.products),
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Color.fromARGB(255, 206, 147, 216),
+                  Color.fromARGB(255, 241, 184, 11),
+                  Color.fromARGB(255, 4, 105, 97),
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              ),
+              height: double.infinity,
+              width: double.infinity,
+              child: Stack(
                 children: [
                   RefreshIndicator(
+                    displacement: 140,
                     onRefresh: () async {
                       await _revisionCubit.getProducts(
                           revisionId: widget.revision.id);
@@ -77,24 +83,30 @@ class _RevisionScreenState extends State<RevisionScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             itemCount: _products.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return ItemBodyProduct(
-                                product: _products[index],
-                                revisionId: widget.revision.id,
+                              return Padding(
+                                padding: index == 0
+                                    ? const EdgeInsets.only(top: 100)
+                                    : index == _products.length - 1
+                                        ? const EdgeInsets.only(bottom: 120)
+                                        : EdgeInsets.zero,
+                                child: ItemBodyProduct(
+                                  product: _products[index],
+                                  revisionId: widget.revision.id,
+                                ),
                               );
                             });
                       }
-                      return const Text(
-                          'AppLocalizations.of(context).screenInitialization');
+                      return const PlugScreen();
                     }),
                   ),
                   (changeBodytate is ShowRevisionState)
                       ? const SizedBox.shrink()
                       : ProductAddWidget(revision: widget.revision),
                 ],
-              );
-            }),
-          ),
-        );
+              ),
+            ),
+          );
+        });
       },
     );
   }

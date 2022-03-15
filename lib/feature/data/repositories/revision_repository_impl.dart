@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/data/components/firestore_collection_path.dart';
-import 'package:store_revision/feature/data/models/remote/user_remote_model.dart';
+import 'package:store_revision/feature/data/models/remote/revision_remote_model.dart';
 import 'package:store_revision/feature/domain/entities/product_entity.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/domain/repositories/revision_repository.dart';
@@ -83,6 +83,64 @@ class RevisionRepositoryImpl implements RevisionRepository {
           .toList();
       return Right(listRevisions);
     } catch (_) {
+      return const Left(UnknownFailure());
+    }
+  }
+
+  //  Add trusted id to revision list
+  @override
+  Future<Either<Failure, List<String>>> addTrustedRevision(
+      {required String revisionId, required List<String> trustedsId}) async {
+    try {
+      DocumentSnapshot snap = await _firestore
+          .collection(FirestoreCollectionPath.revisions)
+          .doc(revisionId)
+          .get();
+      List<String> listTrusted = (snap.data()! as dynamic)['listTrusted'];
+      final trusteds = listTrusted;
+      for (var id in trustedsId) {
+        if (!listTrusted.contains(id)) {
+          await _firestore
+              .collection(FirestoreCollectionPath.revisions)
+              .doc(revisionId)
+              .update({
+            'listTrusted': FieldValue.arrayUnion([id])
+          });
+          trusteds.add(id);
+        }
+      }
+
+      return Right(trusteds);
+    } catch (e) {
+      return const Left(UnknownFailure());
+    }
+  }
+
+  //  Remove trusted from revision list
+  @override
+  Future<Either<Failure, List<String>>> deleteTrustedRevision(
+      {required String revisionId, required List<String> trustedsId}) async {
+    try {
+      DocumentSnapshot snap = await _firestore
+          .collection(FirestoreCollectionPath.revisions)
+          .doc(revisionId)
+          .get();
+      List<String> listTrusted = (snap.data()! as dynamic)['listTrusted'];
+      final trusteds = listTrusted;
+      for (var id in trustedsId) {
+        if (listTrusted.contains(id)) {
+          await _firestore
+              .collection(FirestoreCollectionPath.revisions)
+              .doc(revisionId)
+              .update({
+            'listTrusted': FieldValue.arrayRemove([id])
+          });
+        }
+        trusteds.removeWhere((element) => element == id);
+      }
+
+      return Right(trusteds);
+    } catch (e) {
       return const Left(UnknownFailure());
     }
   }

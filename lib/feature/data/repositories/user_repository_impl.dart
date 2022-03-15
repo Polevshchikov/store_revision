@@ -28,25 +28,12 @@ class UserRepositoryImpl implements UserRepository {
   Future<Either<Failure, List<UserEntity>>> getAllUsers() async {
     try {
       User? userCred = _firebaseAuth.currentUser;
-      // final user =
-      //     await _firestore.collection(FirestoreCollectionPath.users).get();
-      // List<UserRemoteModel> lisrUsers = [];
-      // for (var i = 0; i < user.docs.length; i++) {
-      //   lisrUsers.add(UserRemoteModel.fromJson(user.docs[i].data()));
-      // }
-      //  получить всех пользователей
-      // final document =
-      //     await _firestore.collection(FirestoreCollectionPath.users).get();
-      // final allData = document.docs.map((doc) => doc.data()).toList();
+
       final user =
           await _firestore.collection(FirestoreCollectionPath.users).get();
       final lisrUsers =
           user.docs.map((doc) => UserRemoteModel.fromJson(doc.data())).toList();
-
-      final documentSnapshot = await _firestore
-          .collection(FirestoreCollectionPath.users)
-          .doc(userCred?.uid)
-          .get();
+      lisrUsers.removeWhere((item) => item.uid == userCred?.uid);
 
       return Right(lisrUsers);
     } catch (e) {
@@ -54,7 +41,7 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-  //  Добавить ид ревизии из списка у пользователя
+  //  Добавить ид ревизии в список пользователя
   @override
   Future<Either<Failure, void>> addRevisionUser(
       {required String uid, required String revisionId}) async {
