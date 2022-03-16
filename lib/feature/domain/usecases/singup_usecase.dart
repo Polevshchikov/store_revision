@@ -15,11 +15,13 @@ class SignupUseCase extends UseCase<UserEntity, SignUpParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(SignUpParams params) async {
-    return _authenticationRepository.signUp(
+    final result = await _authenticationRepository.signUp(
       email: params.email,
       password: params.password,
       username: params.username,
       // photo: params.photo ?? '',
     );
+
+    return result.fold((failure) => Left(failure), (user) => Right(user));
   }
 }

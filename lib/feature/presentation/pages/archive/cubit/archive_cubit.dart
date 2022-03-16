@@ -18,22 +18,27 @@ class ArchiveCubit extends Cubit<ArchiveState> {
   ArchiveCubit(this._getRevisionsUseCase, this._openCloseRevisionUseCase)
       : super(ArchiveState.initial());
 
-  Future<void> getRevisions() async {
+  Future<void> getRevisions({required String userId}) async {
     emit(ArchiveState.loading());
     final result = await _getRevisionsUseCase.call(NoParams());
     emit(result.fold((failure) => ArchiveState.error(failure), (listRevision) {
-      final listFiltered =
-          listRevision.where((element) => element.isClosed == true).toList();
+      final listFiltered = listRevision
+          .where((element) => (element.isClosed == true &&
+              (element.uid == userId || element.listTrusted.contains(userId))))
+          .toList();
       return ArchiveState.success(listFiltered);
     }));
   }
 
-  Future<void> openRevision({required String revisionId}) async {
+  Future<void> openRevision(
+      {required String revisionId, required String userId}) async {
     final result = await _openCloseRevisionUseCase
         .call(OpenCloseRevisionParams(revisionId: revisionId));
     emit(result.fold((failure) => ArchiveState.error(failure), (listRevision) {
-      final listFiltered =
-          listRevision.where((element) => element.isClosed == true).toList();
+      final listFiltered = listRevision
+          .where((element) => (element.isClosed == true &&
+              (element.uid == userId || element.listTrusted.contains(userId))))
+          .toList();
       return ArchiveState.success(listFiltered);
     }));
   }

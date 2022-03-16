@@ -11,65 +11,64 @@ import 'package:image_picker/image_picker.dart' as _i12;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i18;
 
-import 'core/modules/local_module.dart' as _i55;
+import 'core/modules/local_module.dart' as _i54;
 import 'feature/data/repositories/authentication_repository_impl.dart' as _i24;
 import 'feature/data/repositories/file_pdf_repository_impl.dart' as _i7;
 import 'feature/data/repositories/file_repository_impl.dart' as _i9;
 import 'feature/data/repositories/product_repository_impl.dart' as _i14;
 import 'feature/data/repositories/revision_repository_impl.dart' as _i17;
-import 'feature/data/repositories/settings_repository_impl.dart' as _i44;
+import 'feature/data/repositories/settings_repository_impl.dart' as _i43;
 import 'feature/data/repositories/user_repository_impl.dart' as _i22;
 import 'feature/domain/repositories/authentication_repository.dart' as _i23;
 import 'feature/domain/repositories/file_pdf_repository.dart' as _i6;
 import 'feature/domain/repositories/file_repository.dart' as _i8;
 import 'feature/domain/repositories/product_repository.dart' as _i13;
 import 'feature/domain/repositories/revision_repository.dart' as _i16;
-import 'feature/domain/repositories/settings_repository.dart' as _i43;
+import 'feature/domain/repositories/settings_repository.dart' as _i42;
 import 'feature/domain/repositories/user_repository.dart' as _i21;
-import 'feature/domain/usecases/add_trusted_usecase.dart' as _i46;
+import 'feature/domain/usecases/add_trusted_usecase.dart' as _i45;
 import 'feature/domain/usecases/create_product_usecase.dart' as _i25;
 import 'feature/domain/usecases/create_revision_usecase.dart' as _i26;
 import 'feature/domain/usecases/delete_product_usecase.dart' as _i27;
 import 'feature/domain/usecases/delete_revision_usecase.dart' as _i28;
-import 'feature/domain/usecases/delete_trusted_usecase.dart' as _i47;
+import 'feature/domain/usecases/delete_trusted_usecase.dart' as _i46;
 import 'feature/domain/usecases/get_authenticated_user_usecase.dart' as _i29;
 import 'feature/domain/usecases/get_products_usecase.dart' as _i30;
 import 'feature/domain/usecases/get_revisions_usecase.dart' as _i31;
-import 'feature/domain/usecases/get_users_usecase.dart' as _i32;
-import 'feature/domain/usecases/get_verification_usecase.dart' as _i33;
-import 'feature/domain/usecases/login_usecase.dart' as _i34;
-import 'feature/domain/usecases/logout_usecase.dart' as _i35;
-import 'feature/domain/usecases/open_close_revision_usecase.dart' as _i37;
-import 'feature/domain/usecases/open_revision_pdf_usecase.dart' as _i38;
-import 'feature/domain/usecases/singup_usecase.dart' as _i45;
-import 'feature/domain/usecases/upload_camera_image_usecase.dart' as _i19;
-import 'feature/domain/usecases/upload_file_usecase.dart' as _i20;
-import 'feature/domain/usecases/verification_email_usecase.dart' as _i48;
-import 'feature/presentation/pages/archive/cubit/archive_cubit.dart' as _i49;
+import 'feature/domain/usecases/get_verification_usecase.dart' as _i32;
+import 'feature/domain/usecases/login_usecase.dart' as _i33;
+import 'feature/domain/usecases/logout_usecase.dart' as _i34;
+import 'feature/domain/usecases/open_close_revision_usecase.dart' as _i35;
+import 'feature/domain/usecases/open_revision_pdf_usecase.dart' as _i36;
+import 'feature/domain/usecases/singup_usecase.dart' as _i44;
+import 'feature/domain/usecases/upload_camera_usecase.dart' as _i19;
+import 'feature/domain/usecases/upload_gallery_usecase.dart' as _i20;
+import 'feature/domain/usecases/verification_email_usecase.dart' as _i47;
+import 'feature/presentation/pages/archive/cubit/archive_cubit.dart' as _i48;
 import 'feature/presentation/pages/archive/cubit/revision_pdf_cubit.dart'
-    as _i42;
+    as _i41;
 import 'feature/presentation/pages/authentication/bloc/authentication_bloc.dart'
-    as _i50;
+    as _i49;
 import 'feature/presentation/pages/home/cubit/bottom_navigation_cubit.dart'
     as _i3;
-import 'feature/presentation/pages/login/cubit/login_cubit.dart' as _i52;
-import 'feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart'
-    as _i36;
+import 'feature/presentation/pages/login/cubit/login_cubit.dart' as _i51;
 import 'feature/presentation/pages/product_add/cubit/product_add_cubit.dart'
-    as _i39;
+    as _i37;
 import 'feature/presentation/pages/profile/cubit/profile_cubit.dart' as _i15;
 import 'feature/presentation/pages/revision/cubit/change_body_to_cubit.dart'
     as _i5;
-import 'feature/presentation/pages/revision/cubit/revision_cubit.dart' as _i41;
+import 'feature/presentation/pages/revision/cubit/revision_cubit.dart' as _i40;
+import 'feature/presentation/pages/revision_create/cubit/revision_create_cubit.dart'
+    as _i39;
 import 'feature/presentation/pages/revisions_active/cubit/change_body_cubit.dart'
     as _i4;
 import 'feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart'
-    as _i40;
+    as _i38;
 import 'feature/presentation/pages/settings/language/bloc/language_bloc.dart'
-    as _i51;
-import 'feature/presentation/pages/sign_up/cubit/sign_up_cubit.dart' as _i53;
-import 'feature/presentation/pages/trusted_add/cubit/trusted_add_cubit.dart'
-    as _i54; // ignore_for_file: unnecessary_lambdas
+    as _i50;
+import 'feature/presentation/pages/sign_up/cubit/sign_up_cubit.dart' as _i52;
+import 'feature/presentation/pages/trusted_revision/cubit/trusted_change_cubit.dart'
+    as _i53; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -115,59 +114,55 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       () => _i30.GetProductsUseCase(get<_i13.ProductRepository>()));
   gh.factory<_i31.GetRevisionsUseCase>(
       () => _i31.GetRevisionsUseCase(get<_i16.RevisionRepository>()));
-  gh.factory<_i32.GetUsersUseCase>(
-      () => _i32.GetUsersUseCase(get<_i21.UserRepository>()));
-  gh.factory<_i33.GetVerificationUseCase>(
-      () => _i33.GetVerificationUseCase(get<_i23.AuthenticationRepository>()));
-  gh.factory<_i34.LoginUseCase>(
-      () => _i34.LoginUseCase(get<_i23.AuthenticationRepository>()));
-  gh.factory<_i35.LogoutUseCase>(
-      () => _i35.LogoutUseCase(get<_i23.AuthenticationRepository>()));
-  gh.factory<_i36.NewRevisionCubit>(
-      () => _i36.NewRevisionCubit(get<_i26.CreateRevisionUseCase>()));
-  gh.factory<_i37.OpenCloseRevisionUseCase>(
-      () => _i37.OpenCloseRevisionUseCase(get<_i16.RevisionRepository>()));
-  gh.factory<_i38.OpenRevisionPDFUseCase>(() => _i38.OpenRevisionPDFUseCase(
+  gh.factory<_i32.GetVerificationUseCase>(
+      () => _i32.GetVerificationUseCase(get<_i23.AuthenticationRepository>()));
+  gh.factory<_i33.LoginUseCase>(
+      () => _i33.LoginUseCase(get<_i23.AuthenticationRepository>()));
+  gh.factory<_i34.LogoutUseCase>(
+      () => _i34.LogoutUseCase(get<_i23.AuthenticationRepository>()));
+  gh.factory<_i35.OpenCloseRevisionUseCase>(
+      () => _i35.OpenCloseRevisionUseCase(get<_i16.RevisionRepository>()));
+  gh.factory<_i36.OpenRevisionPDFUseCase>(() => _i36.OpenRevisionPDFUseCase(
       get<_i6.FilePDFRepository>(), get<_i13.ProductRepository>()));
-  gh.factory<_i39.ProductAddCubit>(
-      () => _i39.ProductAddCubit(get<_i25.CreateProductUseCase>()));
-  gh.factory<_i40.RevisionActiveListCubit>(() => _i40.RevisionActiveListCubit(
+  gh.factory<_i37.ProductAddCubit>(
+      () => _i37.ProductAddCubit(get<_i25.CreateProductUseCase>()));
+  gh.factory<_i38.RevisionActiveListCubit>(() => _i38.RevisionActiveListCubit(
       get<_i31.GetRevisionsUseCase>(),
       get<_i28.DeleteRevisionUseCase>(),
-      get<_i37.OpenCloseRevisionUseCase>()));
-  gh.factory<_i41.RevisionCubit>(() => _i41.RevisionCubit(
+      get<_i35.OpenCloseRevisionUseCase>()));
+  gh.factory<_i39.RevisionCreateCubit>(
+      () => _i39.RevisionCreateCubit(get<_i26.CreateRevisionUseCase>()));
+  gh.factory<_i40.RevisionCubit>(() => _i40.RevisionCubit(
       get<_i30.GetProductsUseCase>(), get<_i27.DeleteProductsUseCase>()));
-  gh.factory<_i42.RevisionPdfCubit>(
-      () => _i42.RevisionPdfCubit(get<_i38.OpenRevisionPDFUseCase>()));
-  gh.factory<_i43.SettingsRepository>(
-      () => _i44.SettingRepositoryImpl(get<_i18.SharedPreferences>()));
-  gh.factory<_i45.SignupUseCase>(
-      () => _i45.SignupUseCase(get<_i23.AuthenticationRepository>()));
-  gh.factory<_i46.TrustedAddUseCase>(() => _i46.TrustedAddUseCase(
+  gh.factory<_i41.RevisionPdfCubit>(
+      () => _i41.RevisionPdfCubit(get<_i36.OpenRevisionPDFUseCase>()));
+  gh.factory<_i42.SettingsRepository>(
+      () => _i43.SettingRepositoryImpl(get<_i18.SharedPreferences>()));
+  gh.factory<_i44.SignupUseCase>(
+      () => _i44.SignupUseCase(get<_i23.AuthenticationRepository>()));
+  gh.factory<_i45.TrustedAddUseCase>(() => _i45.TrustedAddUseCase(
       get<_i16.RevisionRepository>(), get<_i21.UserRepository>()));
-  gh.factory<_i47.TrustedDeleteUseCase>(() => _i47.TrustedDeleteUseCase(
+  gh.factory<_i46.TrustedDeleteUseCase>(() => _i46.TrustedDeleteUseCase(
       get<_i16.RevisionRepository>(), get<_i21.UserRepository>()));
-  gh.factory<_i48.VerificationEmailUseCase>(() =>
-      _i48.VerificationEmailUseCase(get<_i23.AuthenticationRepository>()));
-  gh.factory<_i49.ArchiveCubit>(() => _i49.ArchiveCubit(
-      get<_i31.GetRevisionsUseCase>(), get<_i37.OpenCloseRevisionUseCase>()));
-  gh.singleton<_i50.AuthenticationBloc>(_i50.AuthenticationBloc(
-      get<_i35.LogoutUseCase>(),
+  gh.factory<_i47.VerificationEmailUseCase>(() =>
+      _i47.VerificationEmailUseCase(get<_i23.AuthenticationRepository>()));
+  gh.factory<_i48.ArchiveCubit>(() => _i48.ArchiveCubit(
+      get<_i31.GetRevisionsUseCase>(), get<_i35.OpenCloseRevisionUseCase>()));
+  gh.singleton<_i49.AuthenticationBloc>(_i49.AuthenticationBloc(
+      get<_i34.LogoutUseCase>(),
       get<_i10.FirebaseAuth>(),
       get<_i29.GetAuthenticatedUserUseCase>(),
-      get<_i33.GetVerificationUseCase>(),
-      get<_i48.VerificationEmailUseCase>()));
-  gh.factory<_i51.LanguageBloc>(
-      () => _i51.LanguageBloc(get<_i43.SettingsRepository>()));
-  gh.factory<_i52.LoginCubit>(() => _i52.LoginCubit(
-      get<_i34.LoginUseCase>(), get<_i50.AuthenticationBloc>()));
-  gh.factory<_i53.SignUpCubit>(() => _i53.SignUpCubit(
-      get<_i45.SignupUseCase>(), get<_i50.AuthenticationBloc>()));
-  gh.factory<_i54.TrustedAddCubit>(() => _i54.TrustedAddCubit(
-      get<_i32.GetUsersUseCase>(),
-      get<_i46.TrustedAddUseCase>(),
-      get<_i47.TrustedDeleteUseCase>()));
+      get<_i32.GetVerificationUseCase>(),
+      get<_i47.VerificationEmailUseCase>()));
+  gh.factory<_i50.LanguageBloc>(
+      () => _i50.LanguageBloc(get<_i42.SettingsRepository>()));
+  gh.factory<_i51.LoginCubit>(() => _i51.LoginCubit(
+      get<_i33.LoginUseCase>(), get<_i49.AuthenticationBloc>()));
+  gh.factory<_i52.SignUpCubit>(() => _i52.SignUpCubit(
+      get<_i44.SignupUseCase>(), get<_i49.AuthenticationBloc>()));
+  gh.factory<_i53.TrustedChangeCubit>(() => _i53.TrustedChangeCubit(
+      get<_i45.TrustedAddUseCase>(), get<_i46.TrustedDeleteUseCase>()));
   return get;
 }
 
-class _$LocalModule extends _i55.LocalModule {}
+class _$LocalModule extends _i54.LocalModule {}

@@ -14,7 +14,9 @@ class LoginUseCase extends UseCase<UserEntity, LoginParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(LoginParams params) async {
-    return _authenticationRepository.logIn(
+    final result = await _authenticationRepository.logIn(
         email: params.email, password: params.password);
+
+    return result.fold((failure) => Left(failure), (user) => Right(user));
   }
 }

@@ -123,15 +123,17 @@ class RevisionDetailsPage extends StatelessWidget {
               child: Column(
                 children: [
                   const Text(
-                    'Количество наименований: ',
+                    'Количество допущенных сотрудников: ',
                     style: TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   Text(
-                    revisionDetailsArguments.products.length.toString(),
+                    revisionDetailsArguments.revision.listTrusted.length
+                        .toString(),
                     style: const TextStyle(
                       color: Color.fromARGB(255, 18, 103, 129),
                       fontSize: 18,
@@ -141,6 +143,7 @@ class RevisionDetailsPage extends StatelessWidget {
                 ],
               ),
             ),
+
             const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.all(5.0),
@@ -159,7 +162,7 @@ class RevisionDetailsPage extends StatelessWidget {
               child: Column(
                 children: [
                   const Text(
-                    'Количество сотрудников: ',
+                    'Количество наименований: ',
                     style: TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 14,
@@ -167,8 +170,7 @@ class RevisionDetailsPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    revisionDetailsArguments.revision.listTrusted.length
-                        .toString(),
+                    revisionDetailsArguments.products.length.toString(),
                     style: const TextStyle(
                       color: Color.fromARGB(255, 18, 103, 129),
                       fontSize: 18,

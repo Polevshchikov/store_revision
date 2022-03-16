@@ -23,13 +23,15 @@ class RevisionActiveListCubit extends Cubit<RevisionActiveListState> {
       this._deleteRevisionUseCase, this._openCloseRevisionUseCase)
       : super(RevisionActiveListState.initial());
 
-  Future<void> getRevisions() async {
+  Future<void> getRevisions({required String userId}) async {
     emit(RevisionActiveListState.loading());
     final result = await _getRevisionsUseCase.call(NoParams());
     emit(result.fold((failure) => RevisionActiveListState.error(failure),
         (listRevision) {
-      final listFiltered =
-          listRevision.where((element) => element.isClosed == false).toList();
+      final listFiltered = listRevision
+          .where((element) => (element.isClosed == false &&
+              (element.uid == userId || element.listTrusted.contains(userId))))
+          .toList();
       return RevisionActiveListState.success(listFiltered);
     }));
   }
@@ -43,19 +45,24 @@ class RevisionActiveListCubit extends Cubit<RevisionActiveListState> {
     ));
     emit(result.fold((failure) => RevisionActiveListState.error(failure),
         (listRevision) {
-      final listFiltered =
-          listRevision.where((element) => element.isClosed == false).toList();
+      final listFiltered = listRevision
+          .where((element) => (element.isClosed == false &&
+              (element.uid == userId || element.listTrusted.contains(userId))))
+          .toList();
       return RevisionActiveListState.success(listFiltered);
     }));
   }
 
-  Future<void> closeRevision({required String revisionId}) async {
+  Future<void> closeRevision(
+      {required String revisionId, required String userId}) async {
     final result = await _openCloseRevisionUseCase
         .call(OpenCloseRevisionParams(revisionId: revisionId));
     emit(result.fold((failure) => RevisionActiveListState.error(failure),
         (listRevision) {
-      final listFiltered =
-          listRevision.where((element) => element.isClosed == false).toList();
+      final listFiltered = listRevision
+          .where((element) => (element.isClosed == false &&
+              (element.uid == userId || element.listTrusted.contains(userId))))
+          .toList();
       return RevisionActiveListState.success(listFiltered);
     }));
   }

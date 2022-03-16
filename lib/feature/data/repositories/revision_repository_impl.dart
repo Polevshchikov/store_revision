@@ -96,8 +96,8 @@ class RevisionRepositoryImpl implements RevisionRepository {
           .collection(FirestoreCollectionPath.revisions)
           .doc(revisionId)
           .get();
-      List<String> listTrusted = (snap.data()! as dynamic)['listTrusted'];
-      final trusteds = listTrusted;
+      List<dynamic> listTrusted = (snap.data()! as dynamic)['listTrusted'];
+      final trusteds = listTrusted.map((e) => e.toString()).toList();
       for (var id in trustedsId) {
         if (!listTrusted.contains(id)) {
           await _firestore
@@ -125,8 +125,8 @@ class RevisionRepositoryImpl implements RevisionRepository {
           .collection(FirestoreCollectionPath.revisions)
           .doc(revisionId)
           .get();
-      List<String> listTrusted = (snap.data()! as dynamic)['listTrusted'];
-      final trusteds = listTrusted;
+      List<dynamic> listTrusted = (snap.data()! as dynamic)['listTrusted'];
+      final trusteds = listTrusted.map((e) => e.toString()).toList();
       for (var id in trustedsId) {
         if (listTrusted.contains(id)) {
           await _firestore

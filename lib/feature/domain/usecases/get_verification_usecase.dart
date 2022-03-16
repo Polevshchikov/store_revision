@@ -13,6 +13,8 @@ class GetVerificationUseCase extends UseCase<bool, NoParams> {
 
   @override
   Future<Either<Failure, bool>> call(NoParams params) async {
-    return await _authenticationRepository.isVerificationEmail();
+    final result = await _authenticationRepository.isVerificationEmail();
+
+    return result.fold((failure) => Left(failure), (isVerif) => Right(isVerif));
   }
 }

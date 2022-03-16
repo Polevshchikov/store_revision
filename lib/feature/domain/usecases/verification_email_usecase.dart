@@ -13,6 +13,8 @@ class VerificationEmailUseCase extends UseCase<void, NoParams> {
 
   @override
   Future<Either<Failure, void>> call(NoParams params) async {
-    return await _authenticationRepository.sendVerificationEmail();
+    final result = await _authenticationRepository.sendVerificationEmail();
+
+    return result.fold((failure) => Left(failure), (user) => Right(user));
   }
 }

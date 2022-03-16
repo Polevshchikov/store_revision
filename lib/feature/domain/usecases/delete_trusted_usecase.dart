@@ -26,7 +26,7 @@ class TrustedDeleteUseCase
 
       return resultUsers.fold((failure) => Left(failure), (users) async {
         final listUsers =
-            users.where((e1) => trusteds.every((e2) => e1.uid != e2)).toList();
+            users.where((e1) => !trusteds.every((e2) => e1.uid != e2)).toList();
         return Right(listUsers);
       });
     });

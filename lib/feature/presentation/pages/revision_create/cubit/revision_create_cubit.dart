@@ -6,16 +6,16 @@ import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/domain/usecases/create_revision_usecase.dart';
 import 'package:store_revision/feature/domain/usecases/params/create_revision_params.dart';
-import 'package:store_revision/feature/presentation/pages/new_revision/components/revision_descr.dart';
-import 'package:store_revision/feature/presentation/pages/new_revision/components/revision_name.dart';
+import 'package:store_revision/feature/presentation/pages/revision_create/components/revision_descr.dart';
+import 'package:store_revision/feature/presentation/pages/revision_create/components/revision_name.dart';
 
-part 'new_revision_state.dart';
+part 'revision_create_state.dart';
 
 @injectable
-class NewRevisionCubit extends Cubit<NewRevisionState> {
+class RevisionCreateCubit extends Cubit<RevisionCreateState> {
   final CreateRevisionUseCase _createRevisionUseCase;
-  NewRevisionCubit(this._createRevisionUseCase)
-      : super(const NewRevisionState());
+  RevisionCreateCubit(this._createRevisionUseCase)
+      : super(const RevisionCreateState());
 
   void revisionNameChanged(String value) {
     final name = RevisionName.dirty(value);

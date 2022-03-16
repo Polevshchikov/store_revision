@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:store_revision/feature/presentation/pages/authentication/bloc/authentication_bloc.dart';
-import 'package:store_revision/feature/presentation/pages/new_revision/cubit/new_revision_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/revision_create/cubit/revision_create_cubit.dart';
 
-class AddRevisionScreen extends StatelessWidget {
-  const AddRevisionScreen({Key? key}) : super(key: key);
+class RevisionCreateScreen extends StatelessWidget {
+  const RevisionCreateScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +28,13 @@ class AddRevisionScreen extends StatelessWidget {
 class _NameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NewRevisionCubit, NewRevisionState>(
+    return BlocBuilder<RevisionCreateCubit, RevisionCreateState>(
       buildWhen: (previous, current) => previous.name != current.name,
       builder: (context, state) {
         return TextField(
           key: const Key('revisionForm_nameInput_textField'),
           onChanged: (name) =>
-              context.read<NewRevisionCubit>().revisionNameChanged(name),
+              context.read<RevisionCreateCubit>().revisionNameChanged(name),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             labelText: 'name',
@@ -50,14 +50,14 @@ class _NameInput extends StatelessWidget {
 class _DescriptionInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NewRevisionCubit, NewRevisionState>(
+    return BlocBuilder<RevisionCreateCubit, RevisionCreateState>(
       buildWhen: (previous, current) =>
           previous.description != current.description,
       builder: (context, state) {
         return TextField(
           key: const Key('revisionForm_descrInput_textField'),
           onChanged: (descr) =>
-              context.read<NewRevisionCubit>().revisionDescrChanged(descr),
+              context.read<RevisionCreateCubit>().revisionDescrChanged(descr),
           decoration: InputDecoration(
             labelText: 'description',
             helperText: '',
@@ -73,7 +73,7 @@ class _CreateRevisionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = BlocProvider.of<AuthenticationBloc>(context).state.user;
-    return BlocBuilder<NewRevisionCubit, NewRevisionState>(
+    return BlocBuilder<RevisionCreateCubit, RevisionCreateState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
@@ -89,7 +89,7 @@ class _CreateRevisionButton extends StatelessWidget {
                 onPressed: state.status.isValidated
                     ? () async {
                         await context
-                            .read<NewRevisionCubit>()
+                            .read<RevisionCreateCubit>()
                             .createRevision(uid: user.uid);
                         Navigator.of(context).pop();
                       }

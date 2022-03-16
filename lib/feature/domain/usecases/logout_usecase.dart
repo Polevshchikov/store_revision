@@ -13,6 +13,8 @@ class LogoutUseCase extends UseCase<void, NoParams> {
 
   @override
   Future<Either<Failure, void>> call(NoParams params) async {
-    return await _authenticationRepository.logOut();
+    final result = await _authenticationRepository.logOut();
+
+    return result.fold((failure) => Left(failure), (user) => Right(user));
   }
 }

@@ -20,7 +20,7 @@ class PlugScreen extends StatelessWidget {
                   decoration: const BoxDecoration(
                     gradient: SweepGradient(colors: [
                       Color.fromARGB(255, 0, 0, 0),
-                      Color.fromARGB(255, 152, 182, 209),
+                      Color.fromARGB(255, 158, 0, 0),
                       Color.fromARGB(255, 0, 0, 0)
                     ], endAngle: math.pi),
                   ),
@@ -31,7 +31,7 @@ class PlugScreen extends StatelessWidget {
                   decoration: const BoxDecoration(
                     gradient: SweepGradient(colors: [
                       Color.fromARGB(255, 0, 0, 0),
-                      Color.fromARGB(255, 152, 182, 209),
+                      Color.fromARGB(255, 158, 0, 0),
                       Color.fromARGB(255, 0, 0, 0)
                     ], endAngle: math.pi * 2, startAngle: math.pi),
                   ),
@@ -46,12 +46,11 @@ class PlugScreen extends StatelessWidget {
               width: double.infinity,
               child: Center(
                   child: Text(
-                'ReviSio',
+                'Произошел сбой',
                 style: TextStyle(
-                  fontSize: 34,
+                  fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  color: Color.fromARGB(255, 1, 58, 105),
-                  letterSpacing: 5,
+                  color: Color.fromARGB(255, 255, 255, 255),
                 ),
               )),
             ),

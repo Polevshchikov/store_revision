@@ -6,9 +6,20 @@ part 'change_body_state.dart';
 
 @injectable
 class ChangeBodyCubit extends Cubit<ChangeBodyState> {
-  ChangeBodyCubit() : super(ShowActiveRevisionState());
+  ChangeBodyCubit() : super(ChangeBodyState.showActiveRevision());
 
-  void changeToActiveRevision() => emit(ShowActiveRevisionState());
-  void changeToAddTrusted() => emit(ShowTrustedAddState());
-  void changeToEditRevision() => emit(ShowEditRevisionState());
+  void changeToActiveRevision() => emit(ChangeBodyState.showActiveRevision());
+  void changeToAddTrusted(String revisionId) =>
+      emit(ChangeBodyState.showTrustedAdd(revisionId));
+  void changeToDeleteTrusted(String revisionId) =>
+      emit(ChangeBodyState.showTrustedDelete(revisionId));
+  void changeToEditRevision({
+    required String revisionId,
+    required String revisionName,
+    required String revisionDescr,
+  }) =>
+      emit(ChangeBodyState.showEditRevision(
+          revisionId: revisionId,
+          revisionName: revisionName,
+          revisionDescr: revisionDescr));
 }

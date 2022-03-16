@@ -1,7 +1,7 @@
-part of 'new_revision_cubit.dart';
+part of 'revision_create_cubit.dart';
 
-class NewRevisionState extends Equatable {
-  const NewRevisionState({
+class RevisionCreateState extends Equatable {
+  const RevisionCreateState({
     this.name = const RevisionName.pure(),
     this.description = const RevisionDescr.pure(),
     this.creatorName = '',
@@ -18,14 +18,14 @@ class NewRevisionState extends Equatable {
   @override
   List<Object> get props => [name, description, creatorName, status, failure];
 
-  NewRevisionState copyWith({
+  RevisionCreateState copyWith({
     RevisionName? name,
     RevisionDescr? description,
     String? creatorName,
     FormzStatus? status,
     Failure? failure,
   }) {
-    return NewRevisionState(
+    return RevisionCreateState(
       name: name ?? this.name,
       description: description ?? this.description,
       creatorName: creatorName ?? this.creatorName,

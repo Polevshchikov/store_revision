@@ -14,6 +14,8 @@ class GetAuthenticatedUserUseCase extends UseCase<UserEntity, NoParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(NoParams params) async {
-    return _authenticationRepository.getAuthenticatedUser();
+    final result = await _authenticationRepository.getAuthenticatedUser();
+
+    return result.fold((failure) => Left(failure), (user) => Right(user));
   }
 }

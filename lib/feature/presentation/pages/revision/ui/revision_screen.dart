@@ -72,7 +72,12 @@ class _RevisionScreenState extends State<RevisionScreen> {
 
                       if (state.status == Status.success &&
                           state.products.isEmpty) {
-                        return const Text('ПУСТО!!');
+                        return const Center(
+                            child: Text(
+                          'Список пуст',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ));
                       }
 
                       if (state.status == Status.success &&
