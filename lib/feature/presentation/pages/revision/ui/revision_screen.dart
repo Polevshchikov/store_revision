@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/ui/product_add_widget.dart';
+import 'package:store_revision/feature/presentation/pages/product_edit/ui/product_edit_screen.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/revision_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/ui/utils/revision_appbar.dart';
@@ -37,9 +38,10 @@ class _RevisionScreenState extends State<RevisionScreen> {
           return Scaffold(
             extendBodyBehindAppBar: true,
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-            floatingActionButton: (changeBodytate is ShowRevisionState)
-                ? const AddProductButton()
-                : null,
+            floatingActionButton:
+                (changeBodytate.changeBodyType == ChangeBodyType.revision)
+                    ? const AddProductButton()
+                    : null,
             appBar: revisionAppbar(
                 context: context,
                 revision: widget.revision,
@@ -84,29 +86,33 @@ class _RevisionScreenState extends State<RevisionScreen> {
                           state.products.isNotEmpty) {
                         final _products = state.products;
 
-                        return ListView.builder(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            itemCount: _products.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: index == 0
-                                    ? const EdgeInsets.only(top: 100)
-                                    : index == _products.length - 1
-                                        ? const EdgeInsets.only(bottom: 120)
-                                        : EdgeInsets.zero,
-                                child: ItemBodyProduct(
-                                  product: _products[index],
-                                  revisionId: widget.revision.id,
-                                ),
-                              );
-                            });
+                        return (changeBodytate.changeBodyType ==
+                                ChangeBodyType.editProduct)
+                            ? const ProductEditScreen()
+                            : ListView.builder(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                itemCount: _products.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: index == 0
+                                        ? const EdgeInsets.only(top: 100)
+                                        : index == _products.length - 1
+                                            ? const EdgeInsets.only(bottom: 120)
+                                            : EdgeInsets.zero,
+                                    child: ItemBodyProduct(
+                                      product: _products[index],
+                                      revisionId: widget.revision.id,
+                                    ),
+                                  );
+                                });
                       }
                       return const PlugScreen();
                     }),
                   ),
-                  (changeBodytate is ShowRevisionState)
-                      ? const SizedBox.shrink()
-                      : ProductAddWidget(revision: widget.revision),
+                  (changeBodytate.changeBodyType == ChangeBodyType.addProduct)
+                      ? ProductAddWidget(revision: widget.revision)
+                      : const SizedBox.shrink(),
                 ],
               ),
             ),

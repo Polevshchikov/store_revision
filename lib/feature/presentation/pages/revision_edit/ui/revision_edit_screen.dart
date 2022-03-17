@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_revision/feature/presentation/pages/revision_edit/cubit/revision_edit_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/change_body_cubit.dart';
+import 'package:store_revision/feature/presentation/utils/status.dart';
 
 class RevisionEditScreen extends StatefulWidget {
   const RevisionEditScreen({Key? key}) : super(key: key);
@@ -11,16 +13,40 @@ class RevisionEditScreen extends StatefulWidget {
 
 class _RevisionEditScreenState extends State<RevisionEditScreen> {
   late ChangeBodyCubit _changeBodyCubit;
-  // late RevisionEditCubit _revisionEditCubit;
   late String revisionName;
   late String revisionDescr;
+  late String revisionId;
+  late TextEditingController controllerName;
+  late TextEditingController controllerDescr;
+  late FocusNode focusName;
+  late FocusNode focusDescr;
+
   @override
   void initState() {
+    controllerName = TextEditingController();
+    controllerDescr = TextEditingController();
+    focusName = FocusNode();
+    focusDescr = FocusNode();
     _changeBodyCubit = BlocProvider.of<ChangeBodyCubit>(context);
-    // _revisionEditCubit = BlocProvider.of<RevisionEditCubit>(context);
     revisionName = _changeBodyCubit.state.revisionName;
     revisionDescr = _changeBodyCubit.state.revisionDescr;
+    revisionId = _changeBodyCubit.state.revisionId;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controllerName.dispose();
+    controllerDescr.dispose();
+    focusName.dispose();
+    focusDescr.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    context.read<RevisionEditCubit>().resetState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -32,19 +58,172 @@ class _RevisionEditScreenState extends State<RevisionEditScreen> {
             height: 200,
             width: double.infinity,
             padding: const EdgeInsets.all(12.0),
+            margin: const EdgeInsets.symmetric(horizontal: 15.0),
             decoration: const BoxDecoration(
-              color: Color.fromRGBO(236, 236, 236, 0.8),
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 252, 147, 99),
+                Color.fromARGB(255, 139, 238, 255),
+                Color.fromARGB(255, 114, 199, 90),
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 150, 143, 143),
+                  offset: Offset(6, 6),
+                  blurRadius: 15,
+                  spreadRadius: 1,
+                ),
+                BoxShadow(
+                  color: Color.fromARGB(255, 131, 123, 123),
+                  offset: Offset(-6, -6),
+                  blurRadius: 15,
+                  spreadRadius: 1,
+                ),
+              ],
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Название: ' + revisionName),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Flexible(
+                        child: Text(
+                      'Название: ',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Color.fromARGB(255, 0, 79, 143)),
+                    )),
+                    const SizedBox(width: 5),
+                    Flexible(
+                        flex: 2,
+                        child: TextFormField(
+                          autofocus: true,
+                          focusNode: focusName,
+                          controller: controllerName,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromARGB(255, 0, 0, 0)),
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding:
+                                const EdgeInsets.only(top: 20, bottom: 2),
+                            alignLabelWithHint: true,
+                            hintText: revisionName,
+                            helperText: '',
+                          ),
+                          onFieldSubmitted: (term) {
+                            focusName.unfocus();
+                            FocusScope.of(context).requestFocus(focusDescr);
+                          },
+                        )),
+                  ],
+                ),
                 const SizedBox(height: 5),
-                Text('Описание: ' + revisionDescr),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Flexible(
+                      child: Text(
+                        'Описание: ',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromARGB(255, 0, 79, 143)),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Flexible(
+                      flex: 2,
+                      child: TextFormField(
+                        focusNode: focusDescr,
+                        controller: controllerDescr,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromARGB(255, 0, 0, 0)),
+                        decoration: InputDecoration(
+                          isDense: true,
+                          contentPadding:
+                              const EdgeInsets.only(top: 20, bottom: 2),
+                          alignLabelWithHint: true,
+                          hintText: revisionDescr,
+                          helperText: '',
+                        ),
+                        onFieldSubmitted: (term) {
+                          focusDescr.unfocus();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 5),
               ],
             ),
           ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 200),
+            child: BlocBuilder<RevisionEditCubit, RevisionEditState>(
+              builder: (context, state) {
+                if (state.status == Status.success) {
+                  BlocProvider.of<ChangeBodyCubit>(context)
+                      .changeToActiveRevision();
+                }
+                return state.status == Status.waiting
+                    ? const CircularProgressIndicator()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              primary: const Color.fromARGB(255, 255, 81, 0),
+                            ),
+                            onPressed: () =>
+                                BlocProvider.of<ChangeBodyCubit>(context)
+                                    .changeToActiveRevision(),
+                            child: const Text('Отменить'),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              primary: const Color.fromARGB(255, 0, 167, 14),
+                            ),
+                            onPressed: () async {
+                              await context
+                                  .read<RevisionEditCubit>()
+                                  .editRevision(
+                                    revisionId: revisionId,
+                                    revisionName: controllerName.text,
+                                    revisionDescr: controllerDescr.text,
+                                  );
+                            },
+                            child: const Text('Изменить'),
+                          ),
+                        ],
+                      );
+              },
+            ),
+          ),
+        ),
+        const Center(
+          child: Padding(
+              padding: EdgeInsets.only(bottom: 180),
+              child: Text(
+                'Редактирование ревизии',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: Color.fromARGB(255, 0, 0, 0)),
+              )),
         ),
       ],
     );

@@ -209,6 +209,7 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
             );
           },
         ),
+        const SizedBox(height: 30),
         BlocBuilder<ProductAddCubit, ProductAddState>(
           buildWhen: (previous, current) => previous.status != current.status,
           builder: (context, state) {

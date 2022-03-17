@@ -24,7 +24,7 @@ PreferredSizeWidget revisionAppbar({
       ),
       elevation: 10,
       title: Text(
-        'Ревизия: ' + revision.name,
+        revision.name,
       ),
       actions: [
         Padding(

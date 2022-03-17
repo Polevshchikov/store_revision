@@ -12,7 +12,11 @@ abstract class RevisionRepository {
     required String description,
   });
 
-  Future<Either<Failure, void>> editRevision();
+  Future<Either<Failure, void>> editRevision({
+    required String id,
+    required String name,
+    required String description,
+  });
 
   Future<Either<Failure, void>> daleteRevision(String revisionId);
 

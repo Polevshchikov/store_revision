@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:store_revision/feature/domain/entities/product_entity.dart';
+import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/revision_cubit.dart';
 import 'package:store_revision/feature/presentation/utils/prompt_remove.dart';
 
@@ -94,6 +95,33 @@ class ItemBodyProduct extends StatelessWidget {
             ),
           ),
         ),
+        Positioned(
+            right: 25.0,
+            top: 20,
+            child: SizedBox(
+              height: 40,
+              width: 40,
+              child: InkWell(
+                onTap: () {
+                  promptDialog(
+                      context: context,
+                      dialog: Text(
+                          'Вы действительно хотите редактировать товар: ${product.name}?',
+                          style: const TextStyle(color: Colors.black)),
+                      onPressed: () {
+                        BlocProvider.of<ChangeBodyToCubit>(context)
+                            .changeToEditProduct(
+                          revisionId: revisionId,
+                          productId: product.id,
+                          productName: product.name,
+                          productCost: product.cost,
+                          productQuantity: product.quantity,
+                        );
+                      });
+                },
+                child: const Icon(Icons.edit),
+              ),
+            )),
       ],
     );
   }

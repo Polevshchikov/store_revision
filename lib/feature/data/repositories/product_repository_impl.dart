@@ -17,8 +17,68 @@ class ProductRepositoryImpl implements ProductRepository {
 
   //  Edit the data product
   @override
-  Future<Either<Failure, void>> editProduct() {
-    throw UnimplementedError();
+  Future<Either<Failure, void>> editProduct({
+    required String revisionId,
+    required String productId,
+    required String productName,
+    required double productCost,
+    required double productQuantity,
+  }) async {
+    try {
+      final document = await _firestore
+          .collection(FirestoreCollectionPath.revisions)
+          .doc(revisionId)
+          .collection(FirestoreCollectionPath.products)
+          .doc(productId)
+          .get();
+
+      final product = ProductRemoteModel.fromJson(document.data()!);
+
+      if (productName.isNotEmpty) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .collection(FirestoreCollectionPath.products)
+            .doc(productId)
+            .update({'name': productName});
+      }
+      if (productCost != -1 && productQuantity != -1) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .collection(FirestoreCollectionPath.products)
+            .doc(productId)
+            .update({
+          'cost': productCost,
+          'quantity': productQuantity,
+          'total': productQuantity * productCost
+        });
+      } else if (productQuantity != -1 && productCost == -1) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .collection(FirestoreCollectionPath.products)
+            .doc(productId)
+            .update({
+          'quantity': productQuantity,
+          'total': productQuantity * product.cost,
+        });
+      } else if (productQuantity == -1 && productCost != -1) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(revisionId)
+            .collection(FirestoreCollectionPath.products)
+            .doc(productId)
+            .update({
+          'cost': productCost,
+          'total': product.quantity * productCost,
+        });
+      }
+
+      return const Right(null);
+    } catch (e) {
+      return const Left(UnknownFailure());
+    }
   }
 
   //  Get list products

@@ -11,6 +11,7 @@ import 'package:store_revision/feature/presentation/pages/home/ui/home_screen.da
 import 'package:store_revision/feature/presentation/pages/login/cubit/login_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/login/ui/login_page.dart';
 import 'package:store_revision/feature/presentation/pages/product_add/cubit/product_add_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/product_edit/cubit/product_edit_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/profile/cubit/profile_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/profile/ui/profile_page.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
@@ -19,6 +20,7 @@ import 'package:store_revision/feature/presentation/pages/revision/ui/revision_s
 import 'package:store_revision/feature/presentation/pages/revision_create/cubit/revision_create_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision_create/ui/revision_create_screen.dart';
 import 'package:store_revision/feature/presentation/pages/revision_details/ui/revision_details.dart';
+import 'package:store_revision/feature/presentation/pages/revision_edit/cubit/revision_edit_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision_info/ui/revision_info_screen.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/change_body_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart';
@@ -91,6 +93,8 @@ class MainNavigation {
               BlocProvider(
                   create: (BuildContext context) => getIt<ChangeBodyToCubit>()),
               BlocProvider(
+                  create: (BuildContext context) => getIt<ProductEditCubit>()),
+              BlocProvider(
                   create: (BuildContext context) => getIt<ProductAddCubit>(
                       param1: BlocProvider.of<AuthenticationBloc>(context))),
             ],
@@ -124,6 +128,8 @@ final List<Widget> tabGroups = [
       BlocProvider(
           create: (BuildContext context) => getIt<TrustedChangeCubit>(
               param1: BlocProvider.of<AuthenticationBloc>(context))),
+      BlocProvider(
+          create: (BuildContext context) => getIt<RevisionEditCubit>()),
       BlocProvider(create: (BuildContext context) => getIt<ChangeBodyCubit>()),
     ],
     child: const RevisionActiveScreen(),

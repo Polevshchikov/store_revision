@@ -14,7 +14,13 @@ abstract class ProductRepository {
     required double quantity,
   });
 
-  Future<Either<Failure, void>> editProduct();
+  Future<Either<Failure, void>> editProduct({
+    required String revisionId,
+    required String productId,
+    required String productName,
+    required double productCost,
+    required double productQuantity,
+  });
 
   Future<Either<Failure, List<ProductEntity>>> getProducts({
     required String revisionId,

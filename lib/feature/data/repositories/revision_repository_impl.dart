@@ -18,8 +18,29 @@ class RevisionRepositoryImpl implements RevisionRepository {
 
   //  To change the data revision
   @override
-  Future<Either<Failure, void>> editRevision() {
-    throw UnimplementedError();
+  Future<Either<Failure, void>> editRevision({
+    required String id,
+    required String name,
+    required String description,
+  }) async {
+    try {
+      if (name.isNotEmpty) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(id)
+            .update({'name': name});
+      }
+      if (description.isNotEmpty) {
+        await _firestore
+            .collection(FirestoreCollectionPath.revisions)
+            .doc(id)
+            .update({'description': description});
+      }
+
+      return const Right(null);
+    } catch (e) {
+      return const Left(UnknownFailure());
+    }
   }
 
   //  Create revision firebase database
