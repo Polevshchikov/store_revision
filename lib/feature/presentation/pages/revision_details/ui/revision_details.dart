@@ -10,6 +10,7 @@ class RevisionDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       backgroundColor: const Color.fromARGB(255, 31, 30, 30),
       appBar: AppBar(
@@ -143,7 +144,6 @@ class RevisionDetailsPage extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.all(5.0),
@@ -221,33 +221,6 @@ class RevisionDetailsPage extends StatelessWidget {
                 ],
               ),
             ),
-            // const SizedBox(height: 25),
-            // const Text(
-            //   'Добавить сотрудника к ревизии, чтобы он мог добавлять товар?',
-            //   style: TextStyle(
-            //     color: Color.fromARGB(255, 16, 19, 207),
-            //     fontSize: 14,
-            //     fontWeight: FontWeight.w700,
-            //   ),
-            //   textAlign: TextAlign.center,
-            // ),
-            // ElevatedButton(
-            //   style: ElevatedButton.styleFrom(
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(15),
-            //     ),
-            //     primary: const Color.fromARGB(255, 23, 32, 156),
-            //   ),
-            //   onPressed: () {},
-            //   child: Row(
-            //     mainAxisSize: MainAxisSize.min,
-            //     children: const [
-            //       Text('Добавить сотрудника'),
-            //       SizedBox(width: 5),
-            //       Icon(Icons.person_add_outlined)
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),

@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:store_revision/common/app_resources.dart';
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -42,18 +44,14 @@ class SplashScreen extends StatelessWidget {
             ),
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-              child: const SizedBox(
+              child: Container(
                 height: double.infinity,
                 width: double.infinity,
+                margin: const EdgeInsets.all(20),
                 child: Center(
-                    child: Text(
-                  'ReviSio',
-                  style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.w700,
-                    color: Color.fromARGB(255, 1, 58, 105),
-                    letterSpacing: 5,
-                  ),
+                    child: Image.asset(
+                  AppResources.logoApp,
+                  color: Colors.white,
                 )),
               ),
             ),

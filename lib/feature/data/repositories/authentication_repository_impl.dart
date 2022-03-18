@@ -27,10 +27,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   /// Throws a [LogOutFailure] if an exception occurs.
   @override
   Future<Either<Failure, void>> logOut() async {
-//  await Future.wait([
-//         _firebaseAuth.signOut(),
-//         _googleSignIn.signOut(),
-//       ]);
     try {
       await _firebaseAuth.signOut();
       return const Right(null);

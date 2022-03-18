@@ -36,6 +36,7 @@ class _RevisionScreenState extends State<RevisionScreen> {
         return BlocBuilder<RevisionCubit, RevisionState>(
             builder: (BuildContext context, RevisionState state) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             extendBodyBehindAppBar: true,
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton:

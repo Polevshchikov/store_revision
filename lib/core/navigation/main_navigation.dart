@@ -21,6 +21,7 @@ import 'package:store_revision/feature/presentation/pages/revision_create/cubit/
 import 'package:store_revision/feature/presentation/pages/revision_create/ui/revision_create_screen.dart';
 import 'package:store_revision/feature/presentation/pages/revision_details/ui/revision_details.dart';
 import 'package:store_revision/feature/presentation/pages/revision_edit/cubit/revision_edit_cubit.dart';
+import 'package:store_revision/feature/presentation/pages/revision_info/cubit/revision_info_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision_info/ui/revision_info_screen.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/change_body_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/revisions_active_list_cubit.dart';
@@ -110,7 +111,12 @@ class MainNavigation {
       case MainNavigationRouteNames.revisionInfo:
         final value = routeSettings.arguments as RevisionEntity;
         return MaterialPageRoute(
-            builder: (_) => RevisionInfoScreen(revision: value));
+          builder: (_) => BlocProvider(
+            create: (BuildContext context) => getIt<RevisionInfoCubit>(
+                param1: BlocProvider.of<AuthenticationBloc>(context)),
+            child: RevisionInfoScreen(revision: value),
+          ),
+        );
 
       default:
         const widget = Center(child: Text('Navigation Error!!!'));

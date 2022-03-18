@@ -20,6 +20,7 @@ class BuildHomePage extends StatelessWidget {
         minTextAdapt: true,
         orientation: Orientation.portrait);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: homeAppbar(
         context: context,
         gradient:

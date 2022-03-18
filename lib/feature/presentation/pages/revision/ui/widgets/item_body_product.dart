@@ -58,7 +58,7 @@ class ItemBodyProduct extends StatelessWidget {
               const SizedBox(height: 5),
               Text('Итог: ' + product.total.toStringAsFixed(2)),
               const SizedBox(height: 5),
-              Text('Имя создателя : ' + product.userName.toString()),
+              Text('Имя сотрудника: ' + product.userName.toString()),
             ],
           ),
         ),
