@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_revision/feature/presentation/pages/product_edit/cubit/product_edit_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revision/cubit/revision_cubit.dart';
@@ -67,8 +68,8 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        height: 300,
-        margin: const EdgeInsets.all(15),
+        height: 350.h,
+        margin: EdgeInsets.only(top: 120.h, right: 15.w, left: 15.w),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           gradient: const LinearGradient(colors: [
@@ -104,13 +105,13 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Flexible(
+                        Flexible(
                             child: Text(
                           'Название: ',
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(255, 1, 9, 15)),
+                              color: const Color.fromARGB(255, 1, 9, 15)),
                         )),
                         const SizedBox(width: 5),
                         Flexible(
@@ -119,14 +120,14 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                               autofocus: true,
                               focusNode: focusName,
                               controller: controllerName,
-                              style: const TextStyle(
-                                  fontSize: 16,
+                              style: TextStyle(
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 0, 0, 0)),
+                                  color: const Color.fromARGB(255, 0, 0, 0)),
                               decoration: InputDecoration(
                                 isDense: true,
                                 contentPadding:
-                                    const EdgeInsets.only(top: 20, bottom: 2),
+                                    EdgeInsets.only(top: 20.h, bottom: 2.h),
                                 alignLabelWithHint: true,
                                 hintText: productName,
                                 helperText: '',
@@ -146,13 +147,13 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Flexible(
+                        Flexible(
                             child: Text(
                           'Цена: ',
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(255, 1, 9, 15)),
+                              color: const Color.fromARGB(255, 1, 9, 15)),
                         )),
                         const SizedBox(width: 5),
                         Flexible(
@@ -165,14 +166,14 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                                     RegExp('[0-9.,]'))
                               ],
                               keyboardType: TextInputType.datetime,
-                              style: const TextStyle(
-                                  fontSize: 16,
+                              style: TextStyle(
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 0, 0, 0)),
+                                  color: const Color.fromARGB(255, 0, 0, 0)),
                               decoration: InputDecoration(
                                 isDense: true,
                                 contentPadding:
-                                    const EdgeInsets.only(top: 20, bottom: 2),
+                                    EdgeInsets.only(top: 20.h, bottom: 2.h),
                                 alignLabelWithHint: true,
                                 hintText: productCost.toStringAsFixed(2),
                                 helperText: '',
@@ -193,13 +194,13 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Flexible(
+                        Flexible(
                             child: Text(
                           'Количество: ',
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(255, 1, 9, 15)),
+                              color: const Color.fromARGB(255, 1, 9, 15)),
                         )),
                         const SizedBox(width: 5),
                         Flexible(
@@ -212,14 +213,14 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                                     RegExp('[0-9.,]'))
                               ],
                               keyboardType: TextInputType.datetime,
-                              style: const TextStyle(
-                                  fontSize: 16,
+                              style: TextStyle(
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 0, 0, 0)),
+                                  color: const Color.fromARGB(255, 0, 0, 0)),
                               decoration: InputDecoration(
                                 isDense: true,
                                 contentPadding:
-                                    const EdgeInsets.only(top: 20, bottom: 2),
+                                    EdgeInsets.only(top: 20.h, bottom: 2.h),
                                 alignLabelWithHint: true,
                                 hintText: productQuantity.toStringAsFixed(2),
                                 helperText: '',
@@ -236,7 +237,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 200),
+                padding: EdgeInsets.only(top: 200.h),
                 child: BlocBuilder<ProductEditCubit, ProductEditState>(
                   builder: (context, state) {
                     if (state.status == Status.success) {
@@ -292,14 +293,14 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                 ),
               ),
             ),
-            const Positioned(
-              top: -40,
+            Positioned(
+              top: -40.h,
               child: Text(
                 'Редактирование товара',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  color: const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
             ),

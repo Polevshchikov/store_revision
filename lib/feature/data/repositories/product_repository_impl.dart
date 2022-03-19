@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:hive/hive.dart';
 import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/data/components/firestore_collection_path.dart';
+import 'package:store_revision/feature/data/models/local/products_cache_local_model.dart';
 import 'package:store_revision/feature/data/models/remote/product_remote_model.dart';
 import 'package:store_revision/feature/domain/entities/product_entity.dart';
 import 'package:store_revision/feature/domain/repositories/product_repository.dart';
@@ -11,8 +14,12 @@ import 'package:uuid/uuid.dart';
 @Injectable(as: ProductRepository)
 class ProductRepositoryImpl implements ProductRepository {
   final FirebaseFirestore _firestore;
+  final HiveInterface _hive;
+  final Connectivity _connectivity;
   ProductRepositoryImpl(
     this._firestore,
+    this._hive,
+    this._connectivity,
   );
 
   //  Edit the data product
@@ -85,8 +92,27 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, List<ProductEntity>>> getProducts(
       {required String revisionId}) async {
+    final key = revisionId + '_products';
+
+    final connectivityResult = await _connectivity.checkConnectivity();
+
     try {
       //  получить все товары
+
+      final productBox =
+          await _hive.openBox<ProductsCacheLocalModel>(productsCacheBoxKey);
+
+      if (connectivityResult != ConnectivityResult.wifi &&
+          connectivityResult != ConnectivityResult.mobile) {
+        final cachedProducts = productBox.get(key);
+        if (cachedProducts != null) {
+          if (DateTime.now().isBefore(DateTime.parse(cachedProducts.createdAt)
+              .add(const Duration(hours: 1)))) {
+            return Right(cachedProducts.products);
+          }
+        }
+      }
+
       final document = await _firestore
           .collection(FirestoreCollectionPath.revisions)
           .doc(revisionId)
@@ -97,6 +123,9 @@ class ProductRepositoryImpl implements ProductRepository {
       final lisrProducts = allData
           .map((product) => ProductRemoteModel.fromJson(product))
           .toList();
+
+      await productBox.put(key, ProductsCacheLocalModel.from(lisrProducts));
+      await productBox.close();
       return Right(lisrProducts);
     } catch (_) {
       return const Left(UnknownFailure());

@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/data/components/firestore_collection_path.dart';
+import 'package:store_revision/feature/data/models/local/revisions_cache_local_model.dart';
 import 'package:store_revision/feature/data/models/remote/revision_remote_model.dart';
 import 'package:store_revision/feature/domain/entities/product_entity.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
@@ -12,8 +15,12 @@ import 'package:uuid/uuid.dart';
 @Injectable(as: RevisionRepository)
 class RevisionRepositoryImpl implements RevisionRepository {
   final FirebaseFirestore _firestore;
+  final HiveInterface _hive;
+  final Connectivity _connectivity;
   RevisionRepositoryImpl(
     this._firestore,
+    this._hive,
+    this._connectivity,
   );
 
   //  To change the data revision
@@ -93,7 +100,23 @@ class RevisionRepositoryImpl implements RevisionRepository {
   //  Get list revision
   @override
   Future<Either<Failure, List<RevisionEntity>>> getRevisions() async {
+    const key = 'allRevision';
+
+    final connectivityResult = await _connectivity.checkConnectivity();
     try {
+      final revisionsBox =
+          await _hive.openBox<RevisionsCacheLocalModel>(revisionsCacheBoxKey);
+
+      if (connectivityResult != ConnectivityResult.wifi &&
+          connectivityResult != ConnectivityResult.mobile) {
+        final cachedRevisions = revisionsBox.get(key);
+        if (cachedRevisions != null) {
+          if (DateTime.now().isBefore(DateTime.parse(cachedRevisions.createdAt)
+              .add(const Duration(hours: 1)))) {
+            return Right(cachedRevisions.revisions);
+          }
+        }
+      }
       //  получить все ревизии
       final document =
           await _firestore.collection(FirestoreCollectionPath.revisions).get();
@@ -102,6 +125,10 @@ class RevisionRepositoryImpl implements RevisionRepository {
       final listRevisions = allData
           .map((revision) => RevisionRemoteModel.fromJson(revision))
           .toList();
+
+      await revisionsBox.put(key, RevisionsCacheLocalModel.from(listRevisions));
+      await revisionsBox.close();
+
       return Right(listRevisions);
     } catch (_) {
       return const Left(UnknownFailure());

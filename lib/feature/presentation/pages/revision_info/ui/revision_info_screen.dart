@@ -23,7 +23,7 @@ class RevisionInfoScreen extends StatelessWidget {
         .read<RevisionInfoCubit>()
         .getInfo(revisionId: revision.id, listTrustedsId: revision.listTrusted);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       extendBodyBehindAppBar: true,
       backgroundColor: const Color.fromARGB(255, 31, 30, 30),
       appBar: AppBar(

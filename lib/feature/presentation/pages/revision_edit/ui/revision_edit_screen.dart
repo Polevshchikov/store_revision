@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_revision/feature/presentation/pages/revision_edit/cubit/revision_edit_cubit.dart';
 import 'package:store_revision/feature/presentation/pages/revisions_active/cubit/change_body_cubit.dart';
 import 'package:store_revision/feature/presentation/utils/status.dart';
@@ -55,10 +56,10 @@ class _RevisionEditScreenState extends State<RevisionEditScreen> {
       children: [
         Center(
           child: Container(
-            height: 200,
+            height: 300.h,
             width: double.infinity,
             padding: const EdgeInsets.all(12.0),
-            margin: const EdgeInsets.symmetric(horizontal: 15.0),
+            margin: EdgeInsets.only(right: 15.0.w, left: 15.0.w, bottom: 150.h),
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
                 Color.fromARGB(255, 252, 147, 99),
@@ -166,7 +167,7 @@ class _RevisionEditScreenState extends State<RevisionEditScreen> {
         ),
         Center(
           child: Padding(
-            padding: const EdgeInsets.only(top: 200),
+            padding: EdgeInsets.only(top: 150.h),
             child: BlocBuilder<RevisionEditCubit, RevisionEditState>(
               builder: (context, state) {
                 if (state.status == Status.success) {
@@ -214,10 +215,10 @@ class _RevisionEditScreenState extends State<RevisionEditScreen> {
             ),
           ),
         ),
-        const Center(
+        Center(
           child: Padding(
-              padding: EdgeInsets.only(bottom: 180),
-              child: Text(
+              padding: EdgeInsets.only(bottom: 400.h),
+              child: const Text(
                 'Редактирование ревизии',
                 style: TextStyle(
                     fontSize: 18,

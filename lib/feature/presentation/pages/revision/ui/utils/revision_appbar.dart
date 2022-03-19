@@ -3,11 +3,13 @@ import 'package:store_revision/core/navigation/arguments/revision_details_argume
 import 'package:store_revision/core/navigation/main_navigation.dart';
 import 'package:store_revision/feature/domain/entities/product_entity.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
+import 'package:store_revision/feature/presentation/pages/revision/cubit/change_body_to_cubit.dart';
 
 PreferredSizeWidget revisionAppbar({
   required BuildContext context,
   required RevisionEntity revision,
   required List<ProductEntity> products,
+  required ChangeBodyType changeBodyType,
 }) {
   return AppBar(
       centerTitle: true,
@@ -60,12 +62,14 @@ PreferredSizeWidget revisionAppbar({
               )),
             ),
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                MainNavigationRouteNames.revisionDetails,
-                arguments: RevisionDetailsArguments(
-                    revision: revision, products: products),
-              );
+              if (changeBodyType == ChangeBodyType.revision) {
+                Navigator.pushNamed(
+                  context,
+                  MainNavigationRouteNames.revisionDetails,
+                  arguments: RevisionDetailsArguments(
+                      revision: revision, products: products),
+                );
+              }
             },
           ),
         ),

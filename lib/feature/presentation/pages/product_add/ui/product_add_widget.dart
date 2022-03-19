@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:formz/formz.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 import 'package:store_revision/feature/domain/entities/user_entity.dart';
@@ -23,12 +24,13 @@ class ProductAddWidget extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
       child: Center(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          margin: EdgeInsets.only(top: 100.h),
+          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 15.h),
           height: MediaQuery.of(context).size.height * 0.5,
           width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
             color: Colors.black12,
-            borderRadius: BorderRadius.circular(40),
+            borderRadius: BorderRadius.circular(40.r),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black45,

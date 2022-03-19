@@ -11,16 +11,26 @@ class RevisionCreateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-          _NameInput(),
-          const SizedBox(height: 8),
-          _DescriptionInput(),
-          const SizedBox(height: 8),
-          _CreateRevisionButton(),
-        ],
+      appBar: AppBar(
+        title: const Text('Новая ревизия'),
+        leading: const BackButton(color: Colors.black),
+        backgroundColor: const Color.fromARGB(160, 10, 99, 150),
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+            _NameInput(),
+            const SizedBox(height: 8),
+            _DescriptionInput(),
+            const SizedBox(height: 8),
+            _CreateRevisionButton(),
+          ],
+        ),
       ),
     );
   }
@@ -38,7 +48,7 @@ class _NameInput extends StatelessWidget {
               context.read<RevisionCreateCubit>().revisionNameChanged(name),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
-            labelText: 'name',
+            labelText: 'Введите название',
             helperText: '',
             errorText: state.name.invalid ? 'invalid name' : null,
           ),
@@ -60,7 +70,7 @@ class _DescriptionInput extends StatelessWidget {
           onChanged: (descr) =>
               context.read<RevisionCreateCubit>().revisionDescrChanged(descr),
           decoration: InputDecoration(
-            labelText: 'description',
+            labelText: 'Введите описание',
             helperText: '',
             errorText: state.description.invalid ? 'invalid description' : null,
           ),
@@ -85,7 +95,7 @@ class _CreateRevisionButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  primary: const Color(0xFFFFD600),
+                  primary: const Color.fromARGB(255, 2, 122, 66),
                 ),
                 onPressed: state.status.isValidated
                     ? () async {
@@ -95,7 +105,7 @@ class _CreateRevisionButton extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     : null,
-                child: const Text('LOGIN'),
+                child: const Text('Создать ревизию'),
               );
       },
     );

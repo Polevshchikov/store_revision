@@ -36,7 +36,7 @@ class _RevisionScreenState extends State<RevisionScreen> {
         return BlocBuilder<RevisionCubit, RevisionState>(
             builder: (BuildContext context, RevisionState state) {
           return Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             extendBodyBehindAppBar: true,
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton:
@@ -44,9 +44,11 @@ class _RevisionScreenState extends State<RevisionScreen> {
                     ? const AddProductButton()
                     : null,
             appBar: revisionAppbar(
-                context: context,
-                revision: widget.revision,
-                products: state.products),
+              context: context,
+              revision: widget.revision,
+              products: state.products,
+              changeBodyType: changeBodytate.changeBodyType,
+            ),
             body: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [

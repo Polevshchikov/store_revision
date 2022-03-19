@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,5 +17,7 @@ abstract class LocalModule {
 
   FirebaseFirestore get firebaseFirestore => FirebaseFirestore.instance;
 
-  // DeviceInfoPlugin get deviceInfoPlugin => DeviceInfoPlugin();
+  Connectivity get connectivity => Connectivity();
+
+  HiveInterface get hive => Hive;
 }

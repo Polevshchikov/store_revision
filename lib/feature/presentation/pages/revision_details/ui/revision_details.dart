@@ -10,7 +10,7 @@ class RevisionDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       extendBodyBehindAppBar: true,
       backgroundColor: const Color.fromARGB(255, 31, 30, 30),
       appBar: AppBar(

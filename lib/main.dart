@@ -3,6 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:store_revision/app.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:store_revision/feature/data/models/local/product_local_model.dart';
+import 'package:store_revision/feature/data/models/local/products_cache_local_model.dart';
+import 'package:store_revision/feature/data/models/local/revision_local_model.dart';
+import 'package:store_revision/feature/data/models/local/revisions_cache_local_model.dart';
+import 'package:store_revision/feature/data/models/local/user_local_model.dart';
+import 'package:store_revision/feature/data/models/local/users_cache_local_model.dart';
 
 import 'injection.dart';
 
@@ -24,5 +31,14 @@ void main() async {
       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark));
   await configureDependencies();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserLocalModelAdapter());
+  Hive.registerAdapter(UsersCacheLocalModelAdapter());
+  Hive.registerAdapter(RevisionLocalModelAdapter());
+  Hive.registerAdapter(RevisionsCacheLocalModelAdapter());
+  Hive.registerAdapter(ProductLocalModelAdapter());
+  Hive.registerAdapter(ProductsCacheLocalModelAdapter());
+
   runApp(const App());
 }

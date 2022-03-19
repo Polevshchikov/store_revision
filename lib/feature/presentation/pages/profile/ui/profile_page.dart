@@ -10,7 +10,7 @@ class ProfilePage extends StatelessWidget {
     final _user = BlocProvider.of<AuthenticationBloc>(context).state.user;
     final widthScreen = MediaQuery.of(context).size.width;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.teal,
       appBar: AppBar(
