@@ -21,7 +21,9 @@ PreferredSizeWidget revisionAppbar({
             Color.fromARGB(200, 117, 34, 96),
             Color.fromARGB(200, 34, 95, 119),
           ], begin: Alignment.centerLeft, end: Alignment.bottomRight),
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15)),
         ),
       ),
       elevation: 10,

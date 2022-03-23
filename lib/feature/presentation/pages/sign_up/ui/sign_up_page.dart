@@ -12,7 +12,7 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text('Sign Up')),
+      appBar: AppBar(title: const Text('Регистрация')),
       body: const Padding(
         padding: EdgeInsets.all(8),
         child: SignUpForm(),

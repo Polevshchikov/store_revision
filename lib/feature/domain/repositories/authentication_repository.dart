@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:store_revision/core/error/failure.dart';
 import 'package:store_revision/feature/domain/entities/user_entity.dart';
 
@@ -25,6 +26,6 @@ abstract class AuthenticationRepository {
     required String email,
     required String password,
     required String username,
-    // String? photo,
+    required XFile? photo,
   });
 }

@@ -319,7 +319,7 @@ class _BodyRevisionWidgetState extends State<BodyRevisionWidget> {
                                             icon: const Icon(Icons
                                                 .sim_card_download_outlined),
                                             label:
-                                                const Text('Закрыть ревизию'),
+                                                const Text('Завершить ревизию'),
                                           ),
                                         )
                                       : const SizedBox.shrink(),

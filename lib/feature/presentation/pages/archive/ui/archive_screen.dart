@@ -103,12 +103,6 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                               child: BlocBuilder<RevisionPdfCubit,
                                   RevisionPdfState>(
                                 builder: (context, statePDF) {
-                                  if (statePDF.status == Status.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-
                                   if (statePDF.status == Status.success &&
                                       statePDF.filePDF != null) {
                                     PdfApi.openFile(statePDF.filePDF!);

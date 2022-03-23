@@ -19,7 +19,7 @@ class SignupUseCase extends UseCase<UserEntity, SignUpParams> {
       email: params.email,
       password: params.password,
       username: params.username,
-      // photo: params.photo ?? '',
+      photo: params.photo,
     );
 
     return result.fold((failure) => Left(failure), (user) => Right(user));

@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +28,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firestore;
+  final FirebaseStorage _firebaseStorage;
   final SharedPreferences _prefs;
   final HiveInterface _hive;
   final Connectivity _connectivity;
@@ -33,6 +38,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     this._hive,
     this._connectivity,
     this._prefs,
+    this._firebaseStorage,
   );
 
   /// Throws a [LogOutFailure] if an exception occurs.
@@ -184,7 +190,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String email,
     required String password,
     required String username,
-    // String? photo,
+    required XFile? photo,
   }) async {
     try {
       //  регистрация пользователя в firebase
@@ -193,13 +199,27 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         email: email,
         password: password,
       );
+
       await userCred.user?.updateDisplayName(username);
-      //await user?.updatePhotoURL(photo);
+      String downloadUrl = '';
+      if (photo != null) {
+        File _file = File(photo.path);
+        Reference ref = _firebaseStorage
+            .ref()
+            .child('profilePics')
+            .child(_firebaseAuth.currentUser!.uid);
+        UploadTask uploadTask = ref.putFile(_file);
+        TaskSnapshot snapshot = await uploadTask;
+        downloadUrl = await snapshot.ref.getDownloadURL();
+
+        await userCred.user?.updatePhotoURL(downloadUrl);
+      }
+
       final UserRemoteModel user = UserRemoteModel(
         uid: userCred.user!.uid,
         email: email,
         name: username,
-        photo: '',
+        photo: downloadUrl,
         revisions: const [],
       );
 

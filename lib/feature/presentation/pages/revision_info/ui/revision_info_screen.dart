@@ -36,16 +36,14 @@ class RevisionInfoScreen extends StatelessWidget {
         width: double.infinity,
         child: Stack(
           children: [
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 207, 202, 202),
-                    Color.fromARGB(255, 194, 137, 137),
-                    Color.fromARGB(255, 112, 104, 179),
-                    Color.fromARGB(255, 41, 38, 38),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                ),
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Color.fromARGB(255, 207, 202, 202),
+                  Color.fromARGB(255, 194, 137, 137),
+                  Color.fromARGB(255, 112, 104, 179),
+                  Color.fromARGB(255, 41, 38, 38),
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
               ),
             ),
             BackdropFilter(

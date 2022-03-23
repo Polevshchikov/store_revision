@@ -46,12 +46,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
   }
 
   @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -78,13 +72,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     children: [
                       CircleAvatar(
                         child: ClipOval(
-                          child: (_user.photo.isEmpty)
-                              ? const Icon(
-                                  Icons.person,
-                                  size: 60,
-                                )
-                              : Image.network('https://picsum.photos/200',
-                                  fit: BoxFit.fill),
+                          child: Image.network(
+                            _user.photo.isEmpty
+                                ? 'https://i.stack.imgur.com/l60Hf.png'
+                                : _user.photo,
+                            fit: BoxFit.cover,
+                            width: 200,
+                            height: 200,
+                          ),
                         ),
                         backgroundColor: const Color.fromARGB(158, 54, 46, 46),
                         radius: 80,

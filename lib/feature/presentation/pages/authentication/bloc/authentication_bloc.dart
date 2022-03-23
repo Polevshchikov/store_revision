@@ -35,11 +35,12 @@ class AuthenticationBloc
     streamSubscription =
         _firebaseAuth.authStateChanges().listen((firebaseUser) {
       if (firebaseUser == null) {
-        add(AuthenticationLoggedOut());
+        add(Unauthenticated());
       }
     });
     on<AuthenticationLoggedIn>(_onLoggedIn);
     on<AuthenticationLoggedOut>(_onLoggedOut);
+    on<Unauthenticated>(_unauthenticated);
     on<AuthenticationLoggedError>(_onLoggedError);
     on<AuthenticationInitialize>(_onAuthInitialize);
     on<AuthenticationLoad>(_onLoad);
@@ -69,6 +70,12 @@ class AuthenticationBloc
           : const AuthenticationState.logOuted(),
     );
   }
+
+  Future<void> _unauthenticated(
+    Unauthenticated event,
+    Emitter<AuthenticationState> emit,
+  ) async =>
+      emit(const AuthenticationState.logOuted());
 
   Future<void> _onAuthInitialize(
     AuthenticationInitialize event,

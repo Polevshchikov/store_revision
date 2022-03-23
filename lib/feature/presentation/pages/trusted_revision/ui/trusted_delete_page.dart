@@ -126,8 +126,10 @@ class _TrustedDeletePageState extends State<TrustedDeletePage> {
                                           child: Container(
                                             color: const Color(0xffFF0E58),
                                             child: Image.network(
-                                                'https://picsum.photos/200',
-                                                fit: BoxFit.fill),
+                                                users[index].photo.isNotEmpty
+                                                    ? users[index].photo
+                                                    : 'https://i.stack.imgur.com/l60Hf.png',
+                                                fit: BoxFit.cover),
                                           ),
                                         ),
                                         const SizedBox(width: 10),

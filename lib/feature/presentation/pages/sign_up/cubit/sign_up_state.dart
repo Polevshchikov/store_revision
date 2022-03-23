@@ -8,6 +8,7 @@ class SignUpState extends Equatable {
     this.password = const Password.pure(),
     this.confirmedPassword = const ConfirmedPassword.pure(),
     this.username = const Username.pure(),
+    this.photo,
     this.status = FormzStatus.pure,
     this.error = const EmptyFailure(),
   });
@@ -16,15 +17,17 @@ class SignUpState extends Equatable {
   final Password password;
   final ConfirmedPassword confirmedPassword;
   final Username username;
+  final XFile? photo;
   final FormzStatus status;
   final Failure error;
 
   @override
-  List<Object> get props => [
+  List<dynamic> get props => [
         email,
         password,
         confirmedPassword,
         status,
+        photo,
         username,
         error,
       ];
@@ -34,6 +37,7 @@ class SignUpState extends Equatable {
     Password? password,
     ConfirmedPassword? confirmedPassword,
     Username? username,
+    XFile? photo,
     FormzStatus? status,
     Failure? error,
   }) {
@@ -42,6 +46,7 @@ class SignUpState extends Equatable {
       password: password ?? this.password,
       confirmedPassword: confirmedPassword ?? this.confirmedPassword,
       username: username ?? this.username,
+      photo: photo ?? this.photo,
       status: status ?? this.status,
       error: error ?? const EmptyFailure(),
     );

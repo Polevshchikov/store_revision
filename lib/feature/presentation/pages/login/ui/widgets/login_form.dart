@@ -109,7 +109,7 @@ class _LoginButton extends StatelessWidget {
                 onPressed: state.status.isValidated
                     ? () => context.read<LoginCubit>().logInWithCredentials()
                     : null,
-                child: const Text('LOGIN'),
+                child: const Text('Вход'),
               );
       },
     );
@@ -125,7 +125,7 @@ class _SignUpButton extends StatelessWidget {
       onPressed: () async =>
           Navigator.of(context).pushNamed(MainNavigationRouteNames.signUpPage),
       child: Text(
-        'CREATE ACCOUNT',
+        'Еще не зарегистрированы?',
         style: TextStyle(color: theme.primaryColor),
       ),
     );

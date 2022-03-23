@@ -25,7 +25,9 @@ class PdfRevisionApi {
     ));
 
     return PdfApi.saveDocument(
-        name: 'revision-${revisionPDF.revisoinName}.pdf', pdf: pdf);
+        name:
+            'revision-${DateFormat('ddMMyy').format(revisionPDF.createDate)}.pdf',
+        pdf: pdf);
   }
 
   static Widget buildHeader(RevisionPDF revision, Font ttf) => Column(

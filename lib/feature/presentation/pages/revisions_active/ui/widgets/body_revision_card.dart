@@ -17,16 +17,65 @@ class BodyRevisionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Название: ' + revision.name),
+          RichText(
+            text: TextSpan(
+              text: 'Название: ',
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                    text: revision.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
           const SizedBox(height: 5),
-          Text('Описание: ' + revision.description),
+          RichText(
+            text: TextSpan(
+              text: 'Описание: ',
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                    text: revision.description,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
           const SizedBox(height: 5),
-          Text('Дата: ' + DateFormat('dd.MM.yyyy').format(revision.date)),
+          RichText(
+            text: TextSpan(
+              text: 'Дата: ',
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                    text: DateFormat('dd.MM.yyyy').format(revision.date),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
           const SizedBox(height: 5),
-          Text('Количество наименований: ' +
-              revision.listProducts.length.toString()),
+          RichText(
+            text: TextSpan(
+              text: 'Количество наименований: ',
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                    text: revision.listProducts.length.toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
           const SizedBox(height: 5),
-          Text('Общая сумма: ' + revision.total.toStringAsFixed(2)),
+          RichText(
+            text: TextSpan(
+              text: 'Общая сумма: ',
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                    text: revision.total.toStringAsFixed(2),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
         ],
       ),
     );

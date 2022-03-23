@@ -90,8 +90,12 @@ class BodyInfoTrusted extends StatelessWidget {
                         child: Container(
                           height: 130,
                           color: const Color(0xffFF0E58),
-                          child: Image.network('https://picsum.photos/200',
-                              fit: BoxFit.fill),
+                          child: Image.network(
+                              trusteds[index].photo.isNotEmpty
+                                  ? trusteds[index].photo
+                                  : 'https://i.stack.imgur.com/l60Hf.png',
+                              width: 130,
+                              fit: BoxFit.cover),
                         ),
                       ),
                     ),
