@@ -46,5 +46,5 @@ class UserEntity extends Equatable {
   bool get isNotEmpty => this != UserEntity.empty;
 
   @override
-  List<Object?> get props => [email, uid, name, photo];
+  List<Object?> get props => [email, uid, name, photo, revisions];
 }

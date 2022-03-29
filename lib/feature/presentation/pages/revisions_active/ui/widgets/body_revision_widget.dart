@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:store_revision/core/navigation/main_navigation.dart';
 import 'package:store_revision/feature/domain/entities/user_entity.dart';
@@ -85,10 +86,10 @@ class _BodyRevisionWidgetState extends State<BodyRevisionWidget> {
             }
 
             if (state.status == Status.success && state.revisions.isEmpty) {
-              return const Center(
+              return Center(
                   child: Text(
                 'Список пуст',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold),
               ));
             }
 
@@ -97,14 +98,14 @@ class _BodyRevisionWidgetState extends State<BodyRevisionWidget> {
 
               return ListView.builder(
                   controller: scrollController,
-                  padding: const EdgeInsets.only(top: 25),
+                  padding: EdgeInsets.only(top: 25.h),
                   itemCount: revisions.length,
                   itemBuilder: (BuildContext context, int index) {
                     return (revisions[index].listTrusted.contains(user.uid) ||
                             revisions[index].uid == user.uid)
                         ? Padding(
                             padding: index + 1 == revisions.length
-                                ? const EdgeInsets.only(bottom: 60)
+                                ? EdgeInsets.only(bottom: 60.h)
                                 : EdgeInsets.zero,
                             child: GestureDetector(
                               onTap: () {
@@ -129,12 +130,12 @@ class _BodyRevisionWidgetState extends State<BodyRevisionWidget> {
                                   });
                                 });
                               },
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 40.0),
-                                    child: DecoratedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    DecoratedBox(
                                       decoration: const BoxDecoration(
                                         boxShadow: [
                                           BoxShadow(
@@ -283,47 +284,51 @@ class _BodyRevisionWidgetState extends State<BodyRevisionWidget> {
                                           : BodyRevisionCard(
                                               revision: revisions[index]),
                                     ),
-                                  ),
-                                  (revisions[index].uid == user.uid)
-                                      ? Positioned(
-                                          right: 6.0,
-                                          bottom: 12,
-                                          child: ElevatedButton.icon(
-                                            style: ElevatedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
+                                    (revisions[index].uid == user.uid)
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 8.0),
+                                            child: ElevatedButton.icon(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.r),
+                                                ),
+                                                shadowColor: Colors.white,
+                                                primary: const Color.fromARGB(
+                                                    160, 8, 117, 81),
                                               ),
-                                              primary: const Color.fromARGB(
-                                                  146, 187, 17, 144),
+                                              onPressed: () {
+                                                promptDialog(
+                                                  context: context,
+                                                  onPressed: () {
+                                                    context
+                                                        .read<
+                                                            RevisionActiveListCubit>()
+                                                        .closeRevision(
+                                                            revisionId:
+                                                                revisions[index]
+                                                                    .id,
+                                                            userId: user.uid);
+                                                  },
+                                                  dialog: Text(
+                                                      'Вы действительно хотите завершить ревизию: ${revisions[index].name}?',
+                                                      style: const TextStyle(
+                                                          color: Colors.black)),
+                                                );
+                                              },
+                                              icon: const Icon(Icons
+                                                  .sim_card_download_outlined),
+                                              label: const Text(
+                                                  'Завершить ревизию'),
                                             ),
-                                            onPressed: () {
-                                              promptDialog(
-                                                context: context,
-                                                onPressed: () {
-                                                  context
-                                                      .read<
-                                                          RevisionActiveListCubit>()
-                                                      .closeRevision(
-                                                          revisionId:
-                                                              revisions[index]
-                                                                  .id,
-                                                          userId: user.uid);
-                                                },
-                                                dialog: Text(
-                                                    'Вы действительно хотите завершить ревизию: ${revisions[index].name}?',
-                                                    style: const TextStyle(
-                                                        color: Colors.black)),
-                                              );
-                                            },
-                                            icon: const Icon(Icons
-                                                .sim_card_download_outlined),
-                                            label:
-                                                const Text('Завершить ревизию'),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ],
+                                          )
+                                        : const SizedBox(height: 20),
+                                  ],
+                                ),
                               ),
                             ),
                           )

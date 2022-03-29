@@ -24,10 +24,10 @@ class ProductAddWidget extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
       child: Center(
         child: Container(
-          margin: EdgeInsets.only(top: 100.h),
+          margin: EdgeInsets.only(top: 130.h),
           padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 15.h),
-          height: MediaQuery.of(context).size.height * 0.5,
-          width: MediaQuery.of(context).size.width * 0.9,
+          height: 330.h,
+          width: 380.w,
           decoration: BoxDecoration(
             color: Colors.black12,
             borderRadius: BorderRadius.circular(40.r),
@@ -46,15 +46,7 @@ class ProductAddWidget extends StatelessWidget {
               ),
             ],
           ),
-          child: Stack(
-            children: [
-              _ProductFormWidget(revisionId: revision.id),
-              const Align(
-                alignment: Alignment.topRight,
-                child: _QrScannerWidget(),
-              )
-            ],
-          ),
+          child: _ProductFormWidget(revisionId: revision.id),
         ),
       ),
     );
@@ -92,21 +84,25 @@ class _QrScannerWidgetState extends State<_QrScannerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        primary: const Color.fromARGB(205, 218, 87, 0),
-      ),
-      onPressed: () async {
+    return GestureDetector(
+      onTap: () async {
         await scanQRCode();
         if (qrCode != '-1' && qrCode.isNotEmpty) {
           context.read<ProductAddCubit>().scannChanged(qrCode);
         }
       },
-      icon: const Icon(Icons.qr_code_2_outlined),
-      label: const Text('Сканировать'),
+      child: Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(158, 255, 255, 255),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            border: Border.all(
+              width: 1,
+              color: const Color.fromARGB(60, 0, 0, 0),
+              style: BorderStyle.solid,
+            ),
+          ),
+          child: const Icon(Icons.qr_code_2_outlined)),
     );
   }
 }
@@ -155,30 +151,37 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 30),
-        BlocBuilder<ProductAddCubit, ProductAddState>(
-          buildWhen: (previous, current) =>
-              ((previous.scannQr != current.scannQr) ||
-                  (previous.name != current.name)),
-          builder: (context, state) {
-            if (state.scannQr.isNotEmpty) {
-              context.read<ProductAddCubit>().nameChanged(state.scannQr);
-              _nameController.value = TextEditingValue(
-                text: state.scannQr,
-                selection: TextSelection.fromPosition(
-                    TextPosition(offset: state.scannQr.length)),
-              );
-            }
-            return ProductFieldWidget(
-              errorText: state.name.invalid ? 'Пустое поле' : null,
-              controllerWidget: _nameController,
-              focusWidget: focusName,
-              focusWidgetNext: focusCost,
-              keyWidget: const Key('productForm_nameInput_textField'),
-              labelText: 'Название товара',
-              typeField: TypeField.name,
-            );
-          },
+        Row(
+          children: [
+            Flexible(
+              flex: 5,
+              child: BlocBuilder<ProductAddCubit, ProductAddState>(
+                buildWhen: (previous, current) =>
+                    ((previous.scannQr != current.scannQr) ||
+                        (previous.name != current.name)),
+                builder: (context, state) {
+                  if (state.scannQr.isNotEmpty) {
+                    context.read<ProductAddCubit>().nameChanged(state.scannQr);
+                    _nameController.value = TextEditingValue(
+                      text: state.scannQr,
+                      selection: TextSelection.fromPosition(
+                          TextPosition(offset: state.scannQr.length)),
+                    );
+                  }
+                  return ProductFieldWidget(
+                    errorText: state.name.invalid ? 'Пустое поле' : null,
+                    controllerWidget: _nameController,
+                    focusWidget: focusName,
+                    focusWidgetNext: focusCost,
+                    keyWidget: const Key('productForm_nameInput_textField'),
+                    labelText: 'Название товара',
+                    typeField: TypeField.name,
+                  );
+                },
+              ),
+            ),
+            const Flexible(child: _QrScannerWidget()),
+          ],
         ),
         BlocBuilder<ProductAddCubit, ProductAddState>(
           buildWhen: (previous, current) => previous.cost != current.cost,
@@ -211,7 +214,7 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
             );
           },
         ),
-        const SizedBox(height: 30),
+        SizedBox(height: 15.h),
         BlocBuilder<ProductAddCubit, ProductAddState>(
           buildWhen: (previous, current) => previous.status != current.status,
           builder: (context, state) {

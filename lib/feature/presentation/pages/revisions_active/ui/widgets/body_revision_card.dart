@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:store_revision/feature/domain/entities/revision_entity.dart';
 
@@ -10,7 +11,7 @@ class BodyRevisionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
       decoration: const BoxDecoration(
         color: Color.fromRGBO(236, 236, 236, 0.8),
       ),
@@ -28,7 +29,7 @@ class BodyRevisionCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: 5.h),
           RichText(
             text: TextSpan(
               text: 'Описание: ',
@@ -40,7 +41,7 @@ class BodyRevisionCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: 5.h),
           RichText(
             text: TextSpan(
               text: 'Дата: ',
@@ -52,7 +53,7 @@ class BodyRevisionCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: 5.h),
           RichText(
             text: TextSpan(
               text: 'Количество наименований: ',
@@ -64,7 +65,7 @@ class BodyRevisionCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: 5.h),
           RichText(
             text: TextSpan(
               text: 'Общая сумма: ',

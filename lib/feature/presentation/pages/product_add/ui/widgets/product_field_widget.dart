@@ -52,6 +52,8 @@ class ProductFieldWidget extends StatelessWidget {
         FocusScope.of(context).requestFocus(focusWidgetNext);
       },
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
         labelText: labelText,
         errorText: errorText,
       ),

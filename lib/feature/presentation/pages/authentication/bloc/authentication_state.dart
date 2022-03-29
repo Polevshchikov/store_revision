@@ -27,6 +27,16 @@ class AuthenticationState extends Equatable {
   const AuthenticationState.logOuted()
       : this._(status: AuthenticationStatus.unauthenticated);
 
+  AuthenticationState copyWith({
+    AuthenticationStatus? status,
+    UserEntity? user,
+  }) {
+    return AuthenticationState._(
+      user: user ?? this.user,
+      status: status ?? this.status,
+    );
+  }
+
   @override
   List<Object> get props => [
         status,

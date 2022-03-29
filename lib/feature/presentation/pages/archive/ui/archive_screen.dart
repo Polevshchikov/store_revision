@@ -106,6 +106,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                   if (statePDF.status == Status.success &&
                                       statePDF.filePDF != null) {
                                     PdfApi.openFile(statePDF.filePDF!);
+                                    _revisionPdfCubit.resetPDF();
                                   }
                                   return DecoratedBox(
                                     decoration: const BoxDecoration(

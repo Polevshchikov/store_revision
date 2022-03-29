@@ -14,7 +14,7 @@ class SignUpPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Регистрация')),
       body: const Padding(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: SignUpForm(),
       ),
     );

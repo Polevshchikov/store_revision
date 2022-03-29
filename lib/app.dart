@@ -52,6 +52,8 @@ class App extends StatelessWidget {
             onGenerateRoute: mainNavigation.onGenerateRoute,
             builder: (context, child) {
               return BlocListener<AuthenticationBloc, AuthenticationState>(
+                listenWhen: (previous, current) =>
+                    previous.status != current.status,
                 listener: (context, state) {
                   switch (state.status) {
                     case AuthenticationStatus.authenticated:

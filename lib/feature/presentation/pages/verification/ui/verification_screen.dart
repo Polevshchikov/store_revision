@@ -63,49 +63,53 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   tileMode: TileMode.clamp),
             ),
             child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        child: ClipOval(
-                          child: Image.network(
-                            _user.photo.isEmpty
-                                ? 'https://i.stack.imgur.com/l60Hf.png'
-                                : _user.photo,
-                            fit: BoxFit.cover,
-                            width: 200,
-                            height: 200,
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            child: ClipOval(
+                              child: Image.network(
+                                _user.photo.isEmpty
+                                    ? 'https://i.stack.imgur.com/l60Hf.png'
+                                    : _user.photo,
+                                fit: BoxFit.cover,
+                                width: 200,
+                                height: 200,
+                              ),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(158, 54, 46, 46),
+                            radius: 80,
                           ),
-                        ),
-                        backgroundColor: const Color.fromARGB(158, 54, 46, 46),
-                        radius: 80,
+                        ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Добро пожаловать',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 8, 66, 114),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    _user.name,
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 8, 66, 114),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Добро пожаловать',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 8, 66, 114),
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        _user.name,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 8, 66, 114),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
                       const Text(
                         'Ваш Email:',
                         style: TextStyle(
@@ -114,7 +118,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(height: 2),
                       Text(
                         _user.email,
                         style: const TextStyle(
@@ -123,149 +127,150 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  const Center(
-                    child: Text(
-                      'К сожалению, Ваш аккаунт не подтвержден!',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 209, 1, 1),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: 280,
-                    child: Column(
-                      children: [
-                        const Text(
-                          'Нажмите на кнопку ниже для подтверждения аккаунта через email.',
+                      const SizedBox(height: 10),
+                      const Center(
+                        child: Text(
+                          'К сожалению, Ваш аккаунт не подтвержден!',
                           style: TextStyle(
-                            color: Color.fromARGB(255, 14, 13, 13),
+                            color: Color.fromARGB(255, 209, 1, 1),
                             fontSize: 14,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'На вашу почту ${_user.email} \nотправлено электронное письмо. Перейдите по этой ссылке в письме, чтобы подтвердить свой адрес электронной почты.',
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 99, 2, 145),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  GestureDetector(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                        ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Icon(
-                              Icons.mark_email_read_outlined,
-                              color: Colors.black,
-                            ),
-                            SizedBox(width: 5),
-                            Text('Подтвердить почту')
-                          ],
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      if (!isStartTiner) {
-                        context
-                            .read<AuthenticationBloc>()
-                            .add(AuthenticationVerifivation(_user));
-                        _startTimer();
-                      }
-                    },
-                  ),
-                  isStartTiner
-                      ? Container(
-                          width: 60,
-                          height: 30,
-                          margin: const EdgeInsets.only(top: 20),
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(148, 18, 111, 218),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                spreadRadius: 0,
-                                blurRadius: 8,
-                                offset: Offset(0, 0),
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Text(
-                              _count.toString(),
-                              style: const TextStyle(
-                                color: Color.fromARGB(255, 1, 7, 58),
-                                fontSize: 22,
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: 280,
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Нажмите на кнопку ниже для подтверждения аккаунта через email.',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 14, 13, 13),
+                                fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               ),
                               textAlign: TextAlign.center,
                             ),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                  const SizedBox(height: 20),
-                  GestureDetector(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Icon(
-                              Icons.exit_to_app_outlined,
-                              color: Colors.black,
+                            const SizedBox(height: 5),
+                            Text(
+                              'На вашу почту ${_user.email} \nотправлено электронное письмо. Перейдите по этой ссылке в письме, чтобы подтвердить свой адрес электронной почты.',
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 99, 2, 145),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            SizedBox(width: 5),
-                            Text('Выйти')
                           ],
                         ),
                       ),
-                    ),
-                    onTap: () {
-                      context
-                          .read<AuthenticationBloc>()
-                          .add(AuthenticationLoggedOut());
-                    },
+                      const SizedBox(height: 20),
+                      GestureDetector(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.black,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Icon(
+                                  Icons.mark_email_read_outlined,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(width: 5),
+                                Text('Подтвердить почту')
+                              ],
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          if (!isStartTiner) {
+                            context
+                                .read<AuthenticationBloc>()
+                                .add(AuthenticationVerifivation(_user));
+                            _startTimer();
+                          }
+                        },
+                      ),
+                      isStartTiner
+                          ? Container(
+                              width: 60,
+                              height: 30,
+                              margin: const EdgeInsets.only(top: 20),
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(148, 18, 111, 218),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    spreadRadius: 0,
+                                    blurRadius: 8,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  _count.toString(),
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 1, 7, 58),
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      const SizedBox(height: 20),
+                      GestureDetector(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.black,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Icon(
+                                  Icons.exit_to_app_outlined,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(width: 5),
+                                Text('Выйти')
+                              ],
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(AuthenticationLoggedOut());
+                        },
+                      ),
+                      const SizedBox(height: 150),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           );

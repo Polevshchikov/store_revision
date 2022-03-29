@@ -19,9 +19,11 @@ class RevisionActiveListCubit extends Cubit<RevisionActiveListState> {
   final GetRevisionsUseCase _getRevisionsUseCase;
   final DeleteRevisionUseCase _deleteRevisionUseCase;
   final OpenCloseRevisionUseCase _openCloseRevisionUseCase;
-  RevisionActiveListCubit(this._getRevisionsUseCase,
-      this._deleteRevisionUseCase, this._openCloseRevisionUseCase)
-      : super(RevisionActiveListState.initial());
+  RevisionActiveListCubit(
+    this._getRevisionsUseCase,
+    this._deleteRevisionUseCase,
+    this._openCloseRevisionUseCase,
+  ) : super(RevisionActiveListState.initial());
 
   Future<void> getRevisions({required String userId}) async {
     emit(RevisionActiveListState.loading());

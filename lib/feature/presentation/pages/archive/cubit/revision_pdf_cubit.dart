@@ -16,6 +16,10 @@ class RevisionPdfCubit extends Cubit<RevisionPdfState> {
   RevisionPdfCubit(this._openRevisionPDFUseCase)
       : super(RevisionPdfState.initial());
 
+  Future<void> resetPDF() async {
+    emit(RevisionPdfState.initial());
+  }
+
   Future<void> openRevisionPDF(RevisionEntity revision) async {
     emit(RevisionPdfState.loading());
     final result = await _openRevisionPDFUseCase

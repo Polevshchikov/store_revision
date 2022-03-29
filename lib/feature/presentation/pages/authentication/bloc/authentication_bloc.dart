@@ -43,6 +43,7 @@ class AuthenticationBloc
     on<Unauthenticated>(_unauthenticated);
     on<AuthenticationLoggedError>(_onLoggedError);
     on<AuthenticationInitialize>(_onAuthInitialize);
+    on<GetAuthenticationInfo>(_onGetInfo);
     on<AuthenticationLoad>(_onLoad);
     on<AuthenticationVerifivation>(_onVerifivation);
   }
@@ -91,6 +92,20 @@ class AuthenticationBloc
         emit(const AuthenticationState.logOuted());
       },
       (user) async => add(AuthenticationLoggedIn(user)),
+    );
+  }
+
+  Future<void> _onGetInfo(
+    GetAuthenticationInfo event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    final result = await _getAuthenticatedUserUseCase.call(NoParams());
+
+    await result.fold(
+      (failure) async {
+        emit(const AuthenticationState.logOuted());
+      },
+      (user) async => emit(state.copyWith(user: user)),
     );
   }
 

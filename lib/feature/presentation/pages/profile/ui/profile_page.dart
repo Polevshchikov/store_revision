@@ -8,7 +8,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _user = BlocProvider.of<AuthenticationBloc>(context).state.user;
+    context.read<AuthenticationBloc>().add(GetAuthenticationInfo());
     final widthScreen = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -65,23 +65,23 @@ class ProfilePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    _user.email,
+                    state.user.email,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 192, 0, 0),
                         fontSize: 18,
                         fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    '_user.name',
-                    style: TextStyle(
+                  Text(
+                    state.user.name,
+                    style: const TextStyle(
                         color: Color.fromARGB(255, 0, 98, 179),
                         fontSize: 18,
                         fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Проведено ревизий: ${_user.revisions.length}',
+                    'Проведено ревизий: ${state.user.revisions.length}',
                     style: const TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   const SizedBox(height: 20),

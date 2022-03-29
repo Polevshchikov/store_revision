@@ -22,6 +22,8 @@ class AuthenticationLoggedOut extends AuthenticationEvent {}
 
 class Unauthenticated extends AuthenticationEvent {}
 
+class GetAuthenticationInfo extends AuthenticationEvent {}
+
 class AuthenticationLoad extends AuthenticationEvent {}
 
 class AuthenticationVerifivation extends AuthenticationEvent {
