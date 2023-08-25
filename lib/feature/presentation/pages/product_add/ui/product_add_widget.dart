@@ -124,6 +124,7 @@ class _ProductFormWidgetState extends State<_ProductFormWidget> {
   late FocusNode focusName;
   late FocusNode focusCost;
   late FocusNode focusQuantity;
+
   @override
   void initState() {
     focusName = FocusNode();

@@ -1,54 +1,22 @@
 part of 'authentication_bloc.dart';
 
 class AuthenticationState extends Equatable {
-  final AuthenticationStatus status;
-  final UserEntity user;
-  final Failure error;
+  final String appVersion;
 
   const AuthenticationState._({
-    this.status = AuthenticationStatus.initial,
-    this.user = UserEntity.empty,
-    Failure? error,
-  }) : error = error ?? const EmptyFailure();
+    this.appVersion = '',
+  });
 
   const AuthenticationState.initial() : this._();
 
-  const AuthenticationState.load() : this._(status: AuthenticationStatus.load);
-
-  const AuthenticationState.error(Failure failure)
-      : this._(status: AuthenticationStatus.error, error: failure);
-
-  const AuthenticationState.authenticated({required UserEntity user})
-      : this._(status: AuthenticationStatus.authenticated, user: user);
-
-  const AuthenticationState.noVerification({required UserEntity user})
-      : this._(status: AuthenticationStatus.noVerification, user: user);
-
-  const AuthenticationState.logOuted()
-      : this._(status: AuthenticationStatus.unauthenticated);
-
   AuthenticationState copyWith({
-    AuthenticationStatus? status,
-    UserEntity? user,
+    String? appVersion,
   }) {
-    return AuthenticationState._(
-      user: user ?? this.user,
-      status: status ?? this.status,
-    );
+    return AuthenticationState._(appVersion: appVersion ?? this.appVersion);
   }
 
   @override
-  List<Object> get props => [
-        status,
-        user,
-      ];
+  List<Object> get props => [appVersion];
 }
 
-enum AuthenticationStatus {
-  initial,
-  authenticated,
-  unauthenticated,
-  noVerification,
-  error,
-  load
-}
+enum AuthenticationStatus { initial, authenticated, unauthenticated, noVerification, error, load }

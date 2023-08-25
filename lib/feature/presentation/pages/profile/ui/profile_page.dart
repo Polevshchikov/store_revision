@@ -18,18 +18,14 @@ class ProfilePage extends StatelessWidget {
         leading: const BackButton(color: Colors.black),
         backgroundColor: const Color.fromARGB(0, 66, 66, 66),
         elevation: 0,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))),
       ),
       body: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           return Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF009688),
-                    Color.fromARGB(255, 245, 255, 255)
-                  ],
+                  colors: [Color(0xFF009688), Color.fromARGB(255, 245, 255, 255)],
                   begin: FractionalOffset(1.0, 1.0),
                   end: FractionalOffset(0.0, 0.0),
                   stops: [0.0, 0.7],
@@ -55,9 +51,7 @@ class ProfilePage extends StatelessWidget {
                           width: widthScreen * 0.6,
                           color: const Color(0xffFF0E58),
                           child: Image.network(
-                              state.user.photo.isNotEmpty
-                                  ? state.user.photo
-                                  : 'https://i.stack.imgur.com/l60Hf.png',
+                              state.user.photo.isNotEmpty ? state.user.photo : 'https://i.stack.imgur.com/l60Hf.png',
                               fit: BoxFit.cover),
                         ),
                       ),
@@ -67,17 +61,13 @@ class ProfilePage extends StatelessWidget {
                   Text(
                     state.user.email,
                     style: const TextStyle(
-                        color: Color.fromARGB(255, 192, 0, 0),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
+                        color: Color.fromARGB(255, 192, 0, 0), fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     state.user.name,
                     style: const TextStyle(
-                        color: Color.fromARGB(255, 0, 98, 179),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
+                        color: Color.fromARGB(255, 0, 98, 179), fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -121,9 +111,7 @@ class ProfilePage extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                        context
-                            .read<AuthenticationBloc>()
-                            .add(AuthenticationLoggedOut());
+                        context.read<AuthenticationBloc>().add(AuthenticationLoggedOut());
                       }),
                   const Spacer(),
                   ProfileButtonWidget(

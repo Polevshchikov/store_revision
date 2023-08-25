@@ -27,8 +27,7 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark));
   await configureDependencies();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
